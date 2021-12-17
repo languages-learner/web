@@ -18,6 +18,7 @@
     ]
   },
   "dependencies": {
+    "pinia": "^2.0.6",
     "vue": "^3.2.25"
   },
   "devDependencies": {
