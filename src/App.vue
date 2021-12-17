@@ -4,16 +4,32 @@
 import HelloWorld from './components/HelloWorld.vue'
 
 import {useUserStore} from '@/store/user';
+import { useI18n } from 'vue-i18n';
 
 const store = useUserStore();
-
 store.fetchProfile()
+
+const t = useI18n();
+const selectedLocale = t.locale
+const availableLocales = t.availableLocales
 </script>
 
 <template>
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
     <p>{{ store.profileData?.email ?? '' }}</p>
+    <p>{{ $t('message.hello') }}</p>
+    <form>
+        <label>{{ $t('language') }} - </label>
+        <select v-model="selectedLocale">
+            <option
+                v-for="(locale, index) in availableLocales"
+                :key="`locale-${index}`"
+                :value="locale">{{ locale }}
+            </option>
+        </select>
+    </form>
+    <p>{{ $t('translate') }}: {{ $t('hello') }}</p>
 </template>
 
 <style>

@@ -1,0 +1,8 @@
+{
+  "message": {
+    "hello": "Привет мир"
+  },
+  "language": "Язык",
+  "translate": "Перевод",
+  "hello": "Привет"
+}
