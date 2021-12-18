@@ -13,9 +13,12 @@
     "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "paths": {
+      "@@/*": [
+        "./*"
+      ],
       "@/*": [
         "src/*"
-      ]
+      ],
     },
     "types": [
       "vite-plugin-pages/client"
