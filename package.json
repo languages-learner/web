@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "firebase": "^8.2.1",
+    "firebase-tools": "^9.23.3",
     "pinia": "^2.0.6",
     "vue": "^3.2.25",
     "vue-i18n": "^9.2.0-beta.23",

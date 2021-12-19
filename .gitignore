@@ -4,5 +4,13 @@ dist
 dist-ssr
 *.local
 
-# Firebase
+# Configs
 firebase.config.json
+.firebaserc
+firebase.json
+
+# Log files
+firebase-debug.log
+
+# Cache files
+.firebase
