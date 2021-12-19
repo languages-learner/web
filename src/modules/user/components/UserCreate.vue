@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { createUser } from '@/services/User'
+import { injectStrict } from '@/utils/injection'
+import { UserFirestoreCollectionKey } from '@/symbols'
+
+const { create: createUser } = injectStrict(UserFirestoreCollectionKey)
 
 const form = reactive({
     name: '',

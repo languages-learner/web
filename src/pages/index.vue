@@ -1,9 +1,7 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from '@/components/HelloWorld.vue'
+import Navigation from '@/components/Navigation.vue'
 
-import {useUserStore} from '@/store/user';
+import { useUserStore } from '@/store/user';
 import { useI18n } from 'vue-i18n';
 
 const store = useUserStore();
@@ -15,8 +13,7 @@ const availableLocales = t.availableLocales
 </script>
 
 <template>
-    <img alt="Vue logo" src="@/assets/logo.png" />
-    <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+    <Navigation />
     <p>{{ store.profileData?.email ?? '' }}</p>
     <p>{{ $t('message.hello') }}</p>
     <form>
@@ -25,7 +22,8 @@ const availableLocales = t.availableLocales
             <option
                 v-for="(locale, index) in availableLocales"
                 :key="`locale-${index}`"
-                :value="locale">{{ locale }}
+                :value="locale">
+                {{ locale }}
             </option>
         </select>
     </form>

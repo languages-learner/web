@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { reactive, computed, onMounted, unref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getUser, updateUser } from '@/services/User'
+import { injectStrict } from '@/utils/injection'
+import { UserFirestoreCollectionKey } from '@/symbols'
+
+const {
+    get: getUser,
+    update: updateUser,
+} = injectStrict(UserFirestoreCollectionKey)
 
 const router = useRouter()
 const route = useRoute()
@@ -18,7 +24,7 @@ onMounted(async () => {
 })
 const onSubmit = async () => {
     await updateUser(unref(userId), { ...form })
-    await router.push('/users')
+    await router.push({name: 'users'})
     form.name = ''
     form.email = ''
 }

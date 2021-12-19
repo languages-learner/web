@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { useLoadUsers, deleteUser } from '@/services/User'
+import { injectStrict } from '@/utils/injection'
+import { UserFirestoreCollectionKey } from '@/symbols'
 
-const users = useLoadUsers()
-const editRoute = (id: string) => `/users/edit/${id}`
+const {
+    delete: deleteUser,
+    items: users
+} = injectStrict(UserFirestoreCollectionKey)
+const editRoute = (id: string) => ({
+    name: 'users-edit-id',
+    params: { id }
+})
 </script>
 
 <template>
