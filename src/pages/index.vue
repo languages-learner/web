@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import Navigation from '@/components/Navigation.vue'
+import Header from '@/components/Header.vue'
 
-import { useUserStore } from '@/store/user'
 import { useI18n } from 'vue-i18n'
-
-const store = useUserStore()
-store.fetchProfile()
 
 const t = useI18n()
 const selectedLocale = t.locale
@@ -13,8 +10,8 @@ const { availableLocales } = t
 </script>
 
 <template>
+    <Header />
     <Navigation />
-    <p>{{ store.profileData?.email ?? '' }}</p>
     <p>{{ $t('message.hello') }}</p>
     <form>
         <label>{{ $t('language') }} - </label>

@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { reactive, computed, onMounted, unref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { injectStrict } from '@/utils/injection'
-import { UserFirestoreCollectionKey } from '@/symbols'
+import { useFirestore } from '@/plugins/services'
 
 const {
     get: getUser,
     update: updateUser,
-} = injectStrict(UserFirestoreCollectionKey)
+} = useFirestore().UserCollection
 
 const router = useRouter()
 const route = useRoute()
