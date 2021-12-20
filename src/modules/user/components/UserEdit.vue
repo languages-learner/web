@@ -24,7 +24,7 @@ onMounted(async () => {
 })
 const onSubmit = async () => {
     await updateUser(unref(userId), { ...form })
-    await router.push({name: 'users'})
+    await router.push({ name: 'users' })
     form.name = ''
     form.email = ''
 }

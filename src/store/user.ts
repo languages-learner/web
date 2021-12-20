@@ -1,4 +1,4 @@
-import { defineStore, Store } from 'pinia';
+import { defineStore, Store } from 'pinia'
 
 export interface State {
     profileData?: {
@@ -7,7 +7,7 @@ export interface State {
     };
 }
 
-type UserStore = Store<"user",
+type UserStore = Store<'user',
     State,
     unknown, {
     fetchProfile(): void
@@ -22,7 +22,7 @@ export const useUserStore: () => UserStore = defineStore('user', {
             this.profileData = {
                 id: 1,
                 email: 'chernigin.boss@gmail.com',
-            };
+            }
         },
     },
-});
+})

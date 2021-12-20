@@ -1,5 +1,5 @@
-import { onUnmounted, ref, Ref } from 'vue';
-import firebase from 'firebase';
+import { onUnmounted, ref, Ref } from 'vue'
+import firebase from 'firebase'
 
 export abstract class BaseFirestoreCollection<T> {
     private readonly _collection: firebase.firestore.CollectionReference<Omit<T, 'id'>>

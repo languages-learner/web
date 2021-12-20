@@ -17,6 +17,13 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         indent: ['error', 4],
         'vue/html-indent': ['error', 4],
+        'vue/attributes-order': ['error'],
+        'vue/v-on-function-call': ['error', 'never'],
         'newline-before-return': 'error',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        'object-curly-spacing': ['error', 'always'],
+        'quotes': ['error', 'single'],
+        'prefer-destructuring': ['error', { 'object': true, 'array': false }],
+        'semi': ['error', 'never'],
     },
-};
+}

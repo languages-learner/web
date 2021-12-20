@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router'
 import routes from '~pages'
 
 import NotFoundComponent from '@/components/NotFound.vue'
@@ -9,6 +9,6 @@ const router = createRouter({
         ...routes,
         { path: '/:pathMatch(.*)', component: NotFoundComponent }
     ],
-});
+})
 
 export default router

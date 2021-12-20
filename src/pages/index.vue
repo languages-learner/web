@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import Navigation from '@/components/Navigation.vue'
 
-import { useUserStore } from '@/store/user';
-import { useI18n } from 'vue-i18n';
+import { useUserStore } from '@/store/user'
+import { useI18n } from 'vue-i18n'
 
-const store = useUserStore();
+const store = useUserStore()
 store.fetchProfile()
 
-const t = useI18n();
+const t = useI18n()
 const selectedLocale = t.locale
-const availableLocales = t.availableLocales
+const { availableLocales } = t
 </script>
 
 <template>
