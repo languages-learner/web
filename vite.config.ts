@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import Pages from "vite-plugin-pages";
+import Pages from 'vite-plugin-pages'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
@@ -11,11 +11,18 @@ export default defineConfig({
             '@': path.resolve(__dirname, 'src')
         }
     },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: '@import "@/assets/main";'
+            }
+        }
+    },
     plugins: [
         vue(),
         Pages({
-            dirs: 'src/pages',
-            exclude: ["**/components/*.vue"],
+            pagesDir: [{ dir: 'src/pages', baseRoute: '' }],
+            exclude: ['**/components/*.vue'],
         }),
     ]
 })

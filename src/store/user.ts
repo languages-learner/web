@@ -1,16 +1,21 @@
 import { defineStore, Store } from 'pinia'
+import firebase from 'firebase'
 
 export interface State {
     profileData?: {
-        id: number,
-        email: string,
-    };
+        uid: string,
+        displayName: string | null,
+        email: string | null,
+        emailVerified: boolean,
+        photoURL: string | null,
+        isAnonymous: boolean,
+    }
 }
 
 type UserStore = Store<'user',
     State,
     unknown, {
-    fetchProfile(): void
+    setUser: (user: firebase.User | null) => void,
 }>
 
 export const useUserStore: () => UserStore = defineStore('user', {
@@ -18,10 +23,20 @@ export const useUserStore: () => UserStore = defineStore('user', {
         profileData: undefined,
     } as State),
     actions: {
-        fetchProfile() {
+        setUser(user) {
+            if (!user) {
+                this.profileData = undefined
+
+                return
+            }
+
             this.profileData = {
-                id: 1,
-                email: 'chernigin.boss@gmail.com',
+                uid: user.uid,
+                displayName: user.displayName,
+                email: user.email,
+                emailVerified: user.emailVerified,
+                isAnonymous: user.isAnonymous,
+                photoURL: user.photoURL
             }
         },
     },

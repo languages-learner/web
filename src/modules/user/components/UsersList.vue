@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { injectStrict } from '@/utils/injection'
-import { UserFirestoreCollectionKey } from '@/symbols'
+import { useFirestore } from '@/plugins/services'
 
 const {
     delete: deleteUser,
     items: users
-} = injectStrict(UserFirestoreCollectionKey)
+} = useFirestore().UserCollection
+
 const editRoute = (id: string) => ({
     name: 'users-edit-id',
     params: { id }
