@@ -6,8 +6,6 @@ dist-ssr
 
 # Configs
 firebase.config.json
-.firebaserc
-firebase.json
 
 # Log files
 firebase-debug.log
