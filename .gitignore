@@ -11,6 +11,7 @@ firebase.json
 
 # Log files
 firebase-debug.log
+yarn-error.log
 
 # Cache files
 .firebase
