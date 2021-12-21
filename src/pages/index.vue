@@ -4,9 +4,10 @@ import Header from '@/components/Header.vue'
 
 import { useI18n } from 'vue-i18n'
 
-const t = useI18n()
-const selectedLocale = t.locale
-const { availableLocales } = t
+const {
+    locale: selectedLocale,
+    availableLocales
+} = useI18n()
 </script>
 
 <template>

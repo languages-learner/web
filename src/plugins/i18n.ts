@@ -1,21 +1,23 @@
 import { createI18n } from 'vue-i18n'
 
-import enUS from '@/locales/en-US.json'
-import ruRU from '@/locales/ru-RU.json'
-import frFR from '@/locales/fr-FR.json'
+import en from '@/locales/en.json'
+import ru from '@/locales/ru.json'
+import fr from '@/locales/fr.json'
 
-type MessageSchema = typeof enUS
+type MessageSchema = typeof en
 
-const i18n = createI18n<[MessageSchema], 'en-US' | 'ru-RU' | 'fr-FR'>({
-    locale: 'en-US',
+const i18n = createI18n<[MessageSchema], 'en' | 'ru' | 'fr'>({
+    locale: 'en',
     fallbackLocale: {
-        default: ['en-US', 'fr-FR', 'ru-RU'],
+        default: ['en', 'fr', 'ru'],
     },
     messages: {
-        'en-US': enUS,
-        'ru-RU': ruRU,
-        'fr-FR': frFR,
+        'en': en,
+        'ru': ru,
+        'fr': fr,
     },
+    legacy: false,
+    globalInjection: true
 })
 
 export default i18n
