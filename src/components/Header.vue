@@ -15,14 +15,10 @@ const { signOut } = useAuthenticate()
 
 <style scoped lang="scss">
 .header {
-    display: flex;
     position: absolute;
     top: 20px;
     right: 20px;
-
-    &_email {
-
-    }
+    display: flex;
 
     &_button {
         margin-left: 10px;
