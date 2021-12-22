@@ -138,17 +138,17 @@ const submit = props.type === 'signin' ? signInWithEmailAndPassword : createUser
 
 <style scoped lang="scss">
 .form-identity {
-    max-width: 450px;
-    margin-left: auto;
-    margin-right: auto;
-    height: 100vh;
     align-items: center;
+    max-width: 450px;
+    height: 100vh;
+    margin-right: auto;
+    margin-left: auto;
 
 
     &_container {
-        border: 1px solid #dbdbdb;
         margin: 0 0 10px;
         padding: 20px;
+        border: 1px solid #dbdbdb;
     }
 
     &_input {
@@ -184,21 +184,21 @@ const submit = props.type === 'signin' ? signInWithEmailAndPassword : createUser
     margin: 18px 40px;
 
     .line {
-        width: 30%;
-        background-color: #dbdbdb;
-        height: 1px;
         position: relative;
         top: 0.45em;
+        width: 30%;
+        height: 1px;
+        background-color: #dbdbdb;
     }
     .text {
         width: 40%;
-        color: #8e8e8e;
-        font-size: 13px;
-        font-weight: 600;
-        line-height: 15px;
         margin: 0 18px;
-        text-transform: uppercase;
+        color: #8e8e8e;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 15px;
         text-align: center;
+        text-transform: uppercase;
     }
 }
 </style>
