@@ -1,7 +1,9 @@
-import { Router } from 'vue-router'
+import { useRouter } from 'vue-router'
 import firebase from 'firebase'
 
-export const initializeAuthenticateMiddleware = (router: Router): void => {
+export const initializeAuthenticateMiddleware = (): void => {
+    const router = useRouter()
+
     router.beforeEach((to, from, next) => {
         if (!to.meta.requiresAuth || to.meta.requiresAuth === false) return next()
         if (firebase.auth().currentUser) return next()

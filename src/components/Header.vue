@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useUserStore } from '@/store/user'
-import { useAuthenticate } from '@/plugins/services'
+import { useUser } from '@/plugins/services'
 
 const userStore = useUserStore()
-const { signOut } = useAuthenticate()
+const { signOut } = useUser()
 </script>
 
 <template>
