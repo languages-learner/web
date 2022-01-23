@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useFirestore } from '@/plugins/services'
+import { useDbStore } from '@/plugins/services'
 
 const {
     delete: deleteUser,
     items: users
-} = useFirestore().UserCollection
+} = useDbStore().UserCollection
 
 const editRoute = (id: string) => ({
     name: 'users-edit-id',

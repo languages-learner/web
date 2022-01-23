@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, reactive, PropType } from 'vue'
-import firebase from 'firebase'
-import { useAuthenticate } from '@/plugins/services'
+import { computed, PropType, reactive } from 'vue'
+import { useFirebaseAuthentication, useUser } from '@/plugins/services'
+import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 
 const props = defineProps({
     type: {
@@ -16,26 +16,26 @@ const form = reactive({
 })
 
 const {
-    useCheckRedirectResult,
     signInWithProvider,
     signInWithEmailAndPassword: baseSignInWithEmailAndPassword,
-    createUserWithEmailAndPassword: baseCreateUserWithEmailAndPassword,
-    getErrorMessage
-} = useAuthenticate()
+    createUserWithEmailAndPassword: baseCreateUserWithEmailAndPassword
+} = useUser()
+
+const { useCheckRedirectResult } = useFirebaseAuthentication()
 
 let { error } = useCheckRedirectResult()
 
 const signInWithEmailAndPassword = () => baseSignInWithEmailAndPassword(form.email, form.password)
-    .catch(e => {
-        error.value = getErrorMessage(e)
+    .catch((e) => {
+        error.value = e
     })
 
 const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(form.email, form.password)
     .catch(e => {
-        error.value = getErrorMessage(e)
+        error.value = e
     })
 
-const signInWithGoogle = () => signInWithProvider(new firebase.auth.GoogleAuthProvider())
+const signInWithGoogle = () => signInWithProvider(EAuthenticationProvider.GOOGLE)
 
 const title = computed(() => ({
     'signin': 'Login',
@@ -58,15 +58,6 @@ const submit = props.type === 'signin' ? signInWithEmailAndPassword : createUser
                 <button class="form-identity_input" @click="signInWithGoogle">
                     Google
                 </button>
-                <!--                <button class="form-identity_input" @click="signInWithProvider(new firebase.auth.FacebookAuthProvider())">-->
-                <!--                    Facebook-->
-                <!--                </button>-->
-                <!--                <button class="form-identity_input" @click="signInWithProvider(new firebase.auth.GithubAuthProvider())">-->
-                <!--                    Github-->
-                <!--                </button>-->
-                <!--                <button class="form-identity_input" @click="signInWithProvider(new firebase.auth.OAuthProvider('microsoft.com'))">-->
-                <!--                    Microsoft-->
-                <!--                </button>-->
             </div>
 
             <div class="divider">

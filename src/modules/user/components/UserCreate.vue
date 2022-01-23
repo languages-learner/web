@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { useFirestore } from '@/plugins/services'
+import { useDbStore } from '@/plugins/services'
 
-const { create: createUser } = useFirestore().UserCollection
+const { create: createUser } = useDbStore().UserCollection
 
 const form = reactive({
     name: '',

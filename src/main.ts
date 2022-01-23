@@ -1,16 +1,27 @@
 import { createApp } from 'vue'
-import router from '@/router'
 import { createPinia } from 'pinia'
+import router from '@/router'
 import i18n from '@/plugins/i18n'
-import { initializeFirebaseApp } from '@/plugins/firebase'
-import services from '@/plugins/services'
 import App from '@/App.vue'
+import services from '@/plugins/services'
+import { initializeFirebaseApp } from '@/plugins/firebase'
+import firebase from 'firebase'
 
 initializeFirebaseApp()
 
-createApp(App)
+const app = createApp(App)
     .use(router)
     .use(createPinia())
     .use(i18n)
     .use(services)
-    .mount('#app')
+
+let mount = false
+
+firebase.auth().onAuthStateChanged(() => {
+    if (mount) return
+
+    app.mount('#app')
+    mount = true
+})
+
+

@@ -1,7 +1,9 @@
 import { InjectionKey } from 'vue'
 
-import { Authenticate } from '@/services/Authenticate'
-import { Firestore } from '@/services/firestore/Firestore'
+import { FirebaseAuthentication } from '@/services/authentication/firebase/FirebaseAuthentication'
+import { User } from '@/services/user/User'
+import { IDbStore } from '@/services/dbstore/IDbStore'
 
-export const AuthenticateServiceKey: InjectionKey<Authenticate> = Symbol('AuthenticateService')
-export const FirestoreServiceKey: InjectionKey<Firestore> = Symbol('FirestoreService')
+export const FirebaseAuthenticationServiceKey: InjectionKey<FirebaseAuthentication> = Symbol('FirebaseAuthenticationService')
+export const UserServiceKey: InjectionKey<User> = Symbol('UserService')
+export const DbStoreServiceKey: InjectionKey<IDbStore> = Symbol('DbStoreService')

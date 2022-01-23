@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { reactive, computed, onMounted, unref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useFirestore } from '@/plugins/services'
+import { useDbStore } from '@/plugins/services'
 
 const {
     get: getUser,
     update: updateUser,
-} = useFirestore().UserCollection
+} = useDbStore().UserCollection
 
 const router = useRouter()
 const route = useRoute()

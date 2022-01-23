@@ -1,7 +1,8 @@
 import { onUnmounted, ref, Ref } from 'vue'
 import firebase from 'firebase'
+import { ICollection } from '@/services/dbstore/ICollection'
 
-export abstract class BaseFirestoreCollection<T> {
+export abstract class BaseFirestoreCollection<T> implements ICollection<T>{
     private readonly _collection: firebase.firestore.CollectionReference<Omit<T, 'id'>>
 
     protected constructor(collectionName: string) {
