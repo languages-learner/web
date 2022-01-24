@@ -2,10 +2,11 @@
 import { computed, PropType, reactive } from 'vue'
 import { useFirebaseAuthentication, useUser } from '@/plugins/services'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
+import { PageEnum } from '@/enums/pageEnum'
 
 const props = defineProps({
     type: {
-        type: String as PropType<'signin' | 'signup'>,
+        type: String as PropType<PageEnum.BASE_SIGNIN | PageEnum.BASE_SIGNUP>,
         required: true
     }
 })
@@ -38,16 +39,16 @@ const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(
 const signInWithGoogle = () => signInWithProvider(EAuthenticationProvider.GOOGLE)
 
 const title = computed(() => ({
-    'signin': 'Login',
-    'signup': 'Registration'
+    [PageEnum.BASE_SIGNIN]: 'Login',
+    [PageEnum.BASE_SIGNUP]: 'Registration'
 }[props.type]))
 
 const submitName = computed(() => ({
-    'signin': 'Login',
-    'signup': 'Registration'
+    [PageEnum.BASE_SIGNIN]: 'Login',
+    [PageEnum.BASE_SIGNUP]: 'Registration'
 }[props.type]))
 
-const submit = props.type === 'signin' ? signInWithEmailAndPassword : createUserWithEmailAndPassword
+const submit = props.type === PageEnum.BASE_SIGNIN ? signInWithEmailAndPassword : createUserWithEmailAndPassword
 </script>
 
 <template>
@@ -99,27 +100,27 @@ const submit = props.type === 'signin' ? signInWithEmailAndPassword : createUser
             </button>
         </div>
 
-        <template v-if="type === 'signin'">
+        <template v-if="type === PageEnum.BASE_SIGNIN">
             <div
                 class="form-identity_have-account"
             >
                 <span>Do not have an account?</span>
                 <router-link
                     tag="span"
-                    :to="{ name: 'signup' }"
+                    :to="{ name: PageEnum.BASE_SIGNUP }"
                 >Register here
                 </router-link>
             </div>
         </template>
 
-        <template v-if="type === 'signup'">
+        <template v-if="type === PageEnum.BASE_SIGNUP">
             <div
                 class="form-identity_have-account"
             >
                 Do you have an account?
                 <router-link
                     tag="span"
-                    :to="{ name: 'signin' }"
+                    :to="{ name: PageEnum.BASE_SIGNIN }"
                 >Login here
                 </router-link>
             </div>

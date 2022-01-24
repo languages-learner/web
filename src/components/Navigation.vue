@@ -1,21 +1,22 @@
 <script setup lang="ts">
-const navItems = [{
-    title: 'Home',
-    name: 'index'
-}, {
-    title: 'Users',
-    name: 'users'
-}]
+import { useUserStore } from '@/store/user'
+
+const userStore = useUserStore()
 </script>
 
 <template>
     <div class="navigation">
-        <router-link
-            v-for="(navItem, index) in navItems"
-            :key="`nav-item-${index}`"
-            :to="{name: navItem.name}"
-        >
-            {{ navItem.title }}
+        <router-link :to="{name: 'index'}">
+            Home
+        </router-link>
+        <router-link v-if="userStore.isLoggedIn" :to="{name: 'users'}">
+            Users
+        </router-link>
+        <router-link v-if="userStore.isLoggedIn" :to="{name: 'chat'}">
+            Chat
+        </router-link>
+        <router-link v-if="!userStore.isLoggedIn" :to="{name: 'signin'}">
+            Signin
         </router-link>
     </div>
 </template>

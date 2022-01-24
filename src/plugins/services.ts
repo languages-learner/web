@@ -7,16 +7,13 @@ import {
     UserServiceKey,
     DbStoreServiceKey
 } from '@/symbols'
-import { inject } from 'vue'
+import { App, inject } from 'vue'
 
-export default {
-    // eslint-disable-next-line
-    install: (app: any): void => {
-        const firebaseAuthentication = new FirebaseAuthentication()
-        app.provide(FirebaseAuthenticationServiceKey, firebaseAuthentication)
-        app.provide(UserServiceKey, new User(firebaseAuthentication))
-        app.provide(DbStoreServiceKey, new Firestore())
-    }
+export function setupServices(app: App<Element>) {
+    const firebaseAuthentication = new FirebaseAuthentication()
+    app.provide(FirebaseAuthenticationServiceKey, firebaseAuthentication)
+    app.provide(UserServiceKey, new User(firebaseAuthentication))
+    app.provide(DbStoreServiceKey, new Firestore())
 }
 
 export const useFirebaseAuthentication = (): FirebaseAuthentication => {
