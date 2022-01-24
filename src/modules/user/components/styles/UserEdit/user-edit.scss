@@ -1,0 +1,15 @@
+.user-edit {
+  &_prop {
+    label {
+      margin-right: 10px;
+    }
+  }
+
+  &_prop + &_prop {
+    margin-top: 5px;
+  }
+
+  button {
+    margin-top: 5px;
+  }
+}

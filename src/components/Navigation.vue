@@ -21,17 +21,5 @@ const navItems = [{
 </template>
 
 <style scoped lang="scss">
-.navigation {
-    a {
-        color: black;
-    }
-
-    a + a {
-        margin-left: 5px;
-    }
-}
-
-.router-link-active {
-    font-weight: bold;
-}
+@import "styles/Navigation/component";
 </style>

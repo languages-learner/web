@@ -44,8 +44,5 @@ const editRoute = (id: string) => ({
 
 
 <style scoped lang="scss">
-.users-list {
-    display: flex;
-    justify-content: center;
-}
+@import "styles/UsersList/component";
 </style>
