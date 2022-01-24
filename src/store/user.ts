@@ -1,5 +1,6 @@
-import { defineStore, Store } from 'pinia'
+import { defineStore, StoreDefinition } from 'pinia'
 import firebase from 'firebase'
+import { store } from '@/store'
 
 export interface State {
     profileData?: {
@@ -12,16 +13,22 @@ export interface State {
     }
 }
 
-type UserStore = Store<'user',
-    State,
-    unknown, {
+type UserStore = StoreDefinition<'user',
+    State, {
+    isLoggedIn: boolean,
+}, {
     setUser: (user: firebase.User | null) => void,
 }>
 
-export const useUserStore: () => UserStore = defineStore('user', {
+export const useUserStore: UserStore = defineStore('user', {
     state: () => ({
         profileData: undefined,
     } as State),
+    getters: {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        isLoggedIn: (state) => state.profileData !== undefined
+    },
     actions: {
         setUser(user) {
             if (!user) {
@@ -41,3 +48,7 @@ export const useUserStore: () => UserStore = defineStore('user', {
         },
     },
 })
+
+export function useUserStoreWithOut() {
+    return useUserStore(store)
+}

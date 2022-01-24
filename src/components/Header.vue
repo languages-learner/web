@@ -7,7 +7,7 @@ const { signOut } = useUser()
 </script>
 
 <template>
-    <div class="header">
+    <div v-if="userStore.isLoggedIn" class="header">
         <div class="header_email">{{ userStore.profileData?.email }}</div>
         <button class="header_button" @click="signOut">Sign out</button>
     </div>

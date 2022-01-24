@@ -1,5 +1,6 @@
 import firebase from 'firebase'
 import { useRoute, useRouter } from 'vue-router'
+import { PageEnum } from '@/enums/pageEnum'
 import { useUserStore } from '@/store/user'
 
 export const initializeOnAuthStateChangedHook = (): void => {
@@ -11,19 +12,15 @@ export const initializeOnAuthStateChangedHook = (): void => {
         userStore.setUser(user)
 
         if (user) {
-            if (route.name === 'signin' || route.name === 'signup') {
+            if (route.name === PageEnum.BASE_SIGNIN || route.name === PageEnum.BASE_SIGNUP) {
                 await router.replace({
-                    name: 'index'
+                    name: PageEnum.BASE_HOME
                 })
             }
-        }
-
-        if (!user) {
+        } else if (route.meta.requiresAuth) {
             await router.replace({
-                name: 'signin'
+                name: PageEnum.BASE_SIGNIN
             })
-
-            return
         }
     })
 }

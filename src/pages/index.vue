@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import Navigation from '@/components/Navigation.vue'
-import Header from '@/components/Header.vue'
-
 import { useI18n } from 'vue-i18n'
 
 const {
@@ -11,8 +8,6 @@ const {
 </script>
 
 <template>
-    <Header />
-    <Navigation />
     <p>{{ $t('message.hello') }}</p>
     <form>
         <label>{{ $t('language') }} - </label>

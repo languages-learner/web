@@ -1,27 +1,35 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import router from '@/router'
-import i18n from '@/plugins/i18n'
+import { setupFirebaseApp } from '@/plugins/firebase'
+import { setupStore } from '@/store'
+import { setupI18n } from '@/plugins/i18n'
+import { router, setupRouter } from '@/router'
+import { setupRouterGuard } from '@/router/guard'
+import { setupServices } from '@/plugins/services'
+
 import App from '@/App.vue'
-import services from '@/plugins/services'
-import { initializeFirebaseApp } from '@/plugins/firebase'
-import firebase from 'firebase'
 
-initializeFirebaseApp()
+async function bootstrap() {
+    const app = createApp(App)
 
-const app = createApp(App)
-    .use(router)
-    .use(createPinia())
-    .use(i18n)
-    .use(services)
+    await setupFirebaseApp()
 
-let mount = false
+    // Configure store
+    setupStore(app)
 
-firebase.auth().onAuthStateChanged(() => {
-    if (mount) return
+    // Multilingual configuration
+    setupI18n(app)
+
+    // Configure routing
+    setupRouter(app)
+
+    // router-guard
+    setupRouterGuard(router)
+
+    setupServices(app)
 
     app.mount('#app')
-    mount = true
-})
+}
+
+bootstrap()
 
 

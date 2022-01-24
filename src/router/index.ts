@@ -2,16 +2,17 @@ import {
     createRouter,
     createWebHistory
 } from 'vue-router'
-import routes from '~pages'
+import { setupLayouts } from 'virtual:generated-layouts'
+import generatedRoutes from 'virtual:generated-pages'
+import { App } from 'vue'
 
-import NotFoundComponent from '@/components/NotFound.vue'
+const routes = setupLayouts(generatedRoutes)
 
-const router = createRouter({
+export const router = createRouter({
     history: createWebHistory(),
-    routes: [
-        ...routes,
-        { path: '/:pathMatch(.*)', component: NotFoundComponent }
-    ],
+    routes,
 })
 
-export default router
+export function setupRouter(app: App<Element>) {
+    app.use(router)
+}

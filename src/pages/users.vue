@@ -1,9 +1,6 @@
-<route>
-{
-    meta: {
-        requiresAuth: true
-    }
-}
+<route lang="yaml">
+meta:
+    requiresAuth: true
 </route>
 
 <template>
