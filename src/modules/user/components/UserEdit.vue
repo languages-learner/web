@@ -54,19 +54,5 @@ const onSubmit = async () => {
 </template>
 
 <style scoped lang="scss">
-.user-edit {
-    &_prop {
-        label {
-            margin-right: 10px;
-        }
-    }
-
-    &_prop + &_prop {
-        margin-top: 5px;
-    }
-
-    button {
-        margin-top: 5px;
-    }
-}
+@import "styles/UserEdit/component";
 </style>

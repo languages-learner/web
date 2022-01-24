@@ -1,0 +1,64 @@
+.form-identity {
+  align-items: center;
+  max-width: 450px;
+  height: 100vh;
+  margin-right: auto;
+  margin-left: auto;
+
+
+  &_container {
+    margin: 0 0 10px;
+    padding: 20px;
+    border: 1px solid #dbdbdb;
+  }
+
+  &_input {
+    width: 100%;
+    text-align: center;
+  }
+
+  &_input + &_input {
+    margin-top: 5px;
+  }
+
+  &_error {
+    margin-top: 10px;
+    color: red;
+  }
+
+  &_submit {
+    margin-top: 10px;
+  }
+
+  &_have-account {
+    margin-top: 30px;
+
+    a {
+      margin-left: 15px;
+    }
+  }
+}
+
+.divider {
+  display: flex;
+  flex-direction: row;
+  margin: 18px 40px;
+
+  .line {
+    position: relative;
+    top: 0.45em;
+    width: 30%;
+    height: 1px;
+    background-color: #dbdbdb;
+  }
+  .text {
+    width: 40%;
+    margin: 0 18px;
+    color: #8e8e8e;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 15px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}

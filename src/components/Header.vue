@@ -14,14 +14,5 @@ const { signOut } = useUser()
 </template>
 
 <style scoped lang="scss">
-.header {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-
-    &_button {
-        margin-left: 10px;
-    }
-}
+@import "styles/Header/component";
 </style>
