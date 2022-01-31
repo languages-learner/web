@@ -13,7 +13,7 @@ export interface State {
     }
 }
 
-type UserStore = StoreDefinition<'user',
+type UserStore = StoreDefinition<string,
     State, {
     isLoggedIn: boolean,
 }, {

@@ -1,5 +1,5 @@
 import { Router } from 'vue-router'
-import { useUserStoreWithOut } from '@/store/user'
+import { useUserStoreWithOut } from '@/store/modules/user'
 import { PageEnum } from '@/enums/pageEnum'
 
 export function createPermissionGuard(router: Router) {

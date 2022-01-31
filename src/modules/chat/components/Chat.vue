@@ -2,7 +2,7 @@
 import { Chat } from '@/services/chat/Chat'
 import ChatMessage from '@/models/ChatMessage'
 import { onBeforeUnmount, ref, unref } from 'vue'
-import { useUserStore } from '@/store/user'
+import { useUserStore } from '@/store/modules/user'
 
 const chat = new Chat()
 const messages = ref<Array<ChatMessage>>([])
