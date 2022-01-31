@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import { IChat } from '@/services/chat/IChat'
 import ChatMessage from '@/models/ChatMessage'
-import { useUserStore } from '@/store/user'
+import { useUserStore } from '@/store/modules/user'
 import { ref, Ref, watch } from 'vue'
 
 export type MessageCallbackType = (data: ChatMessage) => void

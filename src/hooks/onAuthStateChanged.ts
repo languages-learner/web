@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import { useRoute, useRouter } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
-import { useUserStore } from '@/store/user'
+import { useUserStore } from '@/store/modules/user'
 
 export const initializeOnAuthStateChangedHook = (): void => {
     const route = useRoute()

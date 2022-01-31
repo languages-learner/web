@@ -22,6 +22,7 @@
     ]
   },
   "dependencies": {
+    "dayjs": "^1.10.7",
     "firebase": "^8.2.1",
     "firebase-tools": "^9.23.3",
     "pinia": "^2.0.6",

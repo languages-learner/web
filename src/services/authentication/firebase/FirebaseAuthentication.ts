@@ -2,7 +2,7 @@ import firebase from 'firebase'
 import { IAuthentication } from '@/services/authentication/IAuthentication'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 import { onBeforeMount, ref, Ref } from 'vue'
-import { useUserStore } from '@/store/user'
+import { useUserStore } from '@/store/modules/user'
 
 export class FirebaseAuthentication implements IAuthentication {
     constructor() {
