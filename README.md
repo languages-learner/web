@@ -1,5 +1,7 @@
 # Vue 3 + Typescript + Vite
 
+[DEMO](https://education-1c650.web.app/)
+
 ## Firebase deploy
 
 1. `yarn add firebase-tools`
