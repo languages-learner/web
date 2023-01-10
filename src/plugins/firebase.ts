@@ -1,4 +1,5 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import config from '@@/firebase.config.json'
 
 export const setupFirebaseApp = (): Promise<void> => {

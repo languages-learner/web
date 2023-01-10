@@ -1,5 +1,5 @@
 import { defineStore, StoreDefinition } from 'pinia'
-import firebase from 'firebase'
+import type firebase from 'firebase'
 import { store } from '@/store'
 
 export interface State {
