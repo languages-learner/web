@@ -25,9 +25,7 @@ export const useUserStore: UserStore = defineStore('user', {
         profileData: undefined,
     } as State),
     getters: {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        isLoggedIn: (state) => state.profileData !== undefined
+        isLoggedIn: (state: State) => state.profileData !== undefined
     },
     actions: {
         setUser(user) {

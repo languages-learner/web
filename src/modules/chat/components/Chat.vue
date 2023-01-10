@@ -61,5 +61,5 @@ const loadMoreMessages = () => chat.loadMoreMessages()
 </template>
 
 <style scoped lang="scss">
-@import "styles/Chat/component";
+@import "styles/chat";
 </style>

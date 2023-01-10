@@ -129,5 +129,5 @@ const submit = props.type === PageEnum.BASE_SIGNIN ? signInWithEmailAndPassword 
 </template>
 
 <style scoped lang="scss">
-@import "styles/Authenticate/component";
+@import "styles/authenticate";
 </style>
