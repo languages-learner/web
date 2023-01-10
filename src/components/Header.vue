@@ -14,5 +14,5 @@ const { signOut } = useUser()
 </template>
 
 <style scoped lang="scss">
-@import "styles/Header/component";
+@import "styles/header";
 </style>

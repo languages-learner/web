@@ -22,5 +22,5 @@ const userStore = useUserStore()
 </template>
 
 <style scoped lang="scss">
-@import "styles/Navigation/component";
+@import "styles/navigation";
 </style>

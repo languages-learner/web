@@ -54,5 +54,5 @@ const onSubmit = async () => {
 </template>
 
 <style scoped lang="scss">
-@import "styles/UserEdit/component";
+@import "styles/user-edit";
 </style>
