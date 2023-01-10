@@ -1,5 +1,6 @@
 import { onUnmounted, ref, Ref } from 'vue'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 import { ICollection } from '@/services/dbstore/ICollection'
 
 export abstract class BaseFirestoreCollection<T> implements ICollection<T>{
