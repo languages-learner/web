@@ -1,13 +1,31 @@
 import firebase from 'firebase/app'
 import 'firebase/remote-config'
 import { IConfig } from '@/services/configuration/IConfig'
+import { IConfigService } from '@/services/configuration/IConfigService'
+import RemoteConfig = firebase.remoteConfig.RemoteConfig;
 
-export class Config implements IConfig {
+export class Config implements IConfigService {
+    private _config: RemoteConfig
+
     constructor() {
-        firebase.remoteConfig().fetchAndActivate()
+        this._config = firebase.remoteConfig()
     }
 
-    get languagesAvailableForLearning() {
-        return JSON.parse(firebase.remoteConfig().getValue('languagesAvailableForLearning').asString())
+    private async fetchConfig() {
+        await this._config.fetchAndActivate()
+    }
+
+    public async setup(): Promise<void> {
+        await this.fetchConfig()
+    }
+
+    public getConfig() {
+        return Object.entries(firebase.remoteConfig().getAll()).reduce((answer, [key, value]) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            answer[key] = JSON.parse(value.asString())
+
+            return answer
+        }, {} as IConfig)
     }
 }

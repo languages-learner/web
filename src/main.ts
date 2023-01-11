@@ -23,14 +23,14 @@ async function bootstrap() {
     // Configure routing
     setupRouter(app)
 
-    // router-guard
-    setupRouterGuard(router)
-
-    setupServices(app)
+    await setupServices(app)
 
     setupErrorHandle(app)
 
     app.mount('#app')
+
+    // router-guard
+    setupRouterGuard(router)
 }
 
 bootstrap()

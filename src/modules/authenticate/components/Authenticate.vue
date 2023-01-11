@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, PropType, reactive } from 'vue'
-import { useFirebaseAuthentication, useUser } from '@/plugins/services'
+import { computed, ref, PropType, reactive, watch, unref, } from 'vue'
+import { useAuthenticationService } from '@/plugins/services'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 import { EPageName } from '@/enums/EPageName'
 
@@ -19,21 +19,25 @@ const form = reactive({
 const {
     signInWithProvider,
     signInWithEmailAndPassword: baseSignInWithEmailAndPassword,
-    createUserWithEmailAndPassword: baseCreateUserWithEmailAndPassword
-} = useUser()
+    createUserWithEmailAndPassword: baseCreateUserWithEmailAndPassword,
+    useCheckRedirectResult
+} = useAuthenticationService()
 
-const { useCheckRedirectResult } = useFirebaseAuthentication()
-
+const currentError = ref<string>()
 const { error } = useCheckRedirectResult()
+
+watch(error, () => {
+    currentError.value = unref(error)
+})
 
 const signInWithEmailAndPassword = () => baseSignInWithEmailAndPassword(form.email, form.password)
     .catch((e) => {
-        error.value = e
+        currentError.value = e
     })
 
 const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(form.email, form.password)
     .catch(e => {
-        error.value = e
+        currentError.value = e
     })
 
 const signInWithGoogle = () => signInWithProvider(EAuthenticationProvider.GOOGLE)
@@ -86,10 +90,10 @@ const submit = props.type === EPageName.SIGNIN ? signInWithEmailAndPassword : cr
             </div>
 
             <div
-                v-if="error"
+                v-if="currentError"
                 class="form-identity_error"
             >
-                <span>{{ error }}</span>
+                <span>{{ currentError }}</span>
             </div>
 
             <button

@@ -1,5 +1,5 @@
 type User = {
-    uid: string
+    id: string
     activeLearningLanguage: number
 }
 

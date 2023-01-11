@@ -13,7 +13,7 @@ export const initializeOnAuthStateChangedHook = (): void => {
         userStore.setUser(user)
 
         if (user) {
-            if (route.name === EPageName.SIGNIN || route.name === EPageName.SIGNUP) {
+            if (!route.name || route.name === EPageName.SIGNIN || route.name === EPageName.SIGNUP) {
                 await router.replace({
                     name: EPageName.BASE_HOME
                 })

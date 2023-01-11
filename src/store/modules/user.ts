@@ -1,8 +1,9 @@
-import { defineStore } from 'pinia'
+import { defineStore, skipHydrate } from 'pinia'
 import type firebase from 'firebase'
 import { store } from '@/store'
-import { useDbStore, useConfig } from '@/plugins/services'
+import { useDbStore } from '@/plugins/services'
 import { computed, ref, unref } from 'vue'
+import { useConfigStore } from '@/store/modules/config'
 
 type StateForAuthorizedUser = {
     profileData: {
@@ -27,22 +28,29 @@ export type State = StateForAuthorizedUser | StateForNotAuthorizedUser
 
 export const useUserStore = defineStore('user', () => {
     const { userCollection } = useDbStore()
+    const { languagesAvailableForLearning } = useConfigStore()
 
+    const isUserDataLoaded = ref(false)
     const profileData = ref<State['profileData']>(undefined)
     const customData = ref<State['customData']>(undefined)
 
     const isLoggedIn = computed(() => unref(profileData) !== undefined)
+    const activeLearningLanguageName = computed(() => languagesAvailableForLearning.find(lng => lng.id === unref(customData)?.activeLearningLanguage)?.name)
 
     const createBaseCustomData = (): StateForAuthorizedUser['customData'] => {
-        const config = useConfig()
+        const config = useConfigStore()
 
         return {
             activeLearningLanguage: config.languagesAvailableForLearning[0].id
         }
     }
 
-    const uploadCustomData = async () => {
+    const uploadCustomData = async (needToCreate = false) => {
         if (!profileData.value || !customData.value) return
+
+        if (needToCreate) {
+            await userCollection.create(profileData.value.uid, customData.value)
+        }
 
         await userCollection.update(profileData.value.uid, customData.value)
     }
@@ -72,12 +80,14 @@ export const useUserStore = defineStore('user', () => {
                 activeLearningLanguage: baseCustomData.activeLearningLanguage
             }
 
-            await uploadCustomData()
+            await uploadCustomData(true)
         } else {
             customData.value = {
                 activeLearningLanguage: userCustomData.activeLearningLanguage ?? baseCustomData.activeLearningLanguage
             }
         }
+
+        isUserDataLoaded.value = true
     }
 
     const updateActiveLearningLanguage = async (id: number) => {
@@ -88,9 +98,11 @@ export const useUserStore = defineStore('user', () => {
     }
 
     return {
+        isUserDataLoaded: skipHydrate(isUserDataLoaded),
         profileData,
         customData,
-        isLoggedIn,
+        isLoggedIn: skipHydrate(isLoggedIn),
+        activeLearningLanguageName,
         setUser,
         updateActiveLearningLanguage
     }
