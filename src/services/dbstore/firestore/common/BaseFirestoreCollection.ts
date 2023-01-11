@@ -10,10 +10,8 @@ export abstract class BaseFirestoreCollection<T> implements ICollection<T>{
         this._collection = firebase.firestore().collection(collectionName) as firebase.firestore.CollectionReference<Omit<T, 'id'>>
     }
 
-    public create = async (item: Omit<T, 'id'>): Promise<string> => {
-        const { id } = await this._collection.add(item)
-
-        return id
+    public create = async (id: string, item: Omit<T, 'id'>): Promise<void> => {
+        await this._collection.doc(id).set(item)
     }
 
     public get = async (id: string): Promise<T | null> => {
@@ -22,7 +20,7 @@ export abstract class BaseFirestoreCollection<T> implements ICollection<T>{
         return item.exists ? item.data() as T : null
     }
 
-    public update = async (id: string, item: Omit<T, 'uid'>): Promise<void> => {
+    public update = async (id: string, item: Omit<T, 'id'>): Promise<void> => {
         return await this._collection.doc(id).update(item)
     }
 
