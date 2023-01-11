@@ -3,7 +3,6 @@ import 'firebase/auth'
 import { IAuthentication } from '@/services/authentication/IAuthentication'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 import { onBeforeMount, ref, Ref } from 'vue'
-import { useUserStore } from '@/store/modules/user'
 
 export class FirebaseAuthentication implements IAuthentication {
     constructor() {
@@ -53,14 +52,9 @@ export class FirebaseAuthentication implements IAuthentication {
         const success: Ref<boolean> = ref(false)
         const error: Ref<string | undefined> = ref(undefined)
 
-        const userStore = useUserStore()
-
         onBeforeMount(() => {
-            firebase.auth().getRedirectResult().then(result => {
+            firebase.auth().getRedirectResult().then(() => {
                 success.value = true
-                if (result.user) {
-                    userStore.setUser(result.user)
-                }
             }).catch(e => {
                 error.value = this.getErrorMessage(e)
             }).finally(() => {

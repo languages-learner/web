@@ -1,35 +1,25 @@
 import { FirebaseAuthentication } from '@/services/authentication/firebase/FirebaseAuthentication'
-import { User } from '@/services/user/User'
 import { Firestore } from '@/services/dbstore/firestore/Firestore'
 import {
-    FirebaseAuthenticationServiceKey,
-    UserServiceKey,
+    AuthenticationService,
     DbStoreServiceKey,
     ConfigServiceKey,
 } from '@/symbols'
 import { App, inject } from 'vue'
 import { Config } from '@/services/configuration/firebase/Config'
 
-export function setupServices(app: App<Element>) {
-    const firebaseAuthentication = new FirebaseAuthentication()
-    app.provide(FirebaseAuthenticationServiceKey, firebaseAuthentication)
-    app.provide(UserServiceKey, new User(firebaseAuthentication))
+export async function setupServices(app: App<Element>) {
+    app.provide(AuthenticationService, new FirebaseAuthentication())
     app.provide(DbStoreServiceKey, new Firestore())
-    app.provide(ConfigServiceKey, new Config())
+    const configService = new Config()
+    await configService.setup()
+    app.provide(ConfigServiceKey, configService)
 }
 
-export const useFirebaseAuthentication = () => {
-    const service = inject(FirebaseAuthenticationServiceKey)
+export const useAuthenticationService = () => {
+    const service = inject(AuthenticationService)
     if (!service)
         throw new Error('Authenticate service was not initialized.')
-
-    return service
-}
-
-export const useUser = () => {
-    const service = inject(UserServiceKey)
-    if (!service)
-        throw new Error('User service was not initialized.')
 
     return service
 }
@@ -42,7 +32,7 @@ export const useDbStore = () => {
     return service
 }
 
-export const useConfig = () => {
+export const useConfigService = () => {
     const service = inject(ConfigServiceKey)
     if (!service)
         throw new Error('Config service was not initialized.')
