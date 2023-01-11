@@ -1,8 +1,8 @@
 import { useErrorLogStoreWithOut } from '@/store/modules/errorLog'
-import { ErrorTypeEnum } from '@/enums/errorTypeEnum'
+import { EErrorType } from '@/enums/EErrorType'
 import projectSetting from '@/settings/projectSetting'
 import { App } from 'vue'
-import { ComponentPublicInstance } from '@vue/runtime-core'
+import { ComponentPublicInstance } from 'vue'
 
 function formatComponentName(instance: ComponentPublicInstance | null) {
     const anonymous = {
@@ -34,7 +34,7 @@ function vueErrorHandler(err: unknown, instance: ComponentPublicInstance | null,
     const errorLogStore = useErrorLogStoreWithOut()
     const { name, path } = formatComponentName(instance)
     errorLogStore.addErrorLogInfo({
-        type: ErrorTypeEnum.VUE,
+        type: EErrorType.VUE,
         name,
         file: path,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -51,7 +51,7 @@ function registerPromiseErrorHandler() {
         function (event) {
             const errorLogStore = useErrorLogStoreWithOut()
             errorLogStore.addErrorLogInfo({
-                type: ErrorTypeEnum.PROMISE,
+                type: EErrorType.PROMISE,
                 name: 'Promise Error!',
                 detail: 'promise error!',
                 url: window.location.href,

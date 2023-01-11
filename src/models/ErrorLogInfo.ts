@@ -1,7 +1,7 @@
-import { ErrorTypeEnum } from '@/enums/errorTypeEnum'
+import { EErrorType } from '@/enums/EErrorType'
 
 type ErrorLogInfo = {
-    type: ErrorTypeEnum;
+    type: EErrorType;
     name?: string;
     message: string;
     detail: string;

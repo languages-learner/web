@@ -2,11 +2,11 @@
 import { computed, PropType, reactive } from 'vue'
 import { useFirebaseAuthentication, useUser } from '@/plugins/services'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
-import { PageEnum } from '@/enums/pageEnum'
+import { EPageName } from '@/enums/EPageName'
 
 const props = defineProps({
     type: {
-        type: String as PropType<PageEnum.BASE_SIGNIN | PageEnum.BASE_SIGNUP>,
+        type: String as PropType<EPageName.SIGNIN | EPageName.SIGNUP>,
         required: true
     }
 })
@@ -24,7 +24,7 @@ const {
 
 const { useCheckRedirectResult } = useFirebaseAuthentication()
 
-let { error } = useCheckRedirectResult()
+const { error } = useCheckRedirectResult()
 
 const signInWithEmailAndPassword = () => baseSignInWithEmailAndPassword(form.email, form.password)
     .catch((e) => {
@@ -39,16 +39,16 @@ const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(
 const signInWithGoogle = () => signInWithProvider(EAuthenticationProvider.GOOGLE)
 
 const title = computed(() => ({
-    [PageEnum.BASE_SIGNIN]: 'Login',
-    [PageEnum.BASE_SIGNUP]: 'Registration'
+    [EPageName.SIGNIN]: 'Login',
+    [EPageName.SIGNUP]: 'Registration'
 }[props.type]))
 
 const submitName = computed(() => ({
-    [PageEnum.BASE_SIGNIN]: 'Login',
-    [PageEnum.BASE_SIGNUP]: 'Registration'
+    [EPageName.SIGNIN]: 'Login',
+    [EPageName.SIGNUP]: 'Registration'
 }[props.type]))
 
-const submit = props.type === PageEnum.BASE_SIGNIN ? signInWithEmailAndPassword : createUserWithEmailAndPassword
+const submit = props.type === EPageName.SIGNIN ? signInWithEmailAndPassword : createUserWithEmailAndPassword
 </script>
 
 <template>
@@ -100,27 +100,27 @@ const submit = props.type === PageEnum.BASE_SIGNIN ? signInWithEmailAndPassword 
             </button>
         </div>
 
-        <template v-if="type === PageEnum.BASE_SIGNIN">
+        <template v-if="type === EPageName.SIGNIN">
             <div
                 class="form-identity_have-account"
             >
                 <span>Do not have an account?</span>
                 <router-link
                     tag="span"
-                    :to="{ name: PageEnum.BASE_SIGNUP }"
+                    :to="{ name: EPageName.SIGNUP }"
                 >Register here
                 </router-link>
             </div>
         </template>
 
-        <template v-if="type === PageEnum.BASE_SIGNUP">
+        <template v-if="type === EPageName.SIGNUP">
             <div
                 class="form-identity_have-account"
             >
                 Do you have an account?
                 <router-link
                     tag="span"
-                    :to="{ name: PageEnum.BASE_SIGNIN }"
+                    :to="{ name: EPageName.SIGNIN }"
                 >Login here
                 </router-link>
             </div>

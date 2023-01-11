@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Authenticate from '@/modules/authenticate/components/Authenticate.vue'
-import { PageEnum } from '@/enums/pageEnum'
+import { EPageName } from '@/enums/EPageName'
 </script>
 
 <template>
-    <Authenticate :type="PageEnum.BASE_SIGNIN" />
+    <Authenticate :type="EPageName.SIGNIN" />
 </template>
 

@@ -1,15 +1,15 @@
 import { Router } from 'vue-router'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { PageEnum } from '@/enums/pageEnum'
+import { EPageName } from '@/enums/EPageName'
 
 export function createPermissionGuard(router: Router) {
     const userStore = useUserStoreWithOut()
 
     router.beforeEach((to, from, next) => {
         if (userStore.isLoggedIn) {
-            if (to.name === PageEnum.BASE_SIGNIN || to.name === PageEnum.BASE_SIGNUP) {
+            if (to.name === EPageName.SIGNIN || to.name === EPageName.SIGNUP) {
                 return router.replace({
-                    name: PageEnum.BASE_HOME
+                    name: EPageName.BASE_HOME
                 })
             }
 
@@ -18,9 +18,9 @@ export function createPermissionGuard(router: Router) {
 
         if (!to.meta.requiresAuth) return next()
 
-        if (to.name !== PageEnum.BASE_SIGNIN && to.name !== PageEnum.BASE_SIGNUP) {
+        if (to.name !== EPageName.SIGNIN && to.name !== EPageName.SIGNUP) {
             return router.replace({
-                name: PageEnum.BASE_SIGNIN
+                name: EPageName.SIGNIN
             })
         }
     })
