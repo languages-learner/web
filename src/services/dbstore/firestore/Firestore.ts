@@ -2,9 +2,9 @@ import { UserFirestoreCollection } from '@/services/dbstore/firestore/UserFirest
 import { IDbStore } from '@/services/dbstore/IDbStore'
 
 export class Firestore implements IDbStore {
-    public readonly UserCollection: UserFirestoreCollection
+    public readonly userCollection: UserFirestoreCollection
 
     constructor() {
-        this.UserCollection = new UserFirestoreCollection()
+        this.userCollection = new UserFirestoreCollection()
     }
 }

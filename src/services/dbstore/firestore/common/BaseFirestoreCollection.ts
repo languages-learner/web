@@ -22,7 +22,7 @@ export abstract class BaseFirestoreCollection<T> implements ICollection<T>{
         return item.exists ? item.data() as T : null
     }
 
-    public update = async (id: string, item: Omit<T, 'id'>): Promise<void> => {
+    public update = async (id: string, item: Omit<T, 'uid'>): Promise<void> => {
         return await this._collection.doc(id).update(item)
     }
 

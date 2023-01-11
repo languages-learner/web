@@ -1,7 +1,6 @@
 type User = {
-    id: string
-    name: string
-    email: string
+    uid: string
+    activeLearningLanguage: number
 }
 
 export default User
