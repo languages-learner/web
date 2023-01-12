@@ -15,7 +15,8 @@ type StateForAuthorizedUser = {
         isAnonymous: boolean,
     }
     customData: {
-        activeLearningLanguage: number
+        activeLearningLanguage: number,
+        interfaceLanguage: number
     }
 }
 
@@ -41,7 +42,8 @@ export const useUserStore = defineStore('user', () => {
         const config = useConfigStore()
 
         return {
-            activeLearningLanguage: config.languagesAvailableForLearning[0].id
+            activeLearningLanguage: config.languagesAvailableForLearning[0].id,
+            interfaceLanguage: config.interfaceLanguages[0].id
         }
     }
 
@@ -77,13 +79,15 @@ export const useUserStore = defineStore('user', () => {
 
         if (!userCustomData) {
             customData.value = {
-                activeLearningLanguage: baseCustomData.activeLearningLanguage
+                activeLearningLanguage: baseCustomData.activeLearningLanguage,
+                interfaceLanguage: baseCustomData.interfaceLanguage
             }
 
             await uploadCustomData(true)
         } else {
             customData.value = {
-                activeLearningLanguage: userCustomData.activeLearningLanguage ?? baseCustomData.activeLearningLanguage
+                activeLearningLanguage: userCustomData.activeLearningLanguage ?? baseCustomData.activeLearningLanguage,
+                interfaceLanguage: userCustomData.interfaceLanguage ?? baseCustomData.interfaceLanguage,
             }
         }
 
@@ -97,6 +101,13 @@ export const useUserStore = defineStore('user', () => {
         await uploadCustomData()
     }
 
+    const updateInterfaceLanguage = async (id: number) => {
+        if (!customData.value) return
+
+        customData.value.interfaceLanguage = id
+        await uploadCustomData()
+    }
+
     return {
         isUserDataLoaded: skipHydrate(isUserDataLoaded),
         profileData,
@@ -104,7 +115,8 @@ export const useUserStore = defineStore('user', () => {
         isLoggedIn: skipHydrate(isLoggedIn),
         activeLearningLanguageName,
         setUser,
-        updateActiveLearningLanguage
+        updateActiveLearningLanguage,
+        updateInterfaceLanguage
     }
 })
 

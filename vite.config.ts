@@ -26,7 +26,7 @@ export default defineConfig({
             exclude: ['**/components/*.vue'],
         }),
         Layouts({
-            defaultLayout: 'default'
+            defaultLayout: 'defaultLayout',
         }),
     ]
 })

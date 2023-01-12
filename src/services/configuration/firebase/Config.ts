@@ -9,6 +9,14 @@ export class Config implements IConfigService {
 
     constructor() {
         this._config = firebase.remoteConfig()
+
+        /*
+        * Disable cache for development mode
+        * */
+        if (import.meta.env.DEV) {
+            firebase.remoteConfig().settings.fetchTimeoutMillis = 0
+            firebase.remoteConfig().settings.minimumFetchIntervalMillis = 0
+        }
     }
 
     private async fetchConfig() {
