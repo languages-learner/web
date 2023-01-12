@@ -1,12 +1,22 @@
 import {
     createRouter,
-    createWebHistory
+    createWebHistory, RouteRecordRaw
 } from 'vue-router'
 import { setupLayouts } from 'virtual:generated-layouts'
 import generatedRoutes from 'virtual:generated-pages'
 import { App } from 'vue'
 
-const routes = setupLayouts(generatedRoutes)
+let routes = setupLayouts(generatedRoutes)
+
+const addLangParameterToRoutes = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
+    return routes.map(route => {
+        route.path = `/:lang${route.path}`
+
+        return route
+    })
+}
+
+routes = addLangParameterToRoutes(routes)
 
 export const router = createRouter({
     history: createWebHistory(),

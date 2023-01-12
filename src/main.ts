@@ -12,20 +12,20 @@ import App from '@/App.vue'
 async function bootstrap() {
     const app = createApp(App)
 
+    setupErrorHandle(app)
+
     await setupFirebaseApp()
+
+    await setupServices()
+
+    // Configure routing
+    setupRouter(app)
 
     // Configure store
     setupStore(app)
 
     // Multilingual configuration
-    setupI18n(app)
-
-    // Configure routing
-    setupRouter(app)
-
-    await setupServices(app)
-
-    setupErrorHandle(app)
+    await setupI18n(app)
 
     app.mount('#app')
 

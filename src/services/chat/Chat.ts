@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/database'
-import { IChat } from '@/services/chat/IChat'
+import { IChat } from '@/services/chat/common/IChat'
 import ChatMessage from '@/models/ChatMessage'
 import { useUserStore } from '@/store/modules/user'
 import { ref, Ref, watch } from 'vue'

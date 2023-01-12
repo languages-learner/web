@@ -1,22 +1,32 @@
 import { createI18n } from 'vue-i18n'
-
-import en from '@/locales/en.json'
-import ru from '@/locales/ru.json'
-import fr from '@/locales/fr.json'
 import { App } from 'vue'
+import { useDbStore } from '@/plugins/services'
+import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
 
-type MessageSchema = typeof en
+const getInterfaceLanguageFromWindowLocation = () => {
+    const { location } = window
 
-export function setupI18n(app: App) {
-    const i18n = createI18n<[MessageSchema], 'en' | 'ru' | 'fr'>({
-        locale: 'en',
+    try {
+        return location.pathname.split('/')[1]
+    } catch (e) {
+
+    }
+
+    return BASE_INTERFACE_LANGUAGE
+}
+
+export async function setupI18n(app: App) {
+    const interfaceLanguage = getInterfaceLanguageFromWindowLocation()
+    const { translationCollection } = useDbStore()
+    const translations = await translationCollection.get(interfaceLanguage)
+
+    const i18n = createI18n({
+        locale: interfaceLanguage,
         fallbackLocale: {
-            default: ['en', 'fr', 'ru'],
+            default: [interfaceLanguage],
         },
         messages: {
-            'en': en,
-            'ru': ru,
-            'fr': fr,
+            [interfaceLanguage]: translations,
         },
         legacy: false,
         globalInjection: true

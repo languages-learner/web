@@ -4,7 +4,9 @@ import { RouterLink, useRoute } from 'vue-router'
 import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
 import { EPageName } from '@/enums/EPageName'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const currentRoute = computed(() => String(route.name))
 
@@ -18,7 +20,7 @@ const menuOptions: MenuOption[] = [
                         name: EPageName.PROFILE,
                     }
                 },
-                { default: () => 'Profile' }
+                { default: () => t('profile') }
             ),
         key: EPageName.PROFILE,
     },
@@ -31,7 +33,7 @@ const menuOptions: MenuOption[] = [
                         name: EPageName.SETTINGS,
                     }
                 },
-                { default: () => 'Settings' }
+                { default: () => t('settings') }
             ),
         key: EPageName.SETTINGS,
     },
