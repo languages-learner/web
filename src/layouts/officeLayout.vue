@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import Header from '@/components/Header.vue'
+import AppHeader from '@/components/AppHeader.vue'
 </script>
 
 <template>
-    <Header />
-    <div class="content">
+    <AppHeader />
+    <div class="office-layout">
         <router-view></router-view>
     </div>
 </template>
 
 <style scoped lang="scss">
-.content {
-    margin-top: 20px;
-}
+@import "styles/office-layout";
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NAvatar, NDropdown, NButton, NSkeleton } from 'naive-ui'
+import { NAvatar, NDropdown, NButton, NSkeleton, NGradientText } from 'naive-ui'
 import { useUserStore } from '@/store/modules/user'
 import { useAuthenticationService } from '@/plugins/services'
 import { computed, unref } from 'vue'
@@ -13,7 +13,6 @@ const { isUserDataLoaded, isLoggedIn, profileData, customData, activeLearningLan
 const { updateActiveLearningLanguage } = useUserStore()
 const { signOut } = useAuthenticationService()
 const { languagesAvailableForLearning } = useConfigStore()
-console.log(languagesAvailableForLearning, 'languagesAvailableForLearning')
 const navigationItems = [
     {
         label: 'Trainings',
@@ -26,8 +25,6 @@ const navigationItems = [
         isVisible: isLoggedIn,
     },
 ]
-
-console.log(languagesAvailableForLearning.filter(language => language.id !== unref(customData)?.activeLearningLanguage))
 
 const learningLanguagesOptions = computed(() => ([
     {
@@ -74,9 +71,11 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
 </script>
 
 <template>
-    <div class="header">
+    <div class="app-header">
         <div class="menu">
-            <div>Logo</div>
+            <n-gradient-text :size="24" type="success">
+                LanguageLearner
+            </n-gradient-text>
             <div class="menu_navigations navigations">
                 <template v-for="navigationItem in navigationItems">
                     <div v-if="unref(navigationItem.isVisible)" :key="`navigation-item-${navigationItem.name}`">
@@ -91,7 +90,7 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
             <div v-if="isLoggedIn" class="menu_controllers controllers">
                 <template v-if="isUserDataLoaded">
                     <n-dropdown trigger="hover" :options="learningLanguagesOptions" @select="handleSelectLearningLanguagesDropdownMenuItem">
-                        <n-button icon-placement="right" type="info" ghost>
+                        <n-button icon-placement="right" type="primary" ghost>
                             Learn {{ activeLearningLanguageName }}
                         </n-button>
                     </n-dropdown>
@@ -119,5 +118,5 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
 </template>
 
 <style scoped lang="scss">
-@import "styles/header";
+@import "styles/app-header";
 </style>

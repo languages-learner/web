@@ -1,0 +1,44 @@
+.office-profile {
+  width: 600px;
+
+  &_card {
+    border: 1px solid #f0ede5;
+    border-radius: 6px;
+  }
+
+  &_user {
+    height: 400px;
+    background-color: #fff;
+    background-image: url(@/assets/profile-background.svg);
+    background-repeat: no-repeat;
+    background-position-y: 102%;
+    background-size: 100%;
+  }
+}
+
+.office-profile-information {
+  &_user-level {
+    position: absolute;
+    top: 21px;
+    width: 42px;
+    height: 42px;
+    background-image: url(@/assets/user-level.svg);
+    background-repeat: no-repeat;
+    background-position: 50%;
+  }
+}
+
+.office-profile-information-user-level {
+  &_value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+    font-style: normal;
+    font-stretch: normal;
+    text-align: center;
+    transform: translate(-50%,-50%);
+  }
+}
