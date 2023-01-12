@@ -8,16 +8,19 @@ meta:
 import OfficeNavigation from '@/modules/office/components/OfficeNavigation.vue'
 import { NH2 } from 'naive-ui'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, ComputedRef, unref } from 'vue'
 import { EPageName } from '@/enums/EPageName'
+import { useI18n } from 'vue-i18n'
 
-const officeRouteTitle: Record<string, string> = {
-    [EPageName.PROFILE]: 'Profile',
-    [EPageName.SETTINGS]: 'Settings'
-}
+const { t } = useI18n()
+
+const officeRouteTitle: ComputedRef<Record<string, string>> = computed(() => ({
+    [EPageName.PROFILE]: t('profile'),
+    [EPageName.SETTINGS]: t('settings')
+}))
 
 const route = useRoute()
-const title = computed(() => officeRouteTitle[String(route.name)])
+const title = computed(() => unref(officeRouteTitle)[String(route.name)])
 </script>
 
 <template>

@@ -3,8 +3,5 @@ export interface IConfig {
         id: number,
         name: string
     }[]
-    interfaceLanguages: {
-        id: number,
-        name: string
-    }[]
+    interfaceLanguages: string[]
 }

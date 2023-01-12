@@ -1,9 +1,16 @@
 import { defineStore, skipHydrate } from 'pinia'
+import {
+    computed,
+    ref,
+    unref
+} from 'vue'
 import type firebase from 'firebase'
 import { store } from '@/store'
 import { useDbStore } from '@/plugins/services'
-import { computed, ref, unref } from 'vue'
 import { useConfigStore } from '@/store/modules/config'
+import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
+import { useI18n } from 'vue-i18n'
+import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
 
 type StateForAuthorizedUser = {
     profileData: {
@@ -16,7 +23,7 @@ type StateForAuthorizedUser = {
     }
     customData: {
         activeLearningLanguage: number,
-        interfaceLanguage: number
+        interfaceLanguage: string
     }
 }
 
@@ -30,20 +37,24 @@ export type State = StateForAuthorizedUser | StateForNotAuthorizedUser
 export const useUserStore = defineStore('user', () => {
     const { userCollection } = useDbStore()
     const { languagesAvailableForLearning } = useConfigStore()
+    const { setInterfaceLanguage } = useInterfaceLanguageStore()
+    const { t } = useI18n()
 
     const isUserDataLoaded = ref(false)
     const profileData = ref<State['profileData']>(undefined)
     const customData = ref<State['customData']>(undefined)
 
     const isLoggedIn = computed(() => unref(profileData) !== undefined)
-    const activeLearningLanguageName = computed(() => languagesAvailableForLearning.find(lng => lng.id === unref(customData)?.activeLearningLanguage)?.name)
+    const activeLearningLanguageName = computed(() =>
+        t(`language.${languagesAvailableForLearning.find(lng => lng.id === unref(customData)?.activeLearningLanguage)?.name ?? BASE_INTERFACE_LANGUAGE}`)
+    )
 
     const createBaseCustomData = (): StateForAuthorizedUser['customData'] => {
         const config = useConfigStore()
 
         return {
             activeLearningLanguage: config.languagesAvailableForLearning[0].id,
-            interfaceLanguage: config.interfaceLanguages[0].id
+            interfaceLanguage: config.interfaceLanguages[0]
         }
     }
 
@@ -91,6 +102,7 @@ export const useUserStore = defineStore('user', () => {
             }
         }
 
+        await setInterfaceLanguage(customData.value.interfaceLanguage)
         isUserDataLoaded.value = true
     }
 
@@ -101,10 +113,10 @@ export const useUserStore = defineStore('user', () => {
         await uploadCustomData()
     }
 
-    const updateInterfaceLanguage = async (id: number) => {
+    const updateInterfaceLanguage = async (language: string) => {
         if (!customData.value) return
 
-        customData.value.interfaceLanguage = id
+        customData.value.interfaceLanguage = language
         await uploadCustomData()
     }
 

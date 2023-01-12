@@ -1,10 +1,20 @@
 import firebase from 'firebase/app'
 import 'firebase/remote-config'
-import { IConfig } from '@/services/configuration/IConfig'
-import { IConfigService } from '@/services/configuration/IConfigService'
+import { IConfig } from '@/services/configuration/common/IConfig'
+import { IConfigService } from '@/services/configuration/common/IConfigService'
 import RemoteConfig = firebase.remoteConfig.RemoteConfig;
 
 export class Config implements IConfigService {
+    private static instance: Config
+
+    public static getInstance(): IConfigService {
+        if (!Config.instance) {
+            Config.instance = new Config()
+        }
+
+        return Config.instance
+    }
+
     private _config: RemoteConfig
 
     constructor() {

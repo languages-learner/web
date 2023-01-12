@@ -1,10 +1,20 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { IAuthentication } from '@/services/authentication/IAuthentication'
+import { IAuthentication } from '@/services/authentication/common/IAuthentication'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 import { onBeforeMount, ref, Ref } from 'vue'
 
 export class FirebaseAuthentication implements IAuthentication {
+    private static instance: FirebaseAuthentication
+
+    public static getInstance(): IAuthentication {
+        if (!FirebaseAuthentication.instance) {
+            FirebaseAuthentication.instance = new FirebaseAuthentication()
+        }
+
+        return FirebaseAuthentication.instance
+    }
+
     constructor() {
         firebase.auth().useDeviceLanguage()
     }

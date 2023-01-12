@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { NAvatar, NDropdown, NButton, NSkeleton, NGradientText } from 'naive-ui'
+import {
+    NAvatar,
+    NButton,
+    NDropdown,
+    NGradientText,
+    NSkeleton
+} from 'naive-ui'
 import { useUserStore } from '@/store/modules/user'
 import { useAuthenticationService } from '@/plugins/services'
 import { computed, unref } from 'vue'
@@ -7,42 +13,45 @@ import { useConfigStore } from '@/store/modules/config'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { EPageName } from '@/enums/EPageName'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const { isUserDataLoaded, isLoggedIn, profileData, customData, activeLearningLanguageName } = storeToRefs(useUserStore())
 const { updateActiveLearningLanguage } = useUserStore()
 const { signOut } = useAuthenticationService()
 const { languagesAvailableForLearning } = useConfigStore()
-const navigationItems = [
+const { t } = useI18n()
+
+const navigationItems = computed(() => ([
     {
-        label: 'Trainings',
+        label: t('trainings'),
         name: 'trainings',
         isVisible: isLoggedIn,
     },
     {
-        label: 'Dictionary',
+        label: t('dictionary'),
         name: 'dictionary',
         isVisible: isLoggedIn,
     },
-]
+]))
 
 const learningLanguagesOptions = computed(() => ([
     {
         type: 'group',
-        label: 'Available languages',
+        label: t('available_languages'),
         key: 'main',
         children: languagesAvailableForLearning.filter(language => language.id !== unref(customData)?.activeLearningLanguage)
             .map(lng => ({
                 key: lng.id,
-                label: lng.name
+                label: t(`language.${lng.name}`)
             }))
     }
 ]))
 const handleSelectLearningLanguagesDropdownMenuItem = updateActiveLearningLanguage
 
-const avatarDropdownMenuOptions = [
+const avatarDropdownMenuOptions = computed(() => ([
     {
-        label: 'Profile',
+        label: t('profile'),
         key: EPageName.PROFILE
     },
     {
@@ -50,21 +59,21 @@ const avatarDropdownMenuOptions = [
         type: 'divider'
     },
     {
-        label: 'Settings',
+        label: t('settings'),
         key: EPageName.SETTINGS,
     },
     {
-        label: 'Sign out',
-        key: 'Sign out'
+        label: t('sign_out'),
+        key: 'sign_out'
     },
-]
+]))
 const handleSelectAvatarDropdownMenuItem = (key: string) => {
     switch (key) {
     case EPageName.PROFILE:
     case EPageName.SETTINGS:
         router.push({ name: key })
         break
-    case 'Sign out': signOut()
+    case 'sign_out': signOut()
         break
     }
 }
@@ -91,7 +100,7 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
                 <template v-if="isUserDataLoaded">
                     <n-dropdown trigger="hover" :options="learningLanguagesOptions" @select="handleSelectLearningLanguagesDropdownMenuItem">
                         <n-button icon-placement="right" type="primary" ghost>
-                            Learn {{ activeLearningLanguageName }}
+                            {{ $t('learn') }} {{ activeLearningLanguageName }}
                         </n-button>
                     </n-dropdown>
                     <n-dropdown trigger="hover" :options="avatarDropdownMenuOptions" @select="handleSelectAvatarDropdownMenuItem">
@@ -108,8 +117,8 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
             </div>
             <div v-else class="menu_controllers controllers">
                 <n-button type="info" ghost>
-                    <router-link :to="{name: 'signin'}">
-                        Signin
+                    <router-link :to="{name: EPageName.SIGNIN}">
+                        {{ $t('sign_in') }}
                     </router-link>
                 </n-button>
             </div>

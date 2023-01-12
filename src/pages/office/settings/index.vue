@@ -1,23 +1,27 @@
 <script setup lang="ts">
 import { NForm, NFormItem, NSelect, NSkeleton } from 'naive-ui'
 import { computed, unref } from 'vue'
-import { useConfigStore } from '@/store/modules/config'
 import { useUserStore } from '@/store/modules/user'
 import { storeToRefs } from 'pinia'
+import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
+import { useI18n } from 'vue-i18n'
 
-const { interfaceLanguages } = useConfigStore()
-const { customData, isUserDataLoaded } = storeToRefs(useUserStore())
+const { t } = useI18n()
+const { interfaceLanguages, interfaceLanguage: baseInterfaceLanguage } = storeToRefs(useInterfaceLanguageStore())
+const { setInterfaceLanguage } = useInterfaceLanguageStore()
+const { isUserDataLoaded } = storeToRefs(useUserStore())
 const { updateInterfaceLanguage } = useUserStore()
 
 const interfaceLanguage = computed({
     get() {
-        return unref(customData)!.interfaceLanguage
+        return unref(baseInterfaceLanguage)
     },
     set(value) {
         updateInterfaceLanguage(value)
+        setInterfaceLanguage(value)
     }
 })
-const interfaceLanguagesOptions = computed(() => interfaceLanguages.map(lng => ({ label: lng.name, value: lng.id })))
+const interfaceLanguagesOptions = computed(() => unref(interfaceLanguages).map(lng => ({ label: t(`language.${lng}`), value: lng })))
 </script>
 
 <template>
@@ -32,11 +36,11 @@ const interfaceLanguagesOptions = computed(() => interfaceLanguages.map(lng => (
                 maxWidth: '640px'
             }"
         >
-            <n-form-item label="Interface language" path="selectValue">
+            <n-form-item :label="$t('interface_language')" path="selectValue">
                 <n-select
                     v-if="isUserDataLoaded"
                     v-model:value="interfaceLanguage"
-                    placeholder="Select"
+                    :placeholder="$t('select')"
                     :options="interfaceLanguagesOptions"
                 />
                 <n-skeleton v-else height="34px" width="100%" />

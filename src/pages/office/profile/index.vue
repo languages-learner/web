@@ -29,7 +29,7 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                     <n-card v-if="isUserDataLoaded" size="small">
                         <template #header>
                             <n-text type="primary">
-                                Level
+                                {{ $t('level') }}
                             </n-text>
                         </template>
                         <n-grid cols="5" :x-gap="16" item-responsive>
@@ -48,7 +48,7 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                     <n-card v-if="isUserDataLoaded" size="small">
                         <template #header>
                             <n-text type="info">
-                                Language level
+                                {{ $t('language_level') }}
                             </n-text>
                         </template>
                         <n-text depth="3">Intermediate</n-text>
