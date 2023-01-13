@@ -82,13 +82,19 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
 <template>
     <div class="app-header">
         <div class="menu">
-            <n-gradient-text :size="24" type="success">
+            <n-gradient-text
+                :size="24"
+                type="success">
                 LanguageLearner
             </n-gradient-text>
             <div class="menu_navigations navigations">
                 <template v-for="navigationItem in navigationItems">
-                    <div v-if="unref(navigationItem.isVisible)" :key="`navigation-item-${navigationItem.name}`">
-                        <n-button quaternary round>
+                    <div
+                        v-if="unref(navigationItem.isVisible)"
+                        :key="`navigation-item-${navigationItem.name}`">
+                        <n-button
+                            quaternary
+                            round>
                             <router-link :to="{name: navigationItem.name}">
                                 {{ navigationItem.label }}
                             </router-link>
@@ -96,14 +102,25 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
                     </div>
                 </template>
             </div>
-            <div v-if="isLoggedIn" class="menu_controllers controllers">
+            <div
+                v-if="isLoggedIn"
+                class="menu_controllers controllers">
                 <template v-if="isUserDataLoaded">
-                    <n-dropdown trigger="hover" :options="learningLanguagesOptions" @select="handleSelectLearningLanguagesDropdownMenuItem">
-                        <n-button icon-placement="right" type="primary" ghost>
+                    <n-dropdown
+                        @select="handleSelectLearningLanguagesDropdownMenuItem"
+                        trigger="hover"
+                        :options="learningLanguagesOptions">
+                        <n-button
+                            icon-placement="right"
+                            type="primary"
+                            ghost>
                             {{ $t('learn') }} {{ activeLearningLanguageName }}
                         </n-button>
                     </n-dropdown>
-                    <n-dropdown trigger="hover" :options="avatarDropdownMenuOptions" @select="handleSelectAvatarDropdownMenuItem">
+                    <n-dropdown
+                        @select="handleSelectAvatarDropdownMenuItem"
+                        trigger="hover"
+                        :options="avatarDropdownMenuOptions">
                         <n-avatar
                             size="medium"
                             :src="profileData?.photoURL"
@@ -111,12 +128,22 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
                     </n-dropdown>
                 </template>
                 <template v-else>
-                    <n-skeleton :width="120" :sharp="false" size="medium" />
-                    <n-skeleton :width="34" :sharp="false" size="medium" />
+                    <n-skeleton
+                        :width="120"
+                        :sharp="false"
+                        size="medium" />
+                    <n-skeleton
+                        :width="34"
+                        :sharp="false"
+                        size="medium" />
                 </template>
             </div>
-            <div v-else class="menu_controllers controllers">
-                <n-button type="info" ghost>
+            <div
+                v-else
+                class="menu_controllers controllers">
+                <n-button
+                    type="info"
+                    ghost>
                     <router-link :to="{name: EPageName.SIGNIN}">
                         {{ $t('sign_in') }}
                     </router-link>

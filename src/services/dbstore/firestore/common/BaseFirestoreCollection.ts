@@ -1,4 +1,8 @@
-import { onUnmounted, ref, Ref } from 'vue'
+import {
+    Ref,
+    onUnmounted,
+    ref
+} from 'vue'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import { ICollection } from '@/services/dbstore/common/ICollection'

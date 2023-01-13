@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { NGrid, NGridItem, NProgress, NCard, NAvatar, NSpace, NText, NSkeleton } from 'naive-ui'
+import {
+    NAvatar,
+    NCard,
+    NGrid,
+    NGridItem,
+    NProgress,
+    NSkeleton,
+    NSpace,
+    NText
+} from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/modules/user'
 
@@ -8,10 +17,17 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
 
 <template>
     <div class="office-profile">
-        <n-grid cols="5" :x-gap="16" item-responsive>
+        <n-grid
+            cols="5"
+            :x-gap="16"
+            item-responsive>
             <n-grid-item span="2">
-                <n-card v-if="isUserDataLoaded" class="office-profile_user">
-                    <n-space vertical align="center">
+                <n-card
+                    v-if="isUserDataLoaded"
+                    class="office-profile_user">
+                    <n-space
+                        vertical
+                        align="center">
                         <n-avatar
                             round
                             :size="64"
@@ -22,19 +38,32 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                         </n-text>
                     </n-space>
                 </n-card>
-                <n-skeleton v-else class="office-profile_user"></n-skeleton>
+                <n-skeleton
+                    v-else
+                    class="office-profile_user"></n-skeleton>
             </n-grid-item>
             <n-grid-item span="3">
-                <n-space vertical class="office-profile_information office-profile-information">
-                    <n-card v-if="isUserDataLoaded" size="small">
+                <n-space
+                    vertical
+                    class="office-profile_information office-profile-information">
+                    <n-card
+                        v-if="isUserDataLoaded"
+                        size="small">
                         <template #header>
                             <n-text type="primary">
                                 {{ $t('level') }}
                             </n-text>
                         </template>
-                        <n-grid cols="5" :x-gap="16" item-responsive>
+                        <n-grid
+                            cols="5"
+                            :x-gap="16"
+                            item-responsive>
                             <n-grid-item span="4">
-                                <n-progress type="line" :show-indicator="false" status="success" :percentage="20">
+                                <n-progress
+                                    type="line"
+                                    :show-indicator="false"
+                                    status="success"
+                                    :percentage="20">
                                 </n-progress>
                             </n-grid-item>
                             <n-grid-item span="1">
@@ -44,8 +73,13 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                             </n-grid-item>
                         </n-grid>
                     </n-card>
-                    <n-skeleton v-else class="office-profile_information" :height="72"></n-skeleton>
-                    <n-card v-if="isUserDataLoaded" size="small">
+                    <n-skeleton
+                        v-else
+                        class="office-profile_information"
+                        :height="72"></n-skeleton>
+                    <n-card
+                        v-if="isUserDataLoaded"
+                        size="small">
                         <template #header>
                             <n-text type="info">
                                 {{ $t('language_level') }}
@@ -53,7 +87,10 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                         </template>
                         <n-text depth="3">Intermediate</n-text>
                     </n-card>
-                    <n-skeleton v-else class="office-profile_information" :height="86"></n-skeleton>
+                    <n-skeleton
+                        v-else
+                        class="office-profile_information"
+                        :height="86"></n-skeleton>
                 </n-space>
             </n-grid-item>
         </n-grid>

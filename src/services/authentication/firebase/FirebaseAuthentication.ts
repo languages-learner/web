@@ -2,7 +2,11 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { IAuthentication } from '@/services/authentication/common/IAuthentication'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
-import { onBeforeMount, ref, Ref } from 'vue'
+import {
+    Ref,
+    onBeforeMount,
+    ref
+} from 'vue'
 
 export class FirebaseAuthentication implements IAuthentication {
     private static instance: FirebaseAuthentication
