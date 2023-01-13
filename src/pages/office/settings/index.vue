@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { NForm, NFormItem, NSelect, NSkeleton } from 'naive-ui'
+import {
+    NForm,
+    NFormItem,
+    NSelect,
+    NSkeleton
+} from 'naive-ui'
 import { computed, unref } from 'vue'
 import { useUserStore } from '@/store/modules/user'
 import { storeToRefs } from 'pinia'
@@ -36,14 +41,19 @@ const interfaceLanguagesOptions = computed(() => unref(interfaceLanguages).map(l
                 maxWidth: '640px'
             }"
         >
-            <n-form-item :label="$t('interface_language')" path="selectValue">
+            <n-form-item
+                :label="$t('interface_language')"
+                path="selectValue">
                 <n-select
                     v-if="isUserDataLoaded"
                     v-model:value="interfaceLanguage"
                     :placeholder="$t('select')"
                     :options="interfaceLanguagesOptions"
                 />
-                <n-skeleton v-else height="34px" width="100%" />
+                <n-skeleton
+                    v-else
+                    height="34px"
+                    width="100%" />
             </n-form-item>
         </n-form>
     </div>

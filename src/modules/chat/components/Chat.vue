@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { Chat } from '@/services/chat/Chat'
 import ChatMessage from '@/models/ChatMessage'
-import { onBeforeUnmount, ref, unref } from 'vue'
+import {
+    onBeforeUnmount,
+    ref,
+    unref
+} from 'vue'
 import { useUserStore } from '@/store/modules/user'
 
 const chat = new Chat()
@@ -36,7 +40,9 @@ const loadMoreMessages = () => chat.loadMoreMessages()
 <template>
     <div class="chat">
         <section class="chat_container">
-            <button class="chat_container_load-more" @click="loadMoreMessages">Load more</button>
+            <button
+                @click="loadMoreMessages"
+                class="chat_container_load-more">Load more</button>
             <div
                 v-for="message in messages"
                 :key="message.id"

@@ -1,7 +1,11 @@
 import { defineStore } from 'pinia'
 import { useDbStore } from '@/plugins/services'
 import { useI18n } from 'vue-i18n'
-import { readonly, ref, unref } from 'vue'
+import {
+    readonly,
+    ref,
+    unref
+} from 'vue'
 import { useConfigStore } from '@/store/modules/config'
 import { useRouter } from 'vue-router'
 

@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { computed, ref, PropType, reactive, watch, unref, } from 'vue'
+import {
+    PropType,
+    computed,
+    reactive,
+    ref,
+    unref,
+    watch
+} from 'vue'
 import { useAuthenticationService } from '@/plugins/services'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 import { EPageName } from '@/enums/EPageName'
@@ -60,7 +67,9 @@ const submit = props.type === EPageName.SIGNIN ? signInWithEmailAndPassword : cr
         <h3>{{ title }}</h3>
         <div class="form-identity_container">
             <div>
-                <button class="form-identity_input" @click="signInWithGoogle">
+                <button
+                    @click="signInWithGoogle"
+                    class="form-identity_input">
                     Google
                 </button>
             </div>
@@ -97,16 +106,15 @@ const submit = props.type === EPageName.SIGNIN ? signInWithEmailAndPassword : cr
             </div>
 
             <button
-                class="form-identity_submit"
                 @click.prevent="submit"
+                class="form-identity_submit"
             >
                 {{ submitName }}
             </button>
         </div>
 
         <template v-if="type === EPageName.SIGNIN">
-            <div
-                class="form-identity_have-account"
+            <div class="form-identity_have-account"
             >
                 <span>Do not have an account?</span>
                 <router-link
@@ -118,8 +126,7 @@ const submit = props.type === EPageName.SIGNIN ? signInWithEmailAndPassword : cr
         </template>
 
         <template v-if="type === EPageName.SIGNUP">
-            <div
-                class="form-identity_have-account"
+            <div class="form-identity_have-account"
             >
                 Do you have an account?
                 <router-link

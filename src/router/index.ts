@@ -1,6 +1,7 @@
 import {
+    RouteRecordRaw,
     createRouter,
-    createWebHistory, RouteRecordRaw
+    createWebHistory
 } from 'vue-router'
 import { setupLayouts } from 'virtual:generated-layouts'
 import generatedRoutes from 'virtual:generated-pages'
