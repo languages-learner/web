@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {
-    NAvatar,
     NButton,
     NDropdown,
     NGradientText,
     NSkeleton
 } from 'naive-ui'
+import UserAvatar from '@/components/UserAvatar.vue'
 import { useUserStore } from '@/store/modules/user'
 import { useAuthenticationService } from '@/plugins/services'
 import { computed, unref } from 'vue'
@@ -16,10 +16,10 @@ import { EPageName } from '@/enums/EPageName'
 import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
-const { isUserDataLoaded, isLoggedIn, profileData, customData, activeLearningLanguageName } = storeToRefs(useUserStore())
+const { isUserDataLoaded, isLoggedIn, customData, activeLearningLanguageName } = storeToRefs(useUserStore())
 const { updateActiveLearningLanguage } = useUserStore()
 const { signOut } = useAuthenticationService()
-const { languagesAvailableForLearning } = useConfigStore()
+const { languagesAvailableForLearning, getTranslatedLanguageName } = useConfigStore()
 const { t } = useI18n()
 
 const navigationItems = computed(() => ([
@@ -40,10 +40,10 @@ const learningLanguagesOptions = computed(() => ([
         type: 'group',
         label: t('available_languages'),
         key: 'main',
-        children: languagesAvailableForLearning.filter(language => language.id !== unref(customData)?.activeLearningLanguage)
-            .map(lng => ({
-                key: lng.id,
-                label: t(`language.${lng.name}`)
+        children: languagesAvailableForLearning.filter(languageId => languageId !== unref(customData)?.activeLearningLanguage)
+            .map(languageId => ({
+                key: languageId,
+                label: getTranslatedLanguageName(languageId)
             }))
     }
 ]))
@@ -121,10 +121,7 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
                         @select="handleSelectAvatarDropdownMenuItem"
                         trigger="hover"
                         :options="avatarDropdownMenuOptions">
-                        <n-avatar
-                            size="medium"
-                            :src="profileData?.photoURL"
-                        />
+                        <UserAvatar size="medium" />
                     </n-dropdown>
                 </template>
                 <template v-else>

@@ -4,11 +4,13 @@ import AppHeader from '@/components/AppHeader.vue'
 
 <template>
     <AppHeader />
-    <div class="office-layout">
-        <router-view></router-view>
+    <div class="workspace-layout">
+        <div class="workspace-layout_content">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-@import "styles/office-layout";
+@import "styles/workspace-layout";
 </style>

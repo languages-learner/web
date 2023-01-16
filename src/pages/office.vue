@@ -1,7 +1,7 @@
 <route lang="yaml">
 meta:
     requiresAuth: true
-    layout: officeLayout
+    layout: workspaceLayout
 </route>
 
 <script setup lang="ts">

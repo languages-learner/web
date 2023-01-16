@@ -1,7 +1,5 @@
 export interface IConfig {
-    languagesAvailableForLearning: {
-        id: number,
-        name: string
-    }[]
-    interfaceLanguages: string[]
+    languages: Record<number, string>
+    languagesAvailableForLearning: number[]
+    interfaceLanguages: number[]
 }

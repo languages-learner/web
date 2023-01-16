@@ -1,1 +1,2 @@
-export const BASE_INTERFACE_LANGUAGE = 'en'
+export const BASE_INTERFACE_LANGUAGE = 0
+export const BASE_INTERFACE_LANGUAGE_NAME = 'en'

@@ -9,8 +9,8 @@ import { store } from '@/store'
 import { useDbStore } from '@/plugins/services'
 import { useConfigStore } from '@/store/modules/config'
 import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
-import { useI18n } from 'vue-i18n'
 import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
+import type User from '@/models/User'
 
 type StateForAuthorizedUser = {
     profileData: {
@@ -21,10 +21,7 @@ type StateForAuthorizedUser = {
         photoURL: string | null,
         isAnonymous: boolean,
     }
-    customData: {
-        activeLearningLanguage: number,
-        interfaceLanguage: string
-    }
+    customData: Omit<User, 'id'>
 }
 
 type StateForNotAuthorizedUser = {
@@ -36,9 +33,8 @@ export type State = StateForAuthorizedUser | StateForNotAuthorizedUser
 
 export const useUserStore = defineStore('user', () => {
     const { userCollection } = useDbStore()
-    const { languagesAvailableForLearning } = useConfigStore()
+    const { getTranslatedLanguageName } = useConfigStore()
     const { setInterfaceLanguage } = useInterfaceLanguageStore()
-    const { t } = useI18n()
 
     const isUserDataLoaded = ref(false)
     const profileData = ref<State['profileData']>(undefined)
@@ -46,15 +42,16 @@ export const useUserStore = defineStore('user', () => {
 
     const isLoggedIn = computed(() => unref(profileData) !== undefined)
     const activeLearningLanguageName = computed(() =>
-        t(`language.${languagesAvailableForLearning.find(lng => lng.id === unref(customData)?.activeLearningLanguage)?.name ?? BASE_INTERFACE_LANGUAGE}`)
+        getTranslatedLanguageName(unref(customData)?.activeLearningLanguage ?? BASE_INTERFACE_LANGUAGE)
     )
 
     const createBaseCustomData = (): StateForAuthorizedUser['customData'] => {
-        const config = useConfigStore()
+        const { languagesAvailableForLearning, interfaceLanguages } = useConfigStore()
 
         return {
-            activeLearningLanguage: config.languagesAvailableForLearning[0].id,
-            interfaceLanguage: config.interfaceLanguages[0]
+            nativeLanguage: languagesAvailableForLearning[0],
+            activeLearningLanguage: languagesAvailableForLearning[1],
+            interfaceLanguage: interfaceLanguages[0]
         }
     }
 
@@ -90,6 +87,7 @@ export const useUserStore = defineStore('user', () => {
 
         if (!userCustomData) {
             customData.value = {
+                nativeLanguage: baseCustomData.nativeLanguage,
                 activeLearningLanguage: baseCustomData.activeLearningLanguage,
                 interfaceLanguage: baseCustomData.interfaceLanguage
             }
@@ -97,6 +95,7 @@ export const useUserStore = defineStore('user', () => {
             await uploadCustomData(true)
         } else {
             customData.value = {
+                nativeLanguage: userCustomData.nativeLanguage ?? baseCustomData.nativeLanguage,
                 activeLearningLanguage: userCustomData.activeLearningLanguage ?? baseCustomData.activeLearningLanguage,
                 interfaceLanguage: userCustomData.interfaceLanguage ?? baseCustomData.interfaceLanguage,
             }
@@ -106,17 +105,24 @@ export const useUserStore = defineStore('user', () => {
         isUserDataLoaded.value = true
     }
 
-    const updateActiveLearningLanguage = async (id: number) => {
+    const updateActiveLearningLanguage = async (languageId: number) => {
         if (!customData.value) return
 
-        customData.value.activeLearningLanguage = id
+        customData.value.activeLearningLanguage = languageId
         await uploadCustomData()
     }
 
-    const updateInterfaceLanguage = async (language: string) => {
+    const updateInterfaceLanguage = async (languageId: number) => {
         if (!customData.value) return
 
-        customData.value.interfaceLanguage = language
+        customData.value.interfaceLanguage = languageId
+        await uploadCustomData()
+    }
+
+    const updateNativeLanguage = async (languageId: number) => {
+        if (!customData.value) return
+
+        customData.value.nativeLanguage = languageId
         await uploadCustomData()
     }
 
@@ -128,7 +134,8 @@ export const useUserStore = defineStore('user', () => {
         activeLearningLanguageName,
         setUser,
         updateActiveLearningLanguage,
-        updateInterfaceLanguage
+        updateInterfaceLanguage,
+        updateNativeLanguage
     }
 })
 

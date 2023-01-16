@@ -1,7 +1,7 @@
 import { createI18n } from 'vue-i18n'
 import { App } from 'vue'
 import { useDbStore } from '@/plugins/services'
-import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
+import { BASE_INTERFACE_LANGUAGE_NAME } from '@/const/BaseInterfaceLanguage'
 
 const getInterfaceLanguageFromWindowLocation = () => {
     const { location } = window
@@ -12,7 +12,7 @@ const getInterfaceLanguageFromWindowLocation = () => {
 
     }
 
-    return BASE_INTERFACE_LANGUAGE
+    return BASE_INTERFACE_LANGUAGE_NAME
 }
 
 export async function setupI18n(app: App) {
