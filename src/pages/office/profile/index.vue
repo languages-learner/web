@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-    NAvatar,
     NCard,
     NGrid,
     NGridItem,
@@ -9,6 +8,7 @@ import {
     NSpace,
     NText
 } from 'naive-ui'
+import UserAvatar from '@/components/UserAvatar.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/modules/user'
 
@@ -28,13 +28,11 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                     <n-space
                         vertical
                         align="center">
-                        <n-avatar
+                        <UserAvatar
                             round
-                            :size="64"
-                            :src="profileData?.photoURL"
-                        />
+                            :size="64" />
                         <n-text>
-                            {{ profileData.email }}
+                            {{ profileData?.email }}
                         </n-text>
                     </n-space>
                 </n-card>
@@ -45,7 +43,7 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
             <n-grid-item span="3">
                 <n-space
                     vertical
-                    class="office-profile_information office-profile-information">
+                    class="office-profile-information">
                     <n-card
                         v-if="isUserDataLoaded"
                         size="small">
@@ -75,7 +73,6 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                     </n-card>
                     <n-skeleton
                         v-else
-                        class="office-profile_information"
                         :height="72"></n-skeleton>
                     <n-card
                         v-if="isUserDataLoaded"
@@ -89,7 +86,6 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                     </n-card>
                     <n-skeleton
                         v-else
-                        class="office-profile_information"
                         :height="86"></n-skeleton>
                 </n-space>
             </n-grid-item>

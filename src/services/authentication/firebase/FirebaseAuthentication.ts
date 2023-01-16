@@ -11,7 +11,7 @@ import {
 export class FirebaseAuthentication implements IAuthentication {
     private static instance: FirebaseAuthentication
 
-    public static getInstance(): IAuthentication {
+    public static getInstance() {
         if (!FirebaseAuthentication.instance) {
             FirebaseAuthentication.instance = new FirebaseAuthentication()
         }

@@ -9,24 +9,35 @@ import { computed, unref } from 'vue'
 import { useUserStore } from '@/store/modules/user'
 import { storeToRefs } from 'pinia'
 import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
-import { useI18n } from 'vue-i18n'
+import { useConfigStore } from '@/store/modules/config'
+import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
 
-const { t } = useI18n()
-const { interfaceLanguages, interfaceLanguage: baseInterfaceLanguage } = storeToRefs(useInterfaceLanguageStore())
+const { interfaceLanguages, interfaceLanguageId } = storeToRefs(useInterfaceLanguageStore())
 const { setInterfaceLanguage } = useInterfaceLanguageStore()
-const { isUserDataLoaded } = storeToRefs(useUserStore())
-const { updateInterfaceLanguage } = useUserStore()
+const { isUserDataLoaded, customData } = storeToRefs(useUserStore())
+const { updateInterfaceLanguage, updateNativeLanguage } = useUserStore()
+const { getTranslatedLanguageName, languages } = useConfigStore()
 
 const interfaceLanguage = computed({
     get() {
-        return unref(baseInterfaceLanguage)
+        return unref(interfaceLanguageId)
     },
-    set(value) {
+    set(value: number) {
         updateInterfaceLanguage(value)
         setInterfaceLanguage(value)
     }
 })
-const interfaceLanguagesOptions = computed(() => unref(interfaceLanguages).map(lng => ({ label: t(`language.${lng}`), value: lng })))
+const interfaceLanguagesOptions = computed(() => unref(interfaceLanguages).map(languageId => ({ label: getTranslatedLanguageName(languageId), value: languageId })))
+
+const nativeLanguage = computed({
+    get() {
+        return unref(customData)?.nativeLanguage ?? BASE_INTERFACE_LANGUAGE
+    },
+    set(value) {
+        updateNativeLanguage(value)
+    }
+})
+const nativeLanguagesOptions = computed(() => Object.keys(unref(languages)).map(languageId => ({ label: getTranslatedLanguageName(Number(languageId)), value: Number(languageId) })))
 </script>
 
 <template>
@@ -41,6 +52,20 @@ const interfaceLanguagesOptions = computed(() => unref(interfaceLanguages).map(l
                 maxWidth: '640px'
             }"
         >
+            <n-form-item
+                :label="$t('native_language')"
+                path="selectValue">
+                <n-select
+                    v-if="isUserDataLoaded"
+                    v-model:value="nativeLanguage"
+                    :placeholder="$t('select')"
+                    :options="nativeLanguagesOptions"
+                />
+                <n-skeleton
+                    v-else
+                    height="34px"
+                    width="100%" />
+            </n-form-item>
             <n-form-item
                 :label="$t('interface_language')"
                 path="selectValue">

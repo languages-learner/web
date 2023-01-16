@@ -1,0 +1,6 @@
+.words-list-item {
+  &_voice-acting, &_change, &_status, &_delete {
+    display: flex;
+    align-items: center;
+  }
+}

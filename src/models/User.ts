@@ -1,7 +1,8 @@
 type User = {
     id: string
+    nativeLanguage: number
     activeLearningLanguage: number
-    interfaceLanguage: string
+    interfaceLanguage: number
 }
 
 export default User
