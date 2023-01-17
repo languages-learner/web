@@ -1,4 +1,4 @@
-.app-header {
+.workspace-header {
   position: fixed;
   top: 0;
   right: 0;
@@ -7,14 +7,17 @@
   height: 64px;
   background: white;
   box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+
+  &_menu {
+    height: 100%;
+  }
 }
 
-.menu {
+.workspace-header-menu {
   display: flex;
   flex-direction: row;
   gap: 100px;
   align-items: center;
-  height: 100%;
   padding: 0 40px;
 
   &_navigations {
