@@ -1,6 +1,5 @@
 import { useErrorLogStoreWithOut } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
-import projectSetting from '@/settings/projectSetting'
 import { App } from 'vue'
 import { ComponentPublicInstance } from 'vue'
 
@@ -41,7 +40,6 @@ function vueErrorHandler(err: unknown, instance: ComponentPublicInstance | null,
         // @ts-ignore
         message: err.message,
         detail: info,
-        url: window.location.href,
     })
 }
 
@@ -54,7 +52,6 @@ function registerPromiseErrorHandler() {
                 type: EErrorType.PROMISE,
                 name: 'Promise Error!',
                 detail: 'promise error!',
-                url: window.location.href,
                 message: event.reason,
             })
         },
@@ -63,11 +60,6 @@ function registerPromiseErrorHandler() {
 }
 
 export function setupErrorHandle(app: App) {
-    const { useErrorHandle } = projectSetting
-    if (!useErrorHandle) {
-        return
-    }
-
     app.config.errorHandler = vueErrorHandler
 
     //  promise exception

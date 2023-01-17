@@ -1,13 +1,29 @@
 import { defineStore } from 'pinia'
 import { useConfigService } from '@/plugins/services'
 import { useI18n } from 'vue-i18n'
+import { useErrorLogStore } from '@/store/modules/errorLog'
+import { EErrorType } from '@/enums/EErrorType'
 
 
 export const useConfigStore = defineStore('config', () => {
     const configService = useConfigService()
     const { t } = useI18n()
+    const { addErrorLogInfo } = useErrorLogStore()
 
-    const config = configService.getConfig()
+    const getConfig = () => {
+        try {
+            return configService.getConfig()
+        } catch (e: any) {
+            addErrorLogInfo({
+                type: EErrorType.CONFIG_STORE,
+                message: e.message
+            })
+
+            return configService.getBaseConfig()
+        }
+    }
+
+    const config = getConfig()
 
     const getLanguageName = (id: number) => {
         return config.languages[id]

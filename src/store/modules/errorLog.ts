@@ -1,32 +1,23 @@
-import { StoreDefinition, defineStore } from 'pinia'
+import { defineStore } from 'pinia'
 import { store } from '@/store'
-import ErrorLogInfo from '@/models/ErrorLogInfo'
+import { ErrorLogInfo, ErrorLogInfoWithAdditionalData } from '@/models/ErrorLogInfo'
 import { formatToDateTime } from '@/utils/dateUtil'
+import { reactive } from 'vue'
 
-export interface State {
-    errorLogInfoList: ErrorLogInfo[]
-}
+export const useErrorLogStore = defineStore('error-log', () => {
+    const errorLogInfoList = reactive<ErrorLogInfoWithAdditionalData[]>([])
 
-type ErrorLogStore = StoreDefinition<string,
-    State,
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    {}, {
-    addErrorLogInfo: (data: ErrorLogInfo) => void
-}>
+    const addErrorLogInfo = (data: ErrorLogInfo) => {
+        errorLogInfoList.push({
+            ...data,
+            date: formatToDateTime(new Date()),
+            url: window.location.href,
+        })
+    }
 
-export const useErrorLogStore: ErrorLogStore = defineStore('error-log', {
-    state: () => ({
-        errorLogInfoList: [],
-    } as State),
-    actions: {
-        addErrorLogInfo(data: ErrorLogInfo) {
-            const item = {
-                ...data,
-                time: formatToDateTime(new Date()),
-            }
-            this.errorLogInfoList.push(item)
-        },
-    },
+    return {
+        addErrorLogInfo
+    }
 })
 
 export function useErrorLogStoreWithOut() {

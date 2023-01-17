@@ -8,11 +8,14 @@ import type { Word, Words } from '@/modules/words/models/Words'
 import type { WordsFilters } from '@/modules/words/types/WordsFilters'
 import { EWordStatus } from '@/modules/words/enums/EWordStatus'
 import { useDbStore } from '@/plugins/services'
+import { useErrorLogStore } from '@/store/modules/errorLog'
+import { EErrorType } from '@/enums/EErrorType'
 
 export const useWords = (filters: WordsFilters = {
     text: '',
     status: -1
 }) => {
+    const { addErrorLogInfo } = useErrorLogStore()
     const { wordsCollection } = useDbStore()
 
     const selectedWords: Record<string, boolean> = reactive({})
@@ -21,17 +24,21 @@ export const useWords = (filters: WordsFilters = {
     const isWordsLoaded = ref(false)
 
     const fetchWords = async () => {
-        const items = await wordsCollection.items()
+        try {
+            const items = await wordsCollection.items()
 
-        if (!items) {
-            return
+            if (!items) {
+                return
+            }
+
+            Object.entries(items).forEach(([word, wordData]: [word: string, wordData: Word]) => {
+                words[word] = wordData
+            })
+
+            isWordsLoaded.value = true
+        } catch (e: any) {
+            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'fetchWords' })
         }
-
-        Object.entries(items).forEach(([word, wordData]: [word: string, wordData: Word]) => {
-            words[word] = wordData
-        })
-
-        isWordsLoaded.value = true
     }
 
     const filterByText = (text: WordsFilters['text'], word: string, wordData: Word) => {
@@ -80,14 +87,21 @@ export const useWords = (filters: WordsFilters = {
             status: EWordStatus.NEW_WORD
         } as Word
 
-        await wordsCollection.create(word, wordData)
-
-        words[word] = wordData
+        try {
+            await wordsCollection.create(word, wordData)
+            words[word] = wordData
+        } catch (e: any) {
+            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'addWord' })
+        }
     }
 
     const deleteWord = async (word: string) => {
-        await wordsCollection.delete(word)
-        delete words[word]
+        try {
+            await wordsCollection.delete(word)
+            delete words[word]
+        } catch (e: any) {
+            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'deleteWord' })
+        }
     }
 
     const updateTranslations = async (word: string, translations: string[]) => {
@@ -101,21 +115,29 @@ export const useWords = (filters: WordsFilters = {
             return
         }
 
-        await wordsCollection.update(word, {
-            translations,
-            status: words[word].status
-        })
+        try {
+            await wordsCollection.update(word, {
+                translations,
+                status: words[word].status
+            })
 
-        words[word].translations = translations
+            words[word].translations = translations
+        } catch (e: any) {
+            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'updateTranslations' })
+        }
     }
 
     const updateWordStatus = async (word: string, status: number) => {
-        await wordsCollection.update(word, {
-            translations: words[word].translations,
-            status
-        })
+        try {
+            await wordsCollection.update(word, {
+                translations: words[word].translations,
+                status
+            })
 
-        words[word].status = status
+            words[word].status = status
+        } catch (e: any) {
+            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'updateWordStatus' })
+        }
     }
 
     const resetAndFetchWords = async () => {

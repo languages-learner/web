@@ -23,8 +23,7 @@ export class WordsFirestoreCollection implements IWordsCollection {
         const userStore = useUserStoreWithOut()
 
         if (!userStore.profileData || !userStore.customData){
-            // todo
-            throw new Error()
+            throw new Error('User data not initialized')
         }
 
         return this._collection

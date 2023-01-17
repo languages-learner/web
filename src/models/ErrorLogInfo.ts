@@ -1,13 +1,14 @@
 import { EErrorType } from '@/enums/EErrorType'
 
-type ErrorLogInfo = {
+export type ErrorLogInfo = {
     type: EErrorType;
-    name?: string;
     message: string;
-    detail: string;
-    url: string;
-    time?: string;
+    name?: string;
+    detail?: string;
     file?: string
 }
 
-export default ErrorLogInfo
+export type ErrorLogInfoWithAdditionalData = ErrorLogInfo & {
+    date: string
+    url: string;
+}

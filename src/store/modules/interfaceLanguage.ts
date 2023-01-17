@@ -8,6 +8,8 @@ import {
 } from 'vue'
 import { useConfigStore } from '@/store/modules/config'
 import { useRouter } from 'vue-router'
+import { useErrorLogStore } from '@/store/modules/errorLog'
+import { EErrorType } from '@/enums/EErrorType'
 
 export const useInterfaceLanguageStore = defineStore('language', () => {
     const {
@@ -18,15 +20,20 @@ export const useInterfaceLanguageStore = defineStore('language', () => {
     const { translationCollection } = useDbStore()
     const { interfaceLanguages, getLanguageId, getLanguageName } = useConfigStore()
     const router = useRouter()
+    const { addErrorLogInfo } = useErrorLogStore()
 
     const loadedLanguages = ref([...availableLocales])
     const interfaceLanguageId = ref(getLanguageId(unref(locale)))
 
     const fetchLanguage = async (languageId: number) => {
-        const languageName = getLanguageName(languageId)
-        const translations = await translationCollection.get(languageName)
-        loadedLanguages.value.push(languageName)
-        setLocaleMessage(languageName, translations)
+        try {
+            const languageName = getLanguageName(languageId)
+            const translations = await translationCollection.get(languageName)
+            loadedLanguages.value.push(languageName)
+            setLocaleMessage(languageName, translations)
+        } catch (e: any) {
+            addErrorLogInfo({ type: EErrorType.INTERFACE_LANGUAGE_STORE, message: e.message })
+        }
     }
 
     const setInterfaceLanguage = async (languageId: number) => {
