@@ -2,11 +2,6 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { IAuthentication } from '@/services/authentication/common/IAuthentication'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
-import {
-    Ref,
-    onBeforeMount,
-    ref
-} from 'vue'
 
 export class FirebaseAuthentication implements IAuthentication {
     private static instance: FirebaseAuthentication
@@ -39,8 +34,13 @@ export class FirebaseAuthentication implements IAuthentication {
         }
     }
 
-    private signInWithAuthProvider = (provider: firebase.auth.AuthProvider) =>
-        firebase.auth().signInWithRedirect(provider)
+    private signInWithAuthProvider = async (provider: firebase.auth.AuthProvider) => {
+        try {
+            await firebase.auth().signInWithRedirect(provider)
+        } catch (e) {
+            throw new Error(this.getErrorMessage(e))
+        }
+    }
 
     public signInWithProvider = async (provider: EAuthenticationProvider) => {
         let authProvider: firebase.auth.AuthProvider
@@ -54,25 +54,28 @@ export class FirebaseAuthentication implements IAuthentication {
     }
 
     public signOut = async () => {
-        await firebase.auth().signOut()
+        try {
+            await firebase.auth().signOut()
+        } catch (e) {
+            throw new Error(this.getErrorMessage(e))
+        }
     }
 
     public checkRedirectResult = async (): Promise<{
         success: boolean,
-        error: string | undefined
+        error?: string
     }> => {
-        let success = false
-        let error = undefined
+        try {
+            await firebase.auth().getRedirectResult()
 
-        firebase.auth().getRedirectResult().then(() => {
-            success = true
-        }).catch(e => {
-            error = this.getErrorMessage(e)
-        })
-
-        return {
-            success,
-            error
+            return {
+                success: true
+            }
+        } catch (e) {
+            return {
+                success: false,
+                error: this.getErrorMessage(e)
+            }
         }
     }
 

@@ -2,12 +2,23 @@
 import { NButton, NSpace } from 'naive-ui'
 import { useAuthenticationService } from '@/plugins/services'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
+import { EErrorType } from '@/enums/EErrorType'
+import { useErrorLogStore } from '@/store/modules/errorLog'
 
+const { addErrorLogInfo } = useErrorLogStore()
 const {
     signInWithProvider,
 } = useAuthenticationService()
 
+const emit = defineEmits<{
+    (e: 'error', error: string): void
+}>()
+
 const signInWithGoogle = () => signInWithProvider(EAuthenticationProvider.GOOGLE)
+    .catch(e => {
+        addErrorLogInfo({ type: EErrorType.AUTHENTICATE, message: e.message, detail: 'createUserWithEmailAndPassword' })
+        emit('error', e)
+    })
 </script>
 
 <template>

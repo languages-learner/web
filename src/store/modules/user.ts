@@ -11,6 +11,8 @@ import { useConfigStore } from '@/store/modules/config'
 import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
 import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
 import type User from '@/models/User'
+import { useErrorLogStore } from '@/store/modules/errorLog'
+import { EErrorType } from '@/enums/EErrorType'
 
 type StateForAuthorizedUser = {
     profileData: {
@@ -32,6 +34,7 @@ type StateForNotAuthorizedUser = {
 export type State = StateForAuthorizedUser | StateForNotAuthorizedUser
 
 export const useUserStore = defineStore('user', () => {
+    const { addErrorLogInfo } = useErrorLogStore()
     const { userCollection } = useDbStore()
     const { getTranslatedLanguageName } = useConfigStore()
     const { setInterfaceLanguage } = useInterfaceLanguageStore()
@@ -58,11 +61,15 @@ export const useUserStore = defineStore('user', () => {
     const uploadCustomData = async (needToCreate = false) => {
         if (!profileData.value || !customData.value) return
 
-        if (needToCreate) {
-            await userCollection.create(profileData.value.uid, customData.value)
-        }
+        try {
+            if (needToCreate) {
+                await userCollection.create(profileData.value.uid, customData.value)
+            }
 
-        await userCollection.update(profileData.value.uid, customData.value)
+            await userCollection.create(profileData.value.uid, customData.value)
+        } catch (e: any) {
+            addErrorLogInfo({ type: EErrorType.USER_STORE, message: e.message, detail: 'uploadCustomData' })
+        }
     }
 
     const setUser = async (user: firebase.User | null) => {
@@ -81,28 +88,32 @@ export const useUserStore = defineStore('user', () => {
             photoURL: user.photoURL
         }
 
-        const userCustomData = await userCollection.get(user.uid)
+        try {
+            const userCustomData = await userCollection.get(user.uid)
 
-        const baseCustomData = createBaseCustomData()
+            const baseCustomData = createBaseCustomData()
 
-        if (!userCustomData) {
-            customData.value = {
-                nativeLanguage: baseCustomData.nativeLanguage,
-                activeLearningLanguage: baseCustomData.activeLearningLanguage,
-                interfaceLanguage: baseCustomData.interfaceLanguage
+            if (!userCustomData) {
+                customData.value = {
+                    nativeLanguage: baseCustomData.nativeLanguage,
+                    activeLearningLanguage: baseCustomData.activeLearningLanguage,
+                    interfaceLanguage: baseCustomData.interfaceLanguage
+                }
+
+                await uploadCustomData(true)
+            } else {
+                customData.value = {
+                    nativeLanguage: userCustomData.nativeLanguage ?? baseCustomData.nativeLanguage,
+                    activeLearningLanguage: userCustomData.activeLearningLanguage ?? baseCustomData.activeLearningLanguage,
+                    interfaceLanguage: userCustomData.interfaceLanguage ?? baseCustomData.interfaceLanguage,
+                }
             }
 
-            await uploadCustomData(true)
-        } else {
-            customData.value = {
-                nativeLanguage: userCustomData.nativeLanguage ?? baseCustomData.nativeLanguage,
-                activeLearningLanguage: userCustomData.activeLearningLanguage ?? baseCustomData.activeLearningLanguage,
-                interfaceLanguage: userCustomData.interfaceLanguage ?? baseCustomData.interfaceLanguage,
-            }
+            await setInterfaceLanguage(customData.value.interfaceLanguage)
+            isUserDataLoaded.value = true
+        } catch (e: any) {
+            addErrorLogInfo({ type: EErrorType.USER_STORE, message: e.message, detail: 'setUser' })
         }
-
-        await setInterfaceLanguage(customData.value.interfaceLanguage)
-        isUserDataLoaded.value = true
     }
 
     const updateActiveLearningLanguage = async (languageId: number) => {

@@ -46,4 +46,12 @@ export class Config implements IConfigService {
             return answer
         }, {} as IConfig)
     }
+
+    public getBaseConfig() {
+        return {
+            languages: [],
+            languagesAvailableForLearning: [],
+            interfaceLanguages: []
+        } as IConfig
+    }
 }

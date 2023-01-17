@@ -19,6 +19,10 @@ import {
 } from 'vue'
 import AuthenticateModalProviders from '@/modules/authenticate/components/AuthenticateModalProviders.vue'
 import { useAuthenticationService } from '@/plugins/services'
+import { useErrorLogStore } from '@/store/modules/errorLog'
+import { EErrorType } from '@/enums/EErrorType'
+
+const { addErrorLogInfo } = useErrorLogStore()
 
 const props = defineProps<{
     type: 'signin' | 'signup'
@@ -46,20 +50,31 @@ const {
 } = useAuthenticationService()
 
 const currentError = ref<string>()
-
+const setCurrentError = (error: string | undefined) => currentError.value = error
 onBeforeMount(async () => {
-    const { error } = await checkRedirectResult()
-    currentError.value = error
+    try {
+        const { success, error } = await checkRedirectResult()
+
+        if (!success) {
+            addErrorLogInfo({ type: EErrorType.AUTHENTICATE, message: error!, detail: 'checkRedirectResult' })
+            setCurrentError(error)
+        }
+    } catch (e: any) {
+        addErrorLogInfo({ type: EErrorType.AUTHENTICATE, message: e.message, detail: 'checkRedirectResult' })
+        setCurrentError(e.message)
+    }
 })
 
 const signInWithEmailAndPassword = () => baseSignInWithEmailAndPassword(form.email, form.password)
     .catch((e) => {
-        currentError.value = e
+        addErrorLogInfo({ type: EErrorType.AUTHENTICATE, message: e.message, detail: 'signInWithEmailAndPassword' })
+        setCurrentError(e)
     })
 
 const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(form.email, form.password)
     .catch(e => {
-        currentError.value = e
+        addErrorLogInfo({ type: EErrorType.AUTHENTICATE, message: e.message, detail: 'createUserWithEmailAndPassword' })
+        setCurrentError(e)
     })
 </script>
 
@@ -113,7 +128,9 @@ const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(
                         <n-text type="error">{{ currentError }}</n-text>
                     </div>
                     <n-divider />
-                    <AuthenticateModalProviders class="authenticate-modal_providers" />
+                    <AuthenticateModalProviders
+                        @error="setCurrentError"
+                        class="authenticate-modal_providers"/>
                 </n-tab-pane>
                 <n-tab-pane
                     name="signup"
@@ -142,7 +159,9 @@ const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(
                         <n-text type="error">{{ currentError }}</n-text>
                     </div>
                     <n-divider />
-                    <AuthenticateModalProviders class="authenticate-modal_providers" />
+                    <AuthenticateModalProviders
+                        @error="setCurrentError"
+                        class="authenticate-modal_providers" />
                 </n-tab-pane>
             </n-tabs>
         </n-card>
