@@ -16,7 +16,7 @@ import { EPageName } from '@/enums/EPageName'
 import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
-const { isUserDataLoaded, isLoggedIn, customData, activeLearningLanguageName } = storeToRefs(useUserStore())
+const { isUserDataLoaded, customData, activeLearningLanguageName } = storeToRefs(useUserStore())
 const { updateActiveLearningLanguage } = useUserStore()
 const { signOut } = useAuthenticationService()
 const { languagesAvailableForLearning, getTranslatedLanguageName } = useConfigStore()
@@ -26,12 +26,10 @@ const navigationItems = computed(() => ([
     {
         label: t('trainings'),
         name: 'trainings',
-        isVisible: isLoggedIn,
     },
     {
         label: t('dictionary'),
         name: 'dictionary',
-        isVisible: isLoggedIn,
     },
 ]))
 
@@ -80,31 +78,27 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
 </script>
 
 <template>
-    <div class="app-header">
-        <div class="menu">
+    <div class="workspace-header">
+        <div class="workspace-header_menu workspace-header-menu">
             <n-gradient-text
                 :size="24"
                 type="success">
-                LanguageLearner
+                LanguagesLearner
             </n-gradient-text>
-            <div class="menu_navigations navigations">
-                <template v-for="navigationItem in navigationItems">
-                    <div
-                        v-if="unref(navigationItem.isVisible)"
-                        :key="`navigation-item-${navigationItem.name}`">
-                        <n-button
-                            quaternary
-                            round>
-                            <router-link :to="{name: navigationItem.name}">
-                                {{ navigationItem.label }}
-                            </router-link>
-                        </n-button>
-                    </div>
-                </template>
+            <div class="workspace-header-menu_navigations">
+                <div
+                    v-for="navigationItem in navigationItems"
+                    :key="`navigation-item-${navigationItem.name}`">
+                    <n-button
+                        quaternary
+                        round>
+                        <router-link :to="{name: navigationItem.name}">
+                            {{ navigationItem.label }}
+                        </router-link>
+                    </n-button>
+                </div>
             </div>
-            <div
-                v-if="isLoggedIn"
-                class="menu_controllers controllers">
+            <div class="workspace-header-menu_controllers">
                 <template v-if="isUserDataLoaded">
                     <n-dropdown
                         @select="handleSelectLearningLanguagesDropdownMenuItem"
@@ -135,21 +129,10 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
                         size="medium" />
                 </template>
             </div>
-            <div
-                v-else
-                class="menu_controllers controllers">
-                <n-button
-                    type="info"
-                    ghost>
-                    <router-link :to="{name: EPageName.SIGNIN}">
-                        {{ $t('sign_in') }}
-                    </router-link>
-                </n-button>
-            </div>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-@import "styles/app-header";
+@import "styles/workspace-header";
 </style>

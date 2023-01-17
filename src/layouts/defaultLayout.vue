@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import AppHeader from '@/components/AppHeader.vue'
+import MainHeader from '@/components/MainHeader.vue'
 </script>
 
 <template>
-    <AppHeader />
+    <MainHeader />
     <div class="default-layout">
         <div class="default-layout_content">
             <router-view></router-view>

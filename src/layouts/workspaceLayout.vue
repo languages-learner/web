@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import AppHeader from '@/components/AppHeader.vue'
+import WorkspaceHeader from '@/components/WorkspaceHeader.vue'
 </script>
 
 <template>
-    <AppHeader />
+    <WorkspaceHeader />
     <div class="workspace-layout">
         <div class="workspace-layout_content">
             <router-view></router-view>

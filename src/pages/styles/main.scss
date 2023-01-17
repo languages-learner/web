@@ -1,0 +1,17 @@
+.main-page {
+  height: 100vh;
+  background-image: url(@/assets/main-page-background.jpg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+  &_title {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.main-page-title {
+  &_text {
+    line-height: normal;
+  }
+}

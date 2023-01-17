@@ -57,27 +57,20 @@ export class FirebaseAuthentication implements IAuthentication {
         await firebase.auth().signOut()
     }
 
-    public useCheckRedirectResult = (): {
-        loaded: Ref<boolean>,
-        success: Ref<boolean>,
-        error: Ref<string | undefined>
-    } => {
-        const loaded: Ref<boolean> = ref(false)
-        const success: Ref<boolean> = ref(false)
-        const error: Ref<string | undefined> = ref(undefined)
+    public checkRedirectResult = async (): Promise<{
+        success: boolean,
+        error: string | undefined
+    }> => {
+        let success = false
+        let error = undefined
 
-        onBeforeMount(() => {
-            firebase.auth().getRedirectResult().then(() => {
-                success.value = true
-            }).catch(e => {
-                error.value = this.getErrorMessage(e)
-            }).finally(() => {
-                loaded.value = true
-            })
+        firebase.auth().getRedirectResult().then(() => {
+            success = true
+        }).catch(e => {
+            error = this.getErrorMessage(e)
         })
 
         return {
-            loaded,
             success,
             error
         }

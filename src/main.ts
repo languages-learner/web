@@ -19,7 +19,7 @@ async function bootstrap() {
     await setupServices()
 
     // Configure routing
-    setupRouter(app)
+    await setupRouter(app)
 
     // Configure store
     setupStore(app)
