@@ -25,7 +25,7 @@ async function bootstrap() {
     setupStore(app)
 
     // Multilingual configuration
-    await setupI18n(app)
+    await setupI18n(router, app)
 
     app.mount('#app')
 
