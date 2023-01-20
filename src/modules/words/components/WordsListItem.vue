@@ -55,10 +55,10 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
 <template>
     <n-list-item class="words-list-item">
         <n-row
-            class="words-list-item_container"
+            class="words-list-item__container"
             align-items="center">
             <n-col span="1">
-                <div class="words-list-item_selection">
+                <div class="words-list-item__property">
                     <n-checkbox
                         :checked="isSelected"
                         :on-update:checked="toggleSelection">
@@ -67,7 +67,7 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
             </n-col>
             <n-col
                 span="1"
-                class="words-list-item_voice-acting">
+                class="words-list-item__property">
                 <n-button text>
                     <template #icon>
                         <n-icon
@@ -82,7 +82,7 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
             <n-col span="19">
                 <n-space
                     vertical
-                    class="words-list-item_translate">
+                    class="words-list-item__property--translations">
                     <n-text type="primary">{{ props.word }}</n-text>
                     <n-dynamic-tags
                         v-if="isChangeableView"
@@ -94,7 +94,7 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
             </n-col>
             <n-col
                 span="1"
-                class="words-list-item_change">
+                class="words-list-item__property">
                 <n-button text>
                     <n-icon
                         @click="toggleChangeableView"
@@ -106,14 +106,14 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
             </n-col>
             <n-col
                 span="1"
-                class="words-list-item_status">
+                class="words-list-item__property">
                 <WordStatus
                     @update="updateStatus"
                     :status="props.wordData.status"/>
             </n-col>
             <n-col
                 span="1"
-                class="words-list-item_delete">
+                class="words-list-item__property">
                 <n-button text>
                     <n-icon
                         @click="deleteWord"

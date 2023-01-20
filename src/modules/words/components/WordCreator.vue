@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import {
     NButton,
+    NDivider,
     NDynamicTags,
-    NListItem,
-    NRow,
+    NRow
 } from 'naive-ui'
 import {
     computed,
@@ -45,10 +45,10 @@ const text = computed(() => {
 </script>
 
 <template>
-    <n-list-item class="add-word-list-item">
+    <div class="words-creator">
         <n-row
             justify-content="center"
-            class="add-word-list-item_container">
+            class="words-creator__container">
             <span>{{ text }}</span>
             <n-dynamic-tags v-model:value="newTranslations" />
             <n-button
@@ -57,14 +57,15 @@ const text = computed(() => {
                 strong
                 secondary
                 type="success"
-                class="add-word-list-item_button"
+                class="words-creator__button"
             >
                 {{ $t('add') }}
             </n-button>
         </n-row>
-    </n-list-item>
+        <n-divider />
+    </div>
 </template>
 
 <style lang="scss" scoped>
-@import "styles/add-word-list-item";
+@import "styles/words-creator";
 </style>

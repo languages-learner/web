@@ -5,7 +5,7 @@ import WorkspaceHeader from '@/components/WorkspaceHeader.vue'
 <template>
     <WorkspaceHeader />
     <div class="workspace-layout">
-        <div class="workspace-layout_content">
+        <div class="workspace-layout__content">
             <router-view></router-view>
         </div>
     </div>

@@ -11,29 +11,30 @@ import WordStatusIcon from '@/modules/words/components/WordStatus/WordStatusIcon
 import { getWordStatusesValues } from '@/modules/words/enums/EWordStatus'
 import type { WordsFilters } from '@/modules/words/types/WordsFilters'
 import { computed } from 'vue'
+import { Word } from '@/modules/words/models/Words'
 
 const props = defineProps<{
-    filters: WordsFilters
+    text: string,
+    status: Word['status']
     isAllWordsSelected: boolean
-    thereIsFilerWord: boolean
+    hasFilteredWord: boolean
 }>()
 
 const emit = defineEmits<{
-    (e: 'updateText', value: WordsFilters['text']): void
-    (e: 'updateStatus', value: WordsFilters['status']): void
+    (e: 'update:text', value: string): void
+    (e: 'update:status', value: Word['status']): void
     (e: 'toggleSelection'): void
     (e: 'addWord'): void
 }>()
 
-const updateText = (value: WordsFilters['text']) => emit('updateText', value)
-const updateStatus = (value: WordsFilters['status']) => emit('updateStatus', value)
-
+const updateText = (value: string) => emit('update:text', value)
+const updateStatus = (value: Word['status']) => emit('update:status', value)
 const toggleSelection = () => emit('toggleSelection')
-
-const isSelectedStatus = (status: WordsFilters['status']) => props.filters.status === status
-
 const addWord = () => emit('addWord')
-const isAddWordButtonNeeded = computed(() => !props.thereIsFilerWord)
+
+const isSelectedStatus = (status: WordsFilters['status']) => props.status === status
+
+const isAddWordButtonNeeded = computed(() => !props.hasFilteredWord)
 </script>
 
 <template>
@@ -44,7 +45,7 @@ const isAddWordButtonNeeded = computed(() => !props.thereIsFilerWord)
             <n-col span="12">
                 <n-row
                     align-items="center"
-                    class="words-list-filter_left-container">
+                    class="words-list-filter__left-container">
                     <n-col span="2">
                         <n-checkbox
                             :checked="props.isAllWordsSelected"
@@ -53,9 +54,9 @@ const isAddWordButtonNeeded = computed(() => !props.thereIsFilerWord)
                     </n-col>
                     <n-col span="14">
                         <n-input
-                            :value="props.filters.text"
+                            :value="props.text"
                             :on-update:value="(value) => updateText(value)"
-                            class="words-list-filter_search-input"
+                            class="words-list-filter__search-input"
                             type="text"
                             :placeholder="$t('search')"
                             clearable />

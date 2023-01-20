@@ -42,7 +42,6 @@ const menuOptions: MenuOption[] = [
 
 <template>
     <n-menu
-        ref="menuInstRef"
         :value="currentRoute"
         :options="menuOptions">
     </n-menu>

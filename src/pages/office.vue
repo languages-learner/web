@@ -29,9 +29,9 @@ const title = computed(() => unref(officeRouteTitle)[String(route.name)])
 
 <template>
     <div class="office">
-        <OfficeNavigation class="office_navigation" />
-        <div class="office_body">
-            <n-h2 class="office_body_title">{{ title }}</n-h2>
+        <OfficeNavigation />
+        <div class="office__container">
+            <n-h2 class="office__container-title">{{ title }}</n-h2>
             <router-view></router-view>
         </div>
     </div>

@@ -27,7 +27,7 @@ const signInWithGoogle = () => signInWithProvider(EAuthenticationProvider.GOOGLE
         justify="center">
         <n-button
             @click="signInWithGoogle"
-            class="authenticate-modal-providers_button"
+            class="authenticate-modal-providers__button"
             type="success"
             ghost>
             Google

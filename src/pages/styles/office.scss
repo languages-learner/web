@@ -3,12 +3,12 @@
   grid-gap: 10px;
   grid-template-columns: 200px 1fr;
 
-  &_body {
+  &__container {
     max-width: 860px;
     margin: 0 auto;
+  }
 
-    &_title {
-      text-align: left;
-    }
+  &__container-title {
+    text-align: left;
   }
 }

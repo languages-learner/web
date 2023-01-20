@@ -1,13 +1,13 @@
 .authenticate-modal {
-  &_content {
+  &__container {
     width: 600px;
   }
 
-  &_providers {
+  &__providers {
     width: 100%;
   }
 
-  &_error {
+  &__error {
     margin-top: 10px;
   }
 }

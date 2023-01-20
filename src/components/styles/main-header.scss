@@ -5,15 +5,15 @@
   left: 0;
   width: 100vw;
   margin-top: 25px;
-}
 
-.mein-header-menu {
-  gap: 100px;
-  align-items: center;
-  padding: 0 40px;
+  &__menu {
+    gap: 100px;
+    align-items: center;
+    padding: 0 40px;
 
-  a {
-    color: inherit;
-    text-decoration: none;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 }

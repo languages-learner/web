@@ -24,7 +24,7 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
             <n-grid-item span="2">
                 <n-card
                     v-if="isUserDataLoaded"
-                    class="office-profile_user">
+                    class="office-profile__user">
                     <n-space
                         vertical
                         align="center">
@@ -38,12 +38,10 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                 </n-card>
                 <n-skeleton
                     v-else
-                    class="office-profile_user"></n-skeleton>
+                    class="office-profile__user"></n-skeleton>
             </n-grid-item>
             <n-grid-item span="3">
-                <n-space
-                    vertical
-                    class="office-profile-information">
+                <n-space vertical>
                     <n-card
                         v-if="isUserDataLoaded"
                         size="small">
@@ -65,8 +63,8 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                                 </n-progress>
                             </n-grid-item>
                             <n-grid-item span="1">
-                                <div class="office-profile-information_user-level office-profile-information-user-level">
-                                    <div class="office-profile-information-user-level_value">15</div>
+                                <div class="office-profile__user-level">
+                                    <div class="office-profile__user-level-value">15</div>
                                 </div>
                             </n-grid-item>
                         </n-grid>
