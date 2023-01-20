@@ -1,9 +1,9 @@
-import type { ICollection } from '@/services/dbstore/common/ICollection'
-import type User from '@/models/User'
 import type { IWordsCollection } from '@/services/dbstore/interfaces/IWordsCollection'
+import type { IUserCollection } from '@/services/dbstore/interfaces/IUserCollection'
+import type { ITranslationsCollection } from '@/services/dbstore/interfaces/ITranslationsCollection'
 
 export interface IDbStore {
-    readonly userCollection: ICollection<User>
-    readonly translationCollection: ICollection<any>
+    readonly userCollection: IUserCollection
+    readonly translationCollection: ITranslationsCollection
     readonly wordsCollection: IWordsCollection
 }

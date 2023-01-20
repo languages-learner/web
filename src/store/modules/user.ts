@@ -23,7 +23,7 @@ type StateForAuthorizedUser = {
         photoURL: string | null,
         isAnonymous: boolean,
     }
-    customData: Omit<User, 'id'>
+    customData: User
 }
 
 type StateForNotAuthorizedUser = {
@@ -63,10 +63,10 @@ export const useUserStore = defineStore('user', () => {
 
         try {
             if (needToCreate) {
-                await userCollection.create(profileData.value.uid, customData.value)
+                await userCollection.create(customData.value)
             }
 
-            await userCollection.create(profileData.value.uid, customData.value)
+            await userCollection.create(customData.value)
         } catch (e: any) {
             addErrorLogInfo({ type: EErrorType.USER_STORE, message: e.message, detail: 'uploadCustomData' })
         }
@@ -89,7 +89,7 @@ export const useUserStore = defineStore('user', () => {
         }
 
         try {
-            const userCustomData = await userCollection.get(user.uid)
+            const userCustomData = await userCollection.get()
 
             const baseCustomData = createBaseCustomData()
 

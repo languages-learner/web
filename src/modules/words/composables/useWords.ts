@@ -2,7 +2,8 @@ import {
     computed,
     reactive,
     ref,
-    unref
+    unref,
+    watch
 } from 'vue'
 import type { Word, Words } from '@/modules/words/models/Words'
 import type { WordsFilters } from '@/modules/words/types/WordsFilters'
@@ -10,10 +11,17 @@ import { EWordStatus } from '@/modules/words/enums/EWordStatus'
 import { useDbStore } from '@/plugins/services'
 import { useErrorLogStore } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
+import { debounce } from 'lodash'
+
+type Settings = {
+    limitWordsToFetch: number
+}
 
 export const useWords = (filters: WordsFilters = {
     text: '',
     status: -1
+}, settings: Settings = {
+    limitWordsToFetch: 10
 }) => {
     const { addErrorLogInfo } = useErrorLogStore()
     const { wordsCollection } = useDbStore()
@@ -21,37 +29,51 @@ export const useWords = (filters: WordsFilters = {
     const selectedWords: Record<string, boolean> = reactive({})
 
     const words: Words = reactive({})
+    const formattedWords = computed(() => Object.entries(words))
+
     const isWordsLoaded = ref(false)
+    const isAllWordsLoaded = ref(false)
+    const isWordsLoading = ref(false)
 
     const fetchWords = async () => {
+        if (unref(isAllWordsLoaded)) {
+            return
+        }
+
+        isWordsLoading.value = true
         try {
-            const items = await wordsCollection.items()
+            const items = await wordsCollection.items(true,  settings.limitWordsToFetch, [{
+                type: 'word',
+                value: filters.text
+            }, {
+                type: 'status',
+                value: filters.status
+            }])
 
             if (!items) {
+                isAllWordsLoaded.value = true
+
                 return
             }
 
+            let countAddedWords = 0
             Object.entries(items).forEach(([word, wordData]: [word: string, wordData: Word]) => {
+                if (!words[word]) {
+                    countAddedWords += 1
+                }
+
                 words[word] = wordData
             })
 
+            isAllWordsLoaded.value = countAddedWords === 0 || Object.keys(items).length < settings.limitWordsToFetch
             isWordsLoaded.value = true
         } catch (e: any) {
             addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'fetchWords' })
+        } finally {
+            isWordsLoading.value = false
         }
     }
-
-    const filterByText = (text: WordsFilters['text'], word: string, wordData: Word) => {
-        return word.includes(text) || wordData.translations.some(translation => translation.includes(text))
-    }
-    const filterByStatus = (status: WordsFilters['status'], wordData: Word) => {
-        return status === -1 || wordData.status === status
-    }
-    const filteredWords = computed(() => {
-        return Object.entries(words)
-            .filter(([word, wordData]) => filterByText(filters.text, word, wordData))
-            .filter(([, translation]) => filterByStatus(filters.status, translation))
-    })
+    const fetchWordsDebounced = debounce(fetchWords, 300)
 
     const isAllWordsSelected = computed(() => Object.keys(words).length > 0 && Object.keys(selectedWords).length === Object.keys(words).length)
 
@@ -82,14 +104,13 @@ export const useWords = (filters: WordsFilters = {
             return
         }
 
-        const wordData = {
+        const wordData: Omit<Word, 'created' | 'updated'> = {
             translations,
             status: EWordStatus.NEW_WORD
-        } as Word
+        }
 
         try {
-            await wordsCollection.create(word, wordData)
-            words[word] = wordData
+            words[word] = await wordsCollection.create(word, wordData)
         } catch (e: any) {
             addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'addWord' })
         }
@@ -104,43 +125,43 @@ export const useWords = (filters: WordsFilters = {
         }
     }
 
-    const updateWordTranslations = async (word: string, translations: string[]) => {
+    const updateWord = async (word: string, wordData: Word, updatedProperty: keyof Word) => {
         if (!words[word]) {
             return
         }
 
+        try {
+            const newWordData = await wordsCollection.update(word, wordData)
+            words[word].updated = newWordData.updated
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            words[word][updatedProperty] = newWordData[updatedProperty]
+        } catch (e: any) {
+            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'updateWord' })
+        }
+    }
+
+    const updateWordTranslations = async (word: string, translations: string[]) => {
         if (!translations.length) {
             await deleteWord(word)
 
             return
         }
 
-        try {
-            await wordsCollection.update(word, {
-                translations,
-                status: words[word].status
-            })
-
-            words[word].translations = translations
-        } catch (e: any) {
-            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'updateTranslations' })
-        }
+        await updateWord(word, {
+            ...words[word],
+            translations,
+        }, 'translations')
     }
 
     const updateWordStatus = async (word: string, status: number) => {
-        try {
-            await wordsCollection.update(word, {
-                translations: words[word].translations,
-                status
-            })
-
-            words[word].status = status
-        } catch (e: any) {
-            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: e.message, detail: 'updateWordStatus' })
-        }
+        await updateWord(word, {
+            ...words[word],
+            status,
+        }, 'status')
     }
 
-    const resetAndFetchWords = async () => {
+    const reset = () => {
         Object.keys(words).forEach(word => {
             delete words[word]
         })
@@ -148,12 +169,23 @@ export const useWords = (filters: WordsFilters = {
         Object.keys(selectedWords).forEach(word => {
             delete selectedWords[word]
         })
+        wordsCollection.resetWordsPagination()
+        isAllWordsLoaded.value = false
+    }
+    const resetAndFetchWords = async () => {
+        reset()
         await fetchWords()
     }
 
+    watch(filters, () => {
+        reset()
+        fetchWordsDebounced()
+    })
+
     return {
-        words: filteredWords,
+        words: formattedWords,
         isWordsLoaded,
+        isWordsLoading,
         selectedWords,
         isAllWordsSelected,
         toggleWordSelection,

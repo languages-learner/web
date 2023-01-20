@@ -1,5 +1,4 @@
 type User = {
-    id: string
     nativeLanguage: number
     activeLearningLanguage: number
     interfaceLanguage: number

@@ -12,6 +12,7 @@ defineProps<{
     words: Array<[string, Word]>
     selectedWords: Record<string, boolean>
     isWordsLoaded: boolean
+    isWordsLoading: boolean
 }>()
 
 const emit = defineEmits<{
@@ -42,7 +43,7 @@ const updateWordTranslations = (word: string, translations: Word['translations']
                 :isSelected="selectedWords[word] ?? false"
             />
         </template>
-        <n-list-item v-else>
+        <n-list-item v-if="!isWordsLoaded || isWordsLoading">
             <n-row justify-content="center">
                 <n-spin size="large" />
             </n-row>
