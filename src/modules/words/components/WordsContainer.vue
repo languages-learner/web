@@ -6,18 +6,21 @@ import { useWords } from '@/modules/words/composables/useWords'
 import { useWordsFilters } from '@/modules/words/composables/useWordsFilters'
 import {
     computed,
+    onBeforeUnmount,
     onMounted,
     ref,
     unref,
-    watch
+    watch,
 } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/modules/user'
+import { useWordsLoadingOnScroll } from '@/modules/words/composables/useWordsLoadingOnScroll'
 
 const { filters, reset: resetFilters } = useWordsFilters()
 const {
     words,
     isWordsLoaded,
+    isWordsLoading,
     selectedWords,
     isAllWordsSelected,
     toggleWordSelection,
@@ -44,12 +47,19 @@ const toggleIsAddWordBlockNeeded = () => {
 watch(() => filters.text, () => isAddWordBlockNeededByUserRequest.value = false)
 
 const wordCreatorType = computed(() => unref(words).length > 0 || unref(isAddWordBlockNeededByUserRequest) ? 'new_word' : 'not_found')
-const isWordCreatorNeeded = computed(() => unref(isAddWordBlockNeededByUserRequest) || (!unref(words).length && filters.text))
+const isWordCreatorNeeded = computed(() => unref(isWordsLoaded) && !unref(isWordsLoading) &&
+    (unref(isAddWordBlockNeededByUserRequest) || (!unref(words).length && filters.text))
+)
 
-onMounted(fetchWords)
+onBeforeUnmount(resetAndFetchWords)
 watch(() => unref(customData)?.activeLearningLanguage, () => {
     resetFilters()
     resetAndFetchWords()
+})
+
+const bottom = ref<HTMLDivElement>()
+onMounted(() => {
+    useWordsLoadingOnScroll(bottom, isWordsLoading, fetchWords)
 })
 </script>
 
@@ -74,8 +84,10 @@ watch(() => unref(customData)?.activeLearningLanguage, () => {
             @toggleWordSelection="toggleWordSelection"
             @updateWordTranslations="updateWordTranslations"
             :isWordsLoaded="isWordsLoaded"
+            :isWordsLoading="isWordsLoading"
             :words="words"
             :selectedWords="selectedWords"
         />
+        <div ref="bottom"></div>
     </div>
 </template>

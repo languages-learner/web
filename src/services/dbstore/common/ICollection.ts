@@ -1,9 +1,0 @@
-import { Ref } from 'vue'
-
-export interface ICollection<T> {
-    create: (id: string, item: Omit<T, 'id'>) => Promise<void>
-    get: (id: string) => Promise<T | null>
-    update: (id: string, item: Omit<T, 'id'>) => Promise<void>
-    delete: (id: string) => Promise<void>
-    items: Ref<T[]>
-}

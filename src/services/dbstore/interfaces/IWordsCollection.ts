@@ -1,8 +1,10 @@
 import type { Word, Words } from '@/modules/words/models/Words'
+import type { WordsCollectionFetchItemsFilter } from '@/services/dbstore/types/words/WordsCollectionFetchItemsFilter'
 
 export interface IWordsCollection {
-    items(): Promise<Words | null>
-    create(word: string, wordData: Word): Promise<void>
-    update(word: string, wordData: Word): Promise<void>
+    items(paginate: boolean, limit: number, filters: Array<WordsCollectionFetchItemsFilter>): Promise<Words | null>
+    create(word: string, wordData: Omit<Word, 'created' | 'updated'>): Promise<Word>
+    update(word: string, wordData: Word): Promise<Word>
     delete(word: string): Promise<void>
+    resetWordsPagination(): void
 }

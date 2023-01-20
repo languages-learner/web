@@ -6,4 +6,5 @@ export const enum EErrorType {
     INTERFACE_LANGUAGE_STORE = 'interface_language_store',
     USER_STORE = 'user_store',
     WORDS_STORE = 'words_store',
+    INTERSECTION_OBSERVER = 'intersection-observer'
 }
