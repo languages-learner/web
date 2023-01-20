@@ -5,11 +5,11 @@ import { NGradientText, NRow } from 'naive-ui'
 <template>
     <div class="main-page">
         <n-row
-            class="main-page_title"
+            class="main-page__title"
             justify-content="center"
             align-items="center">
             <n-gradient-text
-                class="main-page-title_text"
+                class="main-page__title-text"
                 :size="100"
                 type="success">
                 Languages<br/>

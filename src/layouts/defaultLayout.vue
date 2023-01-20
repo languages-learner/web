@@ -5,7 +5,7 @@ import MainHeader from '@/components/MainHeader.vue'
 <template>
     <MainHeader />
     <div class="default-layout">
-        <div class="default-layout_content">
+        <div class="default-layout__content">
             <router-view></router-view>
         </div>
     </div>

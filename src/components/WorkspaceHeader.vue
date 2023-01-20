@@ -79,13 +79,13 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
 
 <template>
     <div class="workspace-header">
-        <div class="workspace-header_menu workspace-header-menu">
+        <div class="workspace-header__menu">
             <n-gradient-text
                 :size="24"
                 type="success">
                 LanguagesLearner
             </n-gradient-text>
-            <div class="workspace-header-menu_navigations">
+            <div class="workspace-header__navigations">
                 <div
                     v-for="navigationItem in navigationItems"
                     :key="`navigation-item-${navigationItem.name}`">
@@ -98,7 +98,7 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
                     </n-button>
                 </div>
             </div>
-            <div class="workspace-header-menu_controllers">
+            <div class="workspace-header__controllers">
                 <template v-if="isUserDataLoaded">
                     <n-dropdown
                         @select="handleSelectLearningLanguagesDropdownMenuItem"

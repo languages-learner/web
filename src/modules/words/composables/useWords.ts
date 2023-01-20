@@ -104,7 +104,7 @@ export const useWords = (filters: WordsFilters = {
         }
     }
 
-    const updateTranslations = async (word: string, translations: string[]) => {
+    const updateWordTranslations = async (word: string, translations: string[]) => {
         if (!words[word]) {
             return
         }
@@ -160,7 +160,7 @@ export const useWords = (filters: WordsFilters = {
         toggleAllWordsSelection,
         addWord,
         deleteWord,
-        updateTranslations,
+        updateWordTranslations,
         updateWordStatus,
         fetchWords,
         resetAndFetchWords

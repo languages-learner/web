@@ -1,12 +1,7 @@
 .office-profile {
   width: 600px;
 
-  &_card {
-    border: 1px solid #f0ede5;
-    border-radius: 6px;
-  }
-
-  &_user {
+  &__user {
     height: 400px;
     background-color: #fff;
     background-image: url(@/assets/profile-background.svg);
@@ -14,10 +9,8 @@
     background-position-y: 102%;
     background-size: 100%;
   }
-}
 
-.office-profile-information {
-  &_user-level {
+  &__user-level {
     position: absolute;
     top: 21px;
     width: 42px;
@@ -26,10 +19,8 @@
     background-repeat: no-repeat;
     background-position: 50%;
   }
-}
 
-.office-profile-information-user-level {
-  &_value {
+  &__user-level-value {
     position: absolute;
     top: 50%;
     left: 50%;

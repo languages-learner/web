@@ -1,12 +1,12 @@
-.add-word-list-item {
+.words-creator {
   margin-top: 20px;
 
-  &_container {
+  &__container {
     flex-direction: column;
     gap: 15px;
   }
 
-  &_button {
+  &__button {
     max-width: fit-content;
   }
 }

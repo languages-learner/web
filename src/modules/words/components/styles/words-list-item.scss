@@ -1,6 +1,10 @@
 .words-list-item {
-  &_voice-acting, &_change, &_status, &_delete {
+  &__property {
     display: flex;
     align-items: center;
+
+    &--translations {
+      align-items: flex-start;
+    }
   }
 }

@@ -86,7 +86,7 @@ const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(
         class="authenticate-modal"
     >
         <n-card
-            class="authenticate-modal_content"
+            class="authenticate-modal__container"
             :title="$t('authentication')"
             :bordered="false"
             size="huge"
@@ -95,11 +95,9 @@ const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(
         >
             <n-tabs
                 v-model:value="authenticateType"
-                class="card-tabs"
                 default-value="signin"
                 size="large"
                 animated
-                pane-style="padding-left: 4px; padding-right: 4px; box-sizing: border-box;"
             >
                 <n-tab-pane
                     name="signin"
@@ -124,13 +122,13 @@ const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(
                         strong>
                         {{ $t('sign_in') }}
                     </n-button>
-                    <div class="authenticate-modal_error">
+                    <div class="authenticate-modal__error">
                         <n-text type="error">{{ currentError }}</n-text>
                     </div>
                     <n-divider />
                     <AuthenticateModalProviders
                         @error="setCurrentError"
-                        class="authenticate-modal_providers"/>
+                        class="authenticate-modal__providers"/>
                 </n-tab-pane>
                 <n-tab-pane
                     name="signup"
@@ -155,13 +153,13 @@ const createUserWithEmailAndPassword = () => baseCreateUserWithEmailAndPassword(
                         strong>
                         {{ $t('sign_up') }}
                     </n-button>
-                    <div class="authenticate-modal_error">
+                    <div class="authenticate-modal__error">
                         <n-text type="error">{{ currentError }}</n-text>
                     </div>
                     <n-divider />
                     <AuthenticateModalProviders
                         @error="setCurrentError"
-                        class="authenticate-modal_providers" />
+                        class="authenticate-modal__providers" />
                 </n-tab-pane>
             </n-tabs>
         </n-card>

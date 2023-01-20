@@ -20,7 +20,7 @@ const showAuthenticateModal = (type: 'signin' | 'signup') => {
     <div class="main-header">
         <n-space
             justify="end"
-            class="mein-header-menu">
+            class="main-header__menu">
             <template v-if="!isLoggedIn">
                 <n-button
                     @click="() => showAuthenticateModal('signin')"
