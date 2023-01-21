@@ -1,16 +1,5 @@
 <script lang="ts" setup>
 import {
-    NButton,
-    NCheckbox,
-    NCol,
-    NDynamicTags,
-    NIcon,
-    NListItem,
-    NRow,
-    NSpace,
-    NText
-} from 'naive-ui'
-import {
     Pencil,
     TrashOutline,
     VolumeMediumOutline

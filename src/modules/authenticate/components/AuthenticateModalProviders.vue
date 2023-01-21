@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { NButton, NSpace } from 'naive-ui'
 import { useAuthenticationService } from '@/plugins/services'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 import { EErrorType } from '@/enums/EErrorType'

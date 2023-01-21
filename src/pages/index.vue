@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { NGradientText, NRow } from 'naive-ui'
-</script>
-
 <template>
     <div class="main-page">
         <n-row

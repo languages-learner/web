@@ -1,17 +1,9 @@
 <script lang="ts" setup>
-import {
-    NButton,
-    NButtonGroup,
-    NCheckbox,
-    NCol,
-    NInput,
-    NRow,
-} from 'naive-ui'
 import WordStatusIcon from '@/modules/words/components/WordStatus/WordStatusIcon.vue'
 import { getWordStatusesValues } from '@/modules/words/enums/EWordStatus'
 import type { WordsFilters } from '@/modules/words/types/WordsFilters'
 import { computed } from 'vue'
-import { Word } from '@/modules/words/models/Words'
+import type { Word } from '@/modules/words/models/Words'
 
 const props = defineProps<{
     text: string,
@@ -55,7 +47,7 @@ const isAddWordButtonNeeded = computed(() => !props.hasFilteredWord)
                     <n-col span="14">
                         <n-input
                             :value="props.text"
-                            :on-update:value="(value) => updateText(value)"
+                            :on-update:value="(value: string) => updateText(value)"
                             class="words-list-filter__search-input"
                             type="text"
                             :placeholder="$t('search')"

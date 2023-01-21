@@ -1,12 +1,6 @@
 <script lang="ts" setup>
-import {
-    NList,
-    NListItem,
-    NRow,
-    NSpin
-} from 'naive-ui'
 import WordsListItem from '@/modules/words/components/WordsListItem.vue'
-import { Word } from '@/modules/words/models/Words'
+import type { Word } from '@/modules/words/models/Words'
 
 defineProps<{
     words: Array<[string, Word]>

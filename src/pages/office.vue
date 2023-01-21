@@ -6,7 +6,6 @@ meta:
 
 <script setup lang="ts">
 import OfficeNavigation from '@/modules/office/components/OfficeNavigation.vue'
-import { NH2 } from 'naive-ui'
 import { useRoute } from 'vue-router'
 import {
     ComputedRef,
