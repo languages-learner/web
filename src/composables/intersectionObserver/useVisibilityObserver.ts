@@ -1,11 +1,11 @@
 import {
-    Ref,
+    type Ref,
     onScopeDispose,
     ref,
-    watchEffect
+    watchEffect,
 } from 'vue'
-import { useIntersectionObserver } from '@/composables/intersectionObserver/useIntersectionObserver'
 import { noop } from '@/utils/noop'
+import { useIntersectionObserver } from '@/composables/intersectionObserver/useIntersectionObserver'
 
 export const useVisibilityObserver = (target: Ref<HTMLDivElement | undefined>, autoUnobserve?: boolean) => {
     const isVisible = ref(false)

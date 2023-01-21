@@ -1,11 +1,11 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import type { Word, Words } from '@/modules/words/models/Words'
+import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
+import CollectionReference = firebase.firestore.CollectionReference;
+import type { Word, Words } from '@/services/dbstore/dto/Words'
 import type { IWordsCollection } from '@/services/dbstore/interfaces/IWordsCollection'
 import type { FirestoreCollectionFilter } from '@/services/dbstore/firestore/types/FirestoreCollectionFilter'
 import type { WordsCollectionFetchItemsFilter } from '@/services/dbstore/types/words/WordsCollectionFetchItemsFilter'
-import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
-import CollectionReference = firebase.firestore.CollectionReference;
 import { EFirestoreCollectionFilterType } from '@/services/dbstore/firestore/enums/EFirestoreCollectionFilterType'
 import { BaseFirestoreCollection } from '@/services/dbstore/firestore/common/BaseFirestoreCollection'
 import { useUserStoreWithOut } from '@/store/modules/user'
@@ -46,12 +46,12 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
                     firestoreCollectionFilters.push({
                         property: 'documentId',
                         type: EFirestoreCollectionFilterType.GREATER_THAN_OR_EQUAL_TO,
-                        value: filter.value
+                        value: filter.value,
                     })
                     firestoreCollectionFilters.push({
                         property: 'documentId',
                         type: EFirestoreCollectionFilterType.LESS_THAN,
-                        value: `${filter.value}z`
+                        value: `${filter.value}z`,
                     })
                 }
                 break
@@ -60,7 +60,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
                     firestoreCollectionFilters.push({
                         property: 'status',
                         type: EFirestoreCollectionFilterType.EQUAL_TO,
-                        value: filter.value
+                        value: filter.value,
                     })
                 }
                 break
@@ -71,16 +71,16 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
             return super.setFilters(collection, firestoreCollectionFilters)
         }
 
-        return collection
+        return collection.orderBy('created', 'desc')
     }
 
     private _lastItem: QueryDocumentSnapshot | null = null
     public items = async (paginate: boolean, limit: number, filters: Array<WordsCollectionFetchItemsFilter>): Promise<Words | null> => {
         const items: Words = {}
-        const query = this.setFetchItemsFilters(this.wordCollection, filters)
+        let query = this.setFetchItemsFilters(this.wordCollection, filters)
 
         if (paginate && this._lastItem) {
-            query.startAt(this._lastItem)
+            query = query.startAt(this._lastItem)
             limit += 1
         }
 

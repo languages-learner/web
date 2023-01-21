@@ -1,7 +1,8 @@
-import { useErrorLogStore } from '@/store/modules/errorLog'
 import { onScopeDispose } from 'vue'
+import { useErrorLogStore } from '@/store/modules/errorLog'
 import { noop } from '@/utils/noop'
 import { EErrorType } from '@/enums/EErrorType'
+import { getErrorMessage } from '@/utils/error'
 
 type TypeListener = (entry: IntersectionObserverEntry) => void;
 
@@ -45,10 +46,10 @@ export const useIntersectionObserver = () => {
     if (isSupported) {
         try {
             observer = new IntersectionObserver(onIntersection, {
-                rootMargin: '100%',
+                threshold: 1,
             })
-        } catch (e: any) {
-            addErrorLogInfo({ type: EErrorType.INTERSECTION_OBSERVER, message: e.message })
+        } catch (e) {
+            addErrorLogInfo({ type: EErrorType.INTERSECTION_OBSERVER, message: getErrorMessage(e) })
         }
     }
 

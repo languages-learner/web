@@ -1,5 +1,5 @@
+import type { ITranslationsCollection } from '@/services/dbstore/interfaces/ITranslationsCollection'
 import { BaseFirestoreCollection } from '@/services/dbstore/firestore/common/BaseFirestoreCollection'
-import { ITranslationsCollection } from '@/services/dbstore/interfaces/ITranslationsCollection'
 
 const COLLECTION_NAME = 'translations'
 

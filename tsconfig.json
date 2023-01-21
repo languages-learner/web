@@ -20,10 +20,6 @@
         "src/*"
       ],
     },
-    "types": [
-      "vite-plugin-pages/client",
-      "vite-plugin-vue-layouts/client"
-    ],
   },
   "include": [
     "src/**/*.ts",
@@ -32,6 +28,7 @@
     "src/**/*.vue",
     "types/**/*.d.ts",
     "types/**/*.ts",
-    "auto-imports.d.ts"
+    "auto-imports.d.ts",
+    "components.d.ts"
   ]
 }

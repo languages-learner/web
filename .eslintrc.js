@@ -9,6 +9,7 @@ module.exports = {
         '@vue/typescript/recommended',
     ],
     plugins: [
+        'import',
         'import-newlines',
     ],
     parserOptions: {
@@ -29,6 +30,21 @@ module.exports = {
         'semi': ['error', 'never'],
         'sort-imports': ['error', {
             'ignoreDeclarationSort': true,
+        }],
+        'import/order': ['error', {
+            'groups': [
+                'index',
+                'sibling',
+                'parent',
+                'internal',
+                'external',
+                'builtin',
+                'object',
+                'type',
+            ],
+        }],
+        '@typescript-eslint/consistent-type-imports': ['error', {
+            fixStyle: 'inline-type-imports',
         }],
         'import-newlines/enforce': ['error', {
             items: 2,
@@ -59,13 +75,6 @@ module.exports = {
             singleline: 1,
             multiline: 1,
         }],
+        'comma-dangle': ['error', 'always-multiline'],
     },
-    overrides: [
-        {
-            files: ['**/pages/**'],
-            rules: {
-                'vue/multi-word-component-names': 'off'
-            }
-        }
-    ]
 }

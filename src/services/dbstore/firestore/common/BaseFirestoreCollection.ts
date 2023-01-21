@@ -1,9 +1,9 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import type { FirestoreCollectionFilter } from '@/services/dbstore/firestore/types/FirestoreCollectionFilter'
-import DocumentData = firebase.firestore.DocumentData;
 import CollectionReference = firebase.firestore.CollectionReference;
 import Query = firebase.firestore.Query;
+import DocumentData = firebase.firestore.DocumentData;
+import type { FirestoreCollectionFilter } from '@/services/dbstore/firestore/types/FirestoreCollectionFilter'
 
 export abstract class BaseFirestoreCollection<T> {
     protected readonly _collection: firebase.firestore.CollectionReference<T>

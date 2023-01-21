@@ -1,7 +1,7 @@
-import User from '@/models/User'
+import type User from '@/services/dbstore/dto/User'
+import type { IUserCollection } from '@/services/dbstore/interfaces/IUserCollection'
 import { BaseFirestoreCollection } from '@/services/dbstore/firestore/common/BaseFirestoreCollection'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { IUserCollection } from '@/services/dbstore/interfaces/IUserCollection'
 
 const COLLECTION_NAME = 'users'
 

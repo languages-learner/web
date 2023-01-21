@@ -1,4 +1,4 @@
-import type { Word, Words } from '@/modules/words/models/Words'
+import type { Word, Words } from '@/services/dbstore/dto/Words'
 import type { WordsCollectionFetchItemsFilter } from '@/services/dbstore/types/words/WordsCollectionFetchItemsFilter'
 
 export interface IWordsCollection {
