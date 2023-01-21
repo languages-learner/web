@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { NPopselect } from 'naive-ui'
 import WordStatusIcon from '@/modules/words/components/WordStatus/WordStatusIcon.vue'
 import { EWordStatus } from '@/modules/words/enums/EWordStatus'
 import { useI18n } from 'vue-i18n'

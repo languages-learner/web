@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import {
-    NForm,
-    NFormItem,
-    NSelect,
-    NSkeleton
-} from 'naive-ui'
 import { computed, unref } from 'vue'
 import { useUserStore } from '@/store/modules/user'
 import { storeToRefs } from 'pinia'

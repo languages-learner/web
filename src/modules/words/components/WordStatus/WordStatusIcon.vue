@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { NIcon } from 'naive-ui'
 import { Checkmark, CheckmarkDone } from '@vicons/ionicons5'
 import { EWordStatus } from '@/modules/words/enums/EWordStatus'
 

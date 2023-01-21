@@ -1,13 +1,4 @@
 <script setup lang="ts">
-import {
-    NCard,
-    NGrid,
-    NGridItem,
-    NProgress,
-    NSkeleton,
-    NSpace,
-    NText
-} from 'naive-ui'
 import UserAvatar from '@/components/UserAvatar.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/modules/user'

@@ -14,3 +14,6 @@ yarn-error.log
 
 # Cache files
 .firebase
+
+# Generated files
+components.d.ts

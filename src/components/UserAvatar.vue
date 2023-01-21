@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { NAvatar } from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/modules/user'
 import {

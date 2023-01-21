@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import {
-    NButton,
-    NDropdown,
-    NGradientText,
-    NSkeleton
-} from 'naive-ui'
 import UserAvatar from '@/components/UserAvatar.vue'
 import { useUserStore } from '@/store/modules/user'
 import { useAuthenticationService } from '@/plugins/services'

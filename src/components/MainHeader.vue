@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { NButton, NSpace } from 'naive-ui'
 import { useUserStore } from '@/store/modules/user'
 import { storeToRefs } from 'pinia'
 import { EPageName } from '@/enums/EPageName'
