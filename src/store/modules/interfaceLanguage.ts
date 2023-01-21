@@ -1,21 +1,22 @@
 import { defineStore } from 'pinia'
-import { useDbStore } from '@/plugins/services'
 import { useI18n } from 'vue-i18n'
 import {
     readonly,
     ref,
-    unref
+    unref,
 } from 'vue'
-import { useConfigStore } from '@/store/modules/config'
 import { useRouter } from 'vue-router'
+import { useConfigStore } from '@/store/modules/config'
+import { useDbStore } from '@/plugins/services'
 import { useErrorLogStore } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
+import { getErrorMessage } from '@/utils/error'
 
 export const useInterfaceLanguageStore = defineStore('language', () => {
     const {
         locale,
         availableLocales,
-        setLocaleMessage
+        setLocaleMessage,
     } = useI18n()
     const { translationCollection } = useDbStore()
     const { interfaceLanguages, getLanguageId, getLanguageName } = useConfigStore()
@@ -31,8 +32,8 @@ export const useInterfaceLanguageStore = defineStore('language', () => {
             const translations = await translationCollection.get(languageName)
             loadedLanguages.value.push(languageName)
             setLocaleMessage(languageName, translations)
-        } catch (e: any) {
-            addErrorLogInfo({ type: EErrorType.INTERFACE_LANGUAGE_STORE, message: e.message })
+        } catch (e) {
+            addErrorLogInfo({ type: EErrorType.INTERFACE_LANGUAGE_STORE, message: getErrorMessage(e) })
         }
     }
 
@@ -56,6 +57,6 @@ export const useInterfaceLanguageStore = defineStore('language', () => {
     return {
         interfaceLanguageId: readonly(interfaceLanguageId),
         interfaceLanguages,
-        setInterfaceLanguage
+        setInterfaceLanguage,
     }
 })

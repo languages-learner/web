@@ -1,4 +1,4 @@
-import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
+import type { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 
 export interface IAuthentication {
     signInWithProvider(provider: EAuthenticationProvider): Promise<void>

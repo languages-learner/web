@@ -1,7 +1,7 @@
+import type { App , ComponentPublicInstance } from 'vue'
 import { useErrorLogStoreWithOut } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
-import { App } from 'vue'
-import { ComponentPublicInstance } from 'vue'
+import { getErrorMessage } from '@/utils/error'
 
 function formatComponentName(instance: ComponentPublicInstance | null) {
     const anonymous = {
@@ -36,9 +36,7 @@ function vueErrorHandler(err: unknown, instance: ComponentPublicInstance | null,
         type: EErrorType.VUE,
         name,
         file: path,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        message: err.message,
+        message: getErrorMessage(err),
         detail: info,
     })
 }

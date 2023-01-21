@@ -1,0 +1,34 @@
+.office-profile {
+  width: 600px;
+
+  &__user {
+    height: 400px;
+    background-color: #fff;
+    background-image: url(/profile-background.svg);
+    background-repeat: no-repeat;
+    background-position-y: 102%;
+    background-size: 100%;
+  }
+
+  &__user-level-container {
+    gap: 16px;
+  }
+
+  &__user-level-label {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  &__user-level {
+    width: 42px;
+    height: 42px;
+    background-image: url(/user-level.svg);
+  }
+
+  &__user-level-value {
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+  }
+}

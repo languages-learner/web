@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import { store } from '@/store'
-import { ErrorLogInfo, ErrorLogInfoWithAdditionalData } from '@/models/ErrorLogInfo'
-import { formatToDateTime } from '@/utils/dateUtil'
 import { reactive } from 'vue'
+import type { ErrorLogInfo, ErrorLogInfoWithAdditionalData } from '@/models/ErrorLogInfo'
+import { store } from '@/store'
+import { formatToDateTime } from '@/utils/dateUtil'
 
 export const useErrorLogStore = defineStore('error-log', () => {
     const errorLogInfoList = reactive<ErrorLogInfoWithAdditionalData[]>([])
@@ -13,10 +13,14 @@ export const useErrorLogStore = defineStore('error-log', () => {
             date: formatToDateTime(new Date()),
             url: window.location.href,
         })
+
+        if (import.meta.env.DEV) {
+            console.error(data)
+        }
     }
 
     return {
-        addErrorLogInfo
+        addErrorLogInfo,
     }
 })
 

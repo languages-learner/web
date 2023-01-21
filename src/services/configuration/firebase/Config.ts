@@ -1,8 +1,8 @@
 import firebase from 'firebase/app'
 import 'firebase/remote-config'
-import { IConfig } from '@/services/configuration/common/IConfig'
-import { IConfigService } from '@/services/configuration/common/IConfigService'
 import RemoteConfig = firebase.remoteConfig.RemoteConfig;
+import type { IConfig } from '@/services/configuration/common/IConfig'
+import type { IConfigService } from '@/services/configuration/common/IConfigService'
 
 export class Config implements IConfigService {
     private static instance: Config
@@ -39,9 +39,7 @@ export class Config implements IConfigService {
 
     public getConfig() {
         return Object.entries(firebase.remoteConfig().getAll()).reduce((answer, [key, value]) => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            answer[key] = JSON.parse(value.asString())
+            answer[key as keyof IConfig] = JSON.parse(value.asString())
 
             return answer
         }, {} as IConfig)
@@ -51,7 +49,7 @@ export class Config implements IConfigService {
         return {
             languages: [],
             languagesAvailableForLearning: [],
-            interfaceLanguages: []
+            interfaceLanguages: [],
         } as IConfig
     }
 }

@@ -1,4 +1,4 @@
-import { EFirestoreCollectionFilterType } from '@/services/dbstore/firestore/enums/EFirestoreCollectionFilterType'
+import type { EFirestoreCollectionFilterType } from '@/services/dbstore/firestore/enums/EFirestoreCollectionFilterType'
 
 type PropertyType = string | 'documentId'
 

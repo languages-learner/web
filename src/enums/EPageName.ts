@@ -1,7 +1,7 @@
 export const enum EPageName {
-    MAIN_PAGE = 'index',
-    PROFILE = 'office-profile',
-    SETTINGS = 'office-settings',
+    LANDING = 'landing',
+    OFFICE_PROFILE = 'office-profile',
+    OFFICE_SETTINGS = 'office-settings',
     DICTIONARY = 'dictionary',
     TRAININGS = 'trainings'
 }

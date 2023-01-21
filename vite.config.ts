@@ -1,6 +1,4 @@
 import { defineConfig } from 'vite'
-import Pages from 'vite-plugin-pages'
-import Layouts from 'vite-plugin-vue-layouts'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import Components from 'unplugin-vue-components/vite'
@@ -23,13 +21,6 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        Pages({
-            pagesDir: [{ dir: 'src/pages', baseRoute: '' }],
-            exclude: ['**/components/*.vue'],
-        }),
-        Layouts({
-            defaultLayout: 'defaultLayout',
-        }),
         Components({
             resolvers: [NaiveUiResolver()]
         })

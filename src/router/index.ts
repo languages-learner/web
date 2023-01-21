@@ -1,14 +1,17 @@
-import {
-    RouteRecordRaw,
-    createRouter,
-    createWebHistory
-} from 'vue-router'
-import { setupLayouts } from 'virtual:generated-layouts'
-import generatedRoutes from 'virtual:generated-pages'
-import { App } from 'vue'
-import { BASE_INTERFACE_LANGUAGE_NAME } from '@/const/BaseInterfaceLanguage'
+import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 
-let routes = setupLayouts(generatedRoutes)
+import type { App } from 'vue'
+import { landingRoutes } from '@/modules/landing/router'
+import { workspaceRoutes } from '@/modules/workspace/router'
+
+import { BASE_INTERFACE_LANGUAGE_NAME } from '@/const/BaseInterfaceLanguage'
+import { EPageName } from '@/enums/EPageName'
+
+let routes = [
+    ...landingRoutes,
+    ...workspaceRoutes,
+]
 
 const addLangParameterToRoutes = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
     return routes.map(route => {
@@ -31,6 +34,6 @@ export async function setupRouter(app: App<Element>) {
     await router.isReady()
 
     if (!router.currentRoute.value.params.lang) {
-        await router.push({ name: router.currentRoute.value.name ?? 'index', params: { lang: BASE_INTERFACE_LANGUAGE_NAME } })
+        await router.push({ name: router.currentRoute.value.name ?? EPageName.LANDING, params: { lang: BASE_INTERFACE_LANGUAGE_NAME } })
     }
 }
