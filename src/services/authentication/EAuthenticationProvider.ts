@@ -1,3 +1,3 @@
-export enum EAuthenticationProvider {
+export const enum EAuthenticationProvider {
     GOOGLE
 }

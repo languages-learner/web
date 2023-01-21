@@ -1,18 +1,20 @@
-import { defineStore, skipHydrate } from 'pinia'
 import {
     computed,
     ref,
-    unref
+    unref,
 } from 'vue'
+import { defineStore, skipHydrate } from 'pinia'
+
 import type firebase from 'firebase'
+import type User from '@/services/dbstore/dto/User'
 import { store } from '@/store'
 import { useDbStore } from '@/plugins/services'
 import { useConfigStore } from '@/store/modules/config'
 import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
 import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
-import type User from '@/models/User'
 import { useErrorLogStore } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
+import { getErrorMessage } from '@/utils/error'
 
 type StateForAuthorizedUser = {
     profileData: {
@@ -37,7 +39,7 @@ export const useUserStore = defineStore('user', () => {
     const { addErrorLogInfo } = useErrorLogStore()
     const { userCollection } = useDbStore()
     const { getTranslatedLanguageName } = useConfigStore()
-    const { setInterfaceLanguage } = useInterfaceLanguageStore()
+    const { setInterfaceLanguage, interfaceLanguageId } = useInterfaceLanguageStore()
 
     const isUserDataLoaded = ref(false)
     const profileData = ref<State['profileData']>(undefined)
@@ -45,16 +47,16 @@ export const useUserStore = defineStore('user', () => {
 
     const isLoggedIn = computed(() => unref(profileData) !== undefined)
     const activeLearningLanguageName = computed(() =>
-        getTranslatedLanguageName(unref(customData)?.activeLearningLanguage ?? BASE_INTERFACE_LANGUAGE)
+        getTranslatedLanguageName(unref(customData)?.activeLearningLanguage ?? BASE_INTERFACE_LANGUAGE),
     )
 
     const createBaseCustomData = (): StateForAuthorizedUser['customData'] => {
-        const { languagesAvailableForLearning, interfaceLanguages } = useConfigStore()
+        const { languagesAvailableForLearning } = useConfigStore()
 
         return {
             nativeLanguage: languagesAvailableForLearning[0],
             activeLearningLanguage: languagesAvailableForLearning[1],
-            interfaceLanguage: interfaceLanguages[0]
+            interfaceLanguage: interfaceLanguageId,
         }
     }
 
@@ -67,8 +69,8 @@ export const useUserStore = defineStore('user', () => {
             }
 
             await userCollection.create(customData.value)
-        } catch (e: any) {
-            addErrorLogInfo({ type: EErrorType.USER_STORE, message: e.message, detail: 'uploadCustomData' })
+        } catch (e) {
+            addErrorLogInfo({ type: EErrorType.USER_STORE, message: getErrorMessage(e), detail: 'uploadCustomData' })
         }
     }
 
@@ -85,7 +87,7 @@ export const useUserStore = defineStore('user', () => {
             email: user.email,
             emailVerified: user.emailVerified,
             isAnonymous: user.isAnonymous,
-            photoURL: user.photoURL
+            photoURL: user.photoURL,
         }
 
         try {
@@ -97,7 +99,7 @@ export const useUserStore = defineStore('user', () => {
                 customData.value = {
                     nativeLanguage: baseCustomData.nativeLanguage,
                     activeLearningLanguage: baseCustomData.activeLearningLanguage,
-                    interfaceLanguage: baseCustomData.interfaceLanguage
+                    interfaceLanguage: baseCustomData.interfaceLanguage,
                 }
 
                 await uploadCustomData(true)
@@ -111,8 +113,8 @@ export const useUserStore = defineStore('user', () => {
 
             await setInterfaceLanguage(customData.value.interfaceLanguage)
             isUserDataLoaded.value = true
-        } catch (e: any) {
-            addErrorLogInfo({ type: EErrorType.USER_STORE, message: e.message, detail: 'setUser' })
+        } catch (e) {
+            addErrorLogInfo({ type: EErrorType.USER_STORE, message: getErrorMessage(e), detail: 'setUser' })
         }
     }
 
@@ -146,7 +148,7 @@ export const useUserStore = defineStore('user', () => {
         setUser,
         updateActiveLearningLanguage,
         updateInterfaceLanguage,
-        updateNativeLanguage
+        updateNativeLanguage,
     }
 })
 

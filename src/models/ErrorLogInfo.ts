@@ -1,4 +1,4 @@
-import { EErrorType } from '@/enums/EErrorType'
+import type { EErrorType } from '@/enums/EErrorType'
 
 export type ErrorLogInfo = {
     type: EErrorType;

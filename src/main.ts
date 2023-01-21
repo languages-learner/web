@@ -3,9 +3,10 @@ import { setupFirebaseApp } from '@/plugins/firebase'
 import { setupStore } from '@/store'
 import { setupI18n } from '@/plugins/i18n'
 import { router, setupRouter } from '@/router'
-import { setupRouterGuard } from '@/router/guard'
 import { setupServices } from '@/plugins/services'
 import { setupErrorHandle } from '@/logics/error-handle'
+import { setupRouterGuard } from '@/router/guard'
+import { initializeOnAuthStateChangedHook } from '@/hooks/onAuthStateChanged'
 
 import App from '@/App.vue'
 
@@ -29,7 +30,8 @@ async function bootstrap() {
 
     app.mount('#app')
 
-    // router-guard
+    initializeOnAuthStateChangedHook(router)
+
     setupRouterGuard(router)
 }
 

@@ -1,12 +1,13 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { IAuthentication } from '@/services/authentication/common/IAuthentication'
+import type { IAuthentication } from '@/services/authentication/common/IAuthentication'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
+import { getErrorMessage } from '@/utils/error'
 
 export class FirebaseAuthentication implements IAuthentication {
     private static instance: FirebaseAuthentication
 
-    public static getInstance() {
+    public static getInstance(): IAuthentication {
         if (!FirebaseAuthentication.instance) {
             FirebaseAuthentication.instance = new FirebaseAuthentication()
         }
@@ -36,7 +37,7 @@ export class FirebaseAuthentication implements IAuthentication {
 
     private signInWithAuthProvider = async (provider: firebase.auth.AuthProvider) => {
         try {
-            await firebase.auth().signInWithRedirect(provider)
+            await firebase.auth().signInWithPopup(provider)
         } catch (e) {
             throw new Error(this.getErrorMessage(e))
         }
@@ -61,27 +62,8 @@ export class FirebaseAuthentication implements IAuthentication {
         }
     }
 
-    public checkRedirectResult = async (): Promise<{
-        success: boolean,
-        error?: string
-    }> => {
-        try {
-            await firebase.auth().getRedirectResult()
-
-            return {
-                success: true
-            }
-        } catch (e) {
-            return {
-                success: false,
-                error: this.getErrorMessage(e)
-            }
-        }
-    }
-
-    // eslint-disable-next-line
     private getErrorMessage = (error: any) => {
-        let { message } = error
+        let message = getErrorMessage(error)
 
         if (error.code === 'auth/account-exists-with-different-credential') {
             message = 'You have already signed up with a different auth provider for that email.'

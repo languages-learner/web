@@ -16,11 +16,12 @@ export class Firestore implements IDbStore {
 
     public readonly userCollection: UserFirestoreCollection
     public readonly translationCollection: TranslationsFirestoreCollection
-    public readonly wordsCollection: WordsFirestoreCollection
+    public get wordsCollection(): WordsFirestoreCollection {
+        return new WordsFirestoreCollection()
+    }
 
     constructor() {
         this.userCollection = new UserFirestoreCollection()
         this.translationCollection = new TranslationsFirestoreCollection()
-        this.wordsCollection = new WordsFirestoreCollection()
     }
 }
