@@ -1,20 +1,26 @@
-# Vue 3 + Typescript + Vite
+# Language Learner App
 
-[DEMO](https://education-1c650.web.app/)
+## Overview
 
-## Firebase deploy
+This project is a language learning application that aims to provide an easy and effective way to learn new languages. It includes the following features:
 
-1. `yarn add firebase-tools`
-2. `yarn firebase login`
-3. `firebase use --add`
-4. `yarn firebase init`
-5. `yarn build`
-6. `yarn firebase deploy`
+- Profile Page: Keep track of your progress and see your achievements.
+- Settings Page: Customize the app to your preferences.
+- Dictionary Page: Store and manage your translations.
+- Trainings Page: Develop your language skills with interactive exercises. (Not ready)
 
-### Github actions
+## Live Demo
 
-1. Create token
-   1. `firebase login:ci`
-2. Create github secrets
-   1. `name: FIREBASE_TOKEN, value: ${token}`
-   2. `name: FIREBASE_CONFIG, value: ${config | base64}`
+Check out the live demo of the app at https://education-1c650.web.app/
+
+## Technologies Used
+
+- [Vue 3](https://vuejs.org/)
+- [Vite](https://vitejs.dev/): A fast and efficient build tool for modern web development.
+- [Pinia](https://pinia.vuejs.org/): A lightweight state management library for Vue 3.
+- [i18n](https://vue-i18n.intlify.dev/): An internationalization library for Vue 3.
+- [Firebase](https://firebase.google.com/): A cloud-based platform for developing mobile and web applications.
+  - [Firebase Authentication](https://firebase.google.com/docs/auth): A service that provides authentication functionality for your app.
+  - [Firestore Database](https://firebase.google.com/docs/firestore): A cloud-based NoSQL database that provides flexible and scalable data storage.
+  - [Firebase Remote Config](https://firebase.google.com/docs/remote-config): A service that allows you to change the behavior and appearance of your app without requiring users to download an app update.
+- [Naive-UI](https://www.naiveui.com/en-US/os-theme): A set of UI components for Vue 3.
