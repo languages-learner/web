@@ -1,8 +1,12 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import VirtualList from 'vue3-virtual-scroll-list'
 import type { Word, Words } from '@/services/dbstore/dto/Words'
 import WordsListItem from '@/modules/workspace/modules/words/components/WordsList/components/WordsListItem/WordsListItem.vue'
 
-defineProps<{
+const props = defineProps<{
     words: Words
     selectedWords: Record<string, boolean>
     isWordsLoaded: boolean
@@ -20,27 +24,30 @@ const deleteWord = (word: string) => emit('deleteWord', word)
 const updateWordStatus = (word: string, status: Word['status']) => emit('updateWordStatus', word, status)
 const toggleWordSelection = (word: string) => emit('toggleWordSelection', word)
 const updateWordTranslations = (word: string, translations: Word['translations']) => emit('updateWordTranslations', word, translations)
+
+const items = computed(() => Object.entries(props.words).map(([word, wordData]) => ({
+    word,
+    wordData,
+    isSelected: props.selectedWords[word] ?? false,
+})))
 </script>
 
 <template>
-    <n-list>
-        <template v-if="isWordsLoaded">
-            <WordsListItem
-                v-for="(wordData, word) of words"
-                :key="`word-${word}`"
-                @delete="() => deleteWord(word)"
-                @updateStatus="(status) => updateWordStatus(word, status)"
-                @toggleSelection="() => toggleWordSelection(word)"
-                @updateTranslations="(translations) => updateWordTranslations(word, translations)"
-                :word="word"
-                :wordData="wordData"
-                :isSelected="selectedWords[word] ?? false"
-            />
-        </template>
-        <n-list-item v-if="!isWordsLoaded || isWordsLoading">
-            <n-row justify-content="center">
-                <n-spin size="large" />
-            </n-row>
-        </n-list-item>
-    </n-list>
+    <virtual-list
+        @deleteWord="deleteWord"
+        @updateWordStatus="updateWordStatus"
+        @updateWordTranslations="updateWordTranslations"
+        @toggleWordSelection="toggleWordSelection"
+        class="words-list"
+        data-key="word"
+        :data-sources="items"
+        :data-component="WordsListItem"
+        :estimate-size="77"
+        :item-class="'words-list__item'"
+        :page-mode="true"
+    />
 </template>
+
+<style lang="scss">
+@import "words-list";
+</style>

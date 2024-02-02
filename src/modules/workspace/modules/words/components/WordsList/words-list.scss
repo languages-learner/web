@@ -1,0 +1,14 @@
+.words-list {
+  width: 100%;
+  overflow-y: auto;
+  border-radius: 3px;
+
+  &__item {
+    margin: 10px 0;
+    padding: 12px 0;
+  }
+
+  &__item + &__item {
+    border-top: rgb(239, 239, 245) 1px solid;
+  }
+}
