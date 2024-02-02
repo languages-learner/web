@@ -1,39 +1,32 @@
 import {
-    computed,
-    onUnmounted,
     reactive,
     ref,
     unref,
-    watch,
 } from 'vue'
-import { cloneDeep, debounce } from 'lodash'
+import { debounce } from 'lodash'
 import type { Word, Words } from '@/services/dbstore/dto/Words'
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
-import { EWordStatus } from '@/services/dbstore/dto/Words'
+import { type EWordStatus } from '@/services/dbstore/dto/Words'
 import { useDbStore } from '@/plugins/services'
 import { useErrorLogStore } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
 import { getErrorMessage } from '@/utils/error'
 import { useRequestMethod } from '@/composables/useRequestMethod'
+import { useWord } from '@/modules/workspace/modules/words/composables/useWord'
 
-type Settings = {
+export type WordsLoaderSettings = {
     limitWordsToFetch: number
 }
 
-export const useWords = (filters: WordsFilters = {
-    text: '',
-    status: -1,
-}, settings: Settings = {
-    limitWordsToFetch: 10,
-}) => {
+export const useWords = (
+    filters: WordsFilters,
+    settings: WordsLoaderSettings,
+) => {
     const { addErrorLogInfo } = useErrorLogStore()
     const { wordsCollection } = useDbStore()
+    const wordControl = useWord()
 
-    const selectedWords: Record<string, boolean> = reactive({})
-
-    const words: Words = reactive({})
-    const formattedWords = computed(() => Object.entries(words))
-
+    const words = reactive<Words>({})
     const isAllWordsLoaded = ref(false)
 
     const {
@@ -50,6 +43,7 @@ export const useWords = (filters: WordsFilters = {
                 type: 'status',
                 value: filters.status,
             }], abortController)
+            console.log(filters, items)
 
             if (abortController.signal.aborted) {
                 return Promise.reject()
@@ -85,121 +79,54 @@ export const useWords = (filters: WordsFilters = {
     })
     const fetchWordsDebounced = debounce(fetchWords, 300)
 
-    const isAllWordsSelected = computed(() => Object.keys(words).length > 0 && Object.keys(selectedWords).length === Object.keys(words).length)
-
-    const toggleWordSelection = (word: string) => {
-        if (!selectedWords[word])
-            selectedWords[word] = true
-        else
-            delete selectedWords[word]
-    }
-
-    const toggleAllWordsSelection = () => {
-        if (!unref(isAllWordsSelected)) {
-            Object.keys(words).forEach(word => {
-                if (!selectedWords[word])
-                    selectedWords[word] = true
-            })
-
-            return
-        }
-
-        Object.keys(selectedWords).forEach(word => {
-            delete selectedWords[word]
-        })
-    }
-
     const addWord = async (word: string, translations: string[]) => {
-        if (words[word]) {
-            return
-        }
-
-        const wordData: Omit<Word, 'created' | 'updated'> = {
-            translations,
-            status: EWordStatus.NEW_WORD,
-        }
-
-        try {
-            words[word] = await wordsCollection.create(word, wordData)
-        } catch (e) {
-            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: getErrorMessage(e), detail: 'addWord' })
+        const result = await wordControl.addWord(word, translations)
+        if (result) {
+            words[word] = result
         }
     }
 
     const deleteWord = async (word: string) => {
-        try {
-            await wordsCollection.delete(word)
+        const result = await wordControl.deleteWord(word)
+        if (result) {
             delete words[word]
-        } catch (e) {
-            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: getErrorMessage(e), detail: 'deleteWord' })
-        }
-    }
-
-    const updateWord = async <K extends keyof Omit<Word, 'created' | 'updated'>>(word: string, property: K, value: Word[K]) => {
-        if (!words[word]) {
-            return
-        }
-
-        try {
-            const newWordData = cloneDeep(words[word])
-            newWordData[property] = value
-
-            await wordsCollection.update(word, newWordData)
-
-            words[word].updated = newWordData.updated
-            words[word][property] = newWordData[property]
-        } catch (e) {
-            addErrorLogInfo({ type: EErrorType.WORDS_STORE, message: getErrorMessage(e), detail: 'updateWord' })
         }
     }
 
     const updateWordTranslations = async (word: string, translations: string[]) => {
-        if (!translations.length) {
-            await deleteWord(word)
+        const result = await wordControl.updateWordTranslations(word,  words[word], translations)
+        if (!result) {
+            delete words[word]
 
             return
         }
-
-        await updateWord(word, 'translations', translations)
+        words[word] = result
     }
 
-    const updateWordStatus = async (word: string, status: EWordStatus) => updateWord(word, 'status', status)
+    const updateWordStatus = async (word: string, status: EWordStatus) => {
+        words[word] = await wordControl.updateWordStatus(word,  words[word], status) ?? words[word]
+    }
 
-    const reset = () => {
+    const resetWords = () => {
         resetFetchWords()
         Object.keys(words).forEach(word => {
             delete words[word]
         })
-        Object.keys(selectedWords).forEach(word => {
-            delete selectedWords[word]
-        })
         wordsCollection.resetWordsPagination()
         isAllWordsLoaded.value = false
     }
-    const resetAndFetchWords = async () => {
-        reset()
-        await fetchWords()
-    }
-
-    watch(filters, () => {
-        reset()
-        fetchWordsDebounced()
-    })
-    onUnmounted(reset)
 
     return {
-        words: formattedWords,
-        isWordsLoaded,
+        words,
         isWordsLoading,
-        selectedWords,
-        isAllWordsSelected,
-        toggleWordSelection,
-        toggleAllWordsSelection,
+        isWordsLoaded,
+        isAllWordsLoaded,
+        fetchWords,
+        fetchWordsDebounced,
+        resetWords,
         addWord,
         deleteWord,
         updateWordTranslations,
         updateWordStatus,
-        fetchWords,
-        resetAndFetchWords,
     }
 }

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { Word } from '@/services/dbstore/dto/Words'
+import type { Word, Words } from '@/services/dbstore/dto/Words'
 import WordsListItem from '@/modules/workspace/modules/words/components/WordsList/components/WordsListItem/WordsListItem.vue'
 
 defineProps<{
-    words: Array<[string, Word]>
+    words: Words
     selectedWords: Record<string, boolean>
     isWordsLoaded: boolean
     isWordsLoading: boolean
@@ -26,8 +26,8 @@ const updateWordTranslations = (word: string, translations: Word['translations']
     <n-list>
         <template v-if="isWordsLoaded">
             <WordsListItem
-                v-for="([word, wordData], index) in words"
-                :key="index"
+                v-for="(wordData, word) of words"
+                :key="`word-${word}`"
                 @delete="() => deleteWord(word)"
                 @updateStatus="(status) => updateWordStatus(word, status)"
                 @toggleSelection="() => toggleWordSelection(word)"
