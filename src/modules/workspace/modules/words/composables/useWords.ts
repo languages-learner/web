@@ -43,7 +43,6 @@ export const useWords = (
                 type: 'status',
                 value: filters.status,
             }], abortController)
-            console.log(filters, items)
 
             if (abortController.signal.aborted) {
                 return Promise.reject()
