@@ -1,19 +1,19 @@
-import {  reactive } from 'vue'
+import { reactive } from 'vue'
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 
 export const useWordsFilters = (baseFilters: WordsFilters = {
     text: '',
     status: -1,
 }) => {
-    const filters: WordsFilters = reactive(baseFilters)
+    const wordsFilters: WordsFilters = reactive(baseFilters)
 
-    const reset = () => {
-        filters.text = ''
-        filters.status = -1
+    const resetWordsFilters = () => {
+        wordsFilters.text = ''
+        wordsFilters.status = -1
     }
 
     return {
-        filters,
-        reset,
+        wordsFilters,
+        resetWordsFilters,
     }
 }
