@@ -26,7 +26,7 @@ export const useWords = (
     const { wordsCollection } = useDbStore()
     const wordControl = useWord()
 
-    const words = reactive<Words>({})
+    const words = reactive<Words>(new Map()) as Words
     const isAllWordsLoaded = ref(false)
 
     const {
@@ -55,15 +55,15 @@ export const useWords = (
             }
 
             let countAddedWords = 0
-            Object.entries(items).forEach(([word, wordData]: [word: string, wordData: Word]) => {
-                if (!words[word]) {
+            Array.from(items).forEach(([word, wordData]) => {
+                if (!words.has(word)) {
                     countAddedWords += 1
                 }
 
-                words[word] = wordData
+                words.set(word, wordData)
             })
 
-            isAllWordsLoaded.value = countAddedWords === 0 || Object.keys(items).length < settings.limitWordsToFetch
+            isAllWordsLoaded.value = countAddedWords === 0 || items.size < settings.limitWordsToFetch
 
             return Promise.resolve()
         } catch (e) {
@@ -81,36 +81,34 @@ export const useWords = (
     const addWord = async (word: string, translations: string[]) => {
         const result = await wordControl.addWord(word, translations)
         if (result) {
-            words[word] = result
+            words.set(word, result)
         }
     }
 
     const deleteWord = async (word: string) => {
         const result = await wordControl.deleteWord(word)
         if (result) {
-            delete words[word]
+            words.delete(word)
         }
     }
 
     const updateWordTranslations = async (word: string, translations: string[]) => {
-        const result = await wordControl.updateWordTranslations(word,  words[word], translations)
+        const result = await wordControl.updateWordTranslations(word,  words.get(word)!, translations)
         if (!result) {
-            delete words[word]
+            words.delete(word)
 
             return
         }
-        words[word] = result
+        words.set(word, result)
     }
 
     const updateWordStatus = async (word: string, status: EWordStatus) => {
-        words[word] = await wordControl.updateWordStatus(word,  words[word], status) ?? words[word]
+        words.set(word, await wordControl.updateWordStatus(word,  words.get(word)!, status) ?? words.get(word)!)
     }
 
     const resetWords = () => {
         resetFetchWords()
-        Object.keys(words).forEach(word => {
-            delete words[word]
-        })
+        words.clear()
         wordsCollection.resetWordsPagination()
         isAllWordsLoaded.value = false
     }

@@ -17,6 +17,4 @@ export type Word = {
     updated: number
 }
 
-export type Words = {
-    [word: string]: Word
-}
+export type Words = Map<string, Word>

@@ -8,12 +8,13 @@ import WordsListItem from '@/modules/workspace/modules/words/components/WordsLis
 
 const props = defineProps<{
     words: Words
-    selectedWords: Record<string, boolean>
+    selectedWords: Map<string, boolean>
     isWordsLoaded: boolean
     isWordsLoading: boolean
 }>()
 
 const emit = defineEmits<{
+    (e: 'reachBottom'): void
     (e: 'deleteWord', word: string): void
     (e: 'updateWordStatus', word: string, status: Word['status']): void
     (e: 'toggleWordSelection', word: string): void
@@ -25,10 +26,10 @@ const updateWordStatus = (word: string, status: Word['status']) => emit('updateW
 const toggleWordSelection = (word: string) => emit('toggleWordSelection', word)
 const updateWordTranslations = (word: string, translations: Word['translations']) => emit('updateWordTranslations', word, translations)
 
-const items = computed(() => Object.entries(props.words).map(([word, wordData]) => ({
+const items = computed(() => Array.from(props.words).map(([word, wordData]) => ({
     word,
     wordData,
-    isSelected: props.selectedWords[word] ?? false,
+    isSelected: props.selectedWords.get(word) ?? false,
 })))
 </script>
 

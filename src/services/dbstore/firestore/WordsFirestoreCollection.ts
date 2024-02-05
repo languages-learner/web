@@ -81,7 +81,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
         limit: number,
         filters: Array<WordsCollectionFetchItemsFilter>,
         abortController?: AbortController): Promise<Words | null> => {
-        const items: Words = {}
+        const items: Words = new Map()
         let query = this.setFetchItemsFilters(this.wordCollection, filters)
 
         if (paginate && this._lastItem) {
@@ -102,7 +102,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
         }
 
         querySnapshot.forEach(doc => {
-            items[doc.id] = doc.data() as Word
+            items.set(doc.id, doc.data() as Word)
         })
 
         return items
