@@ -76,18 +76,22 @@ export const useRequestMethod = <V, F extends (
             },
         })
 
-        f(abortController,
+        f(
+            abortController,
             isLoadingForRequest,
             wasLoadedAtLeastOnceForRequest,
-        ).then(() => {
-            if (options.autoSetLoadingStatus) {
-                wasLoadedAtLeastOnceForRequest.value = true
-            }
-        }).catch(error => noop()).finally(() => {
-            if (options.autoSetLoadingStatus) {
-                isLoadingForRequest.value = false
-            }
-        })
+        )
+            .then(() => {
+                if (options.autoSetLoadingStatus) {
+                    wasLoadedAtLeastOnceForRequest.value = true
+                }
+            })
+            .catch(() => noop())
+            .finally(() => {
+                if (options.autoSetLoadingStatus) {
+                    isLoadingForRequest.value = false
+                }
+            })
     }
 
     const reset = () => {

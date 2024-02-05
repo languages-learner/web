@@ -1,53 +1,53 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 import WordStatusIcon from '@/modules/workspace/modules/words/components/WordStatus/WordStatusIcon.vue'
 import { getWordStatusesValues } from '@/services/dbstore/dto/Words'
 
-const props = defineProps<{
-    text: string,
-    status: WordsFilters['status']
+defineProps<{
     isAllWordsSelected: boolean
-    hasFilteredWord: boolean
+    isAddWordButtonNeeded: boolean
 }>()
+const filters = defineModel<WordsFilters>('filters', { required: true })
 
 const emit = defineEmits<{
-    (e: 'update:text', value: string): void
-    (e: 'update:status', value: WordsFilters['status']): void
+    (e: 'update:filters', value: WordsFilters): void
     (e: 'toggleSelection'): void
     (e: 'addWord'): void
 }>()
 
-const updateText = (value: string) => emit('update:text', value)
-const updateStatus = (value: WordsFilters['status']) => emit('update:status', value)
+const updateText = (value: string) => {
+    updateStatus(-1)
+    filters.value.text = value
+}
+const updateStatus = (value: WordsFilters['status']) => {
+    filters.value.status = value
+}
 const toggleSelection = () => emit('toggleSelection')
 const addWord = () => emit('addWord')
 
-const isSelectedStatus = (status: WordsFilters['status']) => props.status === status
-
-const isAddWordButtonNeeded = computed(() => !props.hasFilteredWord)
+const isSelectedStatus = (status: WordsFilters['status']) => filters.value.status === status
 </script>
 
 <template>
-    <div class="words-filter">
+    <div class="words-container-header">
         <n-row
             align-items="center"
             justify-content="space-between">
             <n-col span="12">
                 <n-row
                     align-items="center"
-                    class="words-filter__left-container">
+                    class="words-container-header__left-container">
                     <n-col span="2">
                         <n-checkbox
-                            :checked="props.isAllWordsSelected"
+                            :checked="isAllWordsSelected"
                             :on-update:checked="toggleSelection">
                         </n-checkbox>
                     </n-col>
                     <n-col span="14">
                         <n-input
-                            :value="props.text"
+
                             :on-update:value="updateText"
-                            class="words-filter__search-input"
+                            class="words-container-header__search-input"
                             type="text"
                             :placeholder="$t('search')"
                             clearable />
@@ -75,7 +75,7 @@ const isAddWordButtonNeeded = computed(() => !props.hasFilteredWord)
                         </n-button>
                         <n-button
                             v-for="(wordStatus, index) in getWordStatusesValues()"
-                            :key="`words-filter-status-${index}`"
+                            :key="`words-container-header-status-${index}`"
                             @click="() => updateStatus(wordStatus)"
                             :secondary="isSelectedStatus(wordStatus)"
                         >
@@ -91,5 +91,5 @@ const isAddWordButtonNeeded = computed(() => !props.hasFilteredWord)
 </template>
 
 <style lang="scss" scoped>
-@import "words-filter";
+@import "words-container-header";
 </style>

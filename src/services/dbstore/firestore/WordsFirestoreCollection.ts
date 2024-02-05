@@ -6,6 +6,7 @@ import type { Word, Words } from '@/services/dbstore/dto/Words'
 import type { IWordsCollection } from '@/services/dbstore/interfaces/IWordsCollection'
 import type { FirestoreCollectionFilter } from '@/services/dbstore/firestore/types/FirestoreCollectionFilter'
 import type { WordsCollectionFetchItemsFilter } from '@/services/dbstore/types/words/WordsCollectionFetchItemsFilter'
+import { EWordStatus } from '@/services/dbstore/dto/Words'
 import { EFirestoreCollectionFilterType } from '@/services/dbstore/firestore/enums/EFirestoreCollectionFilterType'
 import { BaseFirestoreCollection } from '@/services/dbstore/firestore/common/BaseFirestoreCollection'
 import { useUserStoreWithOut } from '@/store/modules/user'
@@ -79,8 +80,8 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
         paginate: boolean,
         limit: number,
         filters: Array<WordsCollectionFetchItemsFilter>,
-        abortController: AbortController): Promise<Words | null> => {
-        const items: Words = {}
+        abortController?: AbortController): Promise<Words | null> => {
+        const items: Words = new Map()
         let query = this.setFetchItemsFilters(this.wordCollection, filters)
 
         if (paginate && this._lastItem) {
@@ -92,7 +93,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
             .limit(limit)
             .get()
 
-        if (abortController.signal.aborted) {
+        if (abortController?.signal.aborted) {
             return null
         }
 
@@ -101,7 +102,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
         }
 
         querySnapshot.forEach(doc => {
-            items[doc.id] = doc.data() as Word
+            items.set(doc.id, doc.data() as Word)
         })
 
         return items
@@ -111,9 +112,10 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
         this._lastItem = null
     }
 
-    public create = async (word: string, wordData: Omit<Word, 'created' | 'updated'>) => {
+    public create = async (word: string, translations: Word['translations']) => {
         const completeWordData: Word = {
-            ...wordData,
+            translations,
+            status: EWordStatus.NEW_WORD,
             created: firebase.firestore.Timestamp.now().seconds,
             updated: firebase.firestore.Timestamp.now().seconds,
         }
@@ -139,5 +141,14 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
         return await this.wordCollection
             .doc(word)
             .delete()
+    }
+
+    public has = async (word: string): Promise<boolean> => {
+        const words = await this.items(false, 1, [{
+            type: 'word',
+            value: word,
+        }], undefined)
+
+        return Boolean(words && Object.keys(words).length > 0)
     }
 }
