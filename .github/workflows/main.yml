@@ -28,8 +28,8 @@ jobs:
         with:
           name: dist
           path: dist
-  deploy:
-    name: Deploy
+  deploy_live_website:
+    name: Deploy Prod
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -41,9 +41,9 @@ jobs:
         with:
           name: dist
           path: dist
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}"
+          projectId: "${{ secrets.GOOGLE_PROJECT_ID }}"
+          channelId: live
