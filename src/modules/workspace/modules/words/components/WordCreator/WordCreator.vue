@@ -6,12 +6,13 @@ import {
     watch,
 } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { WordCreatorType } from '@/modules/workspace/modules/words/components/WordCreator/types'
 
 const { t } = useI18n()
 
 const props = defineProps<{
     sourceWord: string
-    type: 'not_found' | 'new_word'
+    type: WordCreatorType
 }>()
 
 const emit = defineEmits<{
@@ -30,8 +31,8 @@ const addWord = async () => {
 
 const text = computed(() => {
     switch (props.type) {
-    case 'not_found': return t('no_suitable_words')
-    case 'new_word': return t('add_new_word')
+    case WordCreatorType.NOT_FOUND: return t('no_suitable_words')
+    case WordCreatorType.NEW_WORD: return t('add_new_word')
     }
 
     return ''

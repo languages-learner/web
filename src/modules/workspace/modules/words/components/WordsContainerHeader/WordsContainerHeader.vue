@@ -16,6 +16,7 @@ const emit = defineEmits<{
 }>()
 
 const updateText = (value: string) => {
+    updateStatus(-1)
     filters.value.text = value
 }
 const updateStatus = (value: WordsFilters['status']) => {

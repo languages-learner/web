@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@vicons/ionicons5": "^0.12.0",
+    "@vueuse/core": "^10.7.2",
     "dayjs": "^1.10.7",
     "firebase": "^8.2.1",
     "firebase-tools": "^9.23.3",

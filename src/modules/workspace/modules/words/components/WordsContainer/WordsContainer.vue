@@ -1,19 +1,19 @@
 <script lang="ts" setup>
 import {
     computed,
-    onMounted,
     ref,
     unref,
     watch,
 } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useElementVisibility, useToggle } from '@vueuse/core'
 import WordsContainerHeader from '@/modules/workspace/modules/words/components/WordsContainerHeader/WordsContainerHeader.vue'
 import WordsList from '@/modules/workspace/modules/words/components/WordsList/WordsList.vue'
 import WordCreator from '@/modules/workspace/modules/words/components/WordCreator/WordCreator.vue'
 import { useWordsFilters } from '@/modules/workspace/modules/words/composables/useWordsFilters'
 import { useUserStore } from '@/store/modules/user'
-import { useWordsLoadingOnScroll } from '@/modules/workspace/modules/words/composables/useWordsLoadingOnScroll'
 import { useWordsList } from '@/modules/workspace/modules/words/composables/useWordsList'
+import { WordCreatorType } from '@/modules/workspace/modules/words/components/WordCreator/types'
 
 const {
     wordsFilters,
@@ -41,28 +41,29 @@ const addWord = async (newTranslations: string[]) => {
     isAddWordBlockNeededByUserRequest.value = false
 }
 
-const hasFilteredWord = computed(() => !Boolean(wordsFilters.text) || Boolean(unref(words)[wordsFilters.text]))
+const bottom = ref()
+const isBottomReached = useElementVisibility(bottom)
 
-const isAddWordBlockNeededByUserRequest = ref(false)
-const toggleIsAddWordBlockNeeded = () => {
-    isAddWordBlockNeededByUserRequest.value = !unref(isAddWordBlockNeededByUserRequest)
-}
-watch(() => wordsFilters.text, () => isAddWordBlockNeededByUserRequest.value = false)
+const hasFilteredWord = computed(() => !Boolean(wordsFilters.text) || Boolean(unref(words).has(wordsFilters.text)))
 
-const wordCreatorType = computed(() => unref(Object.keys(words)).length > 0 || unref(isAddWordBlockNeededByUserRequest) ? 'new_word' : 'not_found')
+const [isAddWordBlockNeededByUserRequest, toggleIsAddWordBlockNeeded] = useToggle()
+
+const wordCreatorType = computed(() => unref(words).size > 0 || unref(isAddWordBlockNeededByUserRequest)
+    ? WordCreatorType.NEW_WORD
+    : WordCreatorType.NOT_FOUND)
 const isWordCreatorNeeded = computed(() => unref(isWordsLoaded) && !unref(isWordsLoading) &&
-    (unref(isAddWordBlockNeededByUserRequest) || (!unref(words).length && wordsFilters.text)),
+    (unref(isAddWordBlockNeededByUserRequest) || (!unref(words).size && wordsFilters.text)),
 )
 
+watch([isBottomReached, isWordsLoading], () => {
+    if (unref(isBottomReached) && !unref(isWordsLoading)) {
+        fetchWords()
+    }
+})
+watch(() => wordsFilters.text, () => isAddWordBlockNeededByUserRequest.value = false)
 watch(() => unref(customData)?.activeLearningLanguage, () => {
     resetWordsFilters()
     resetAndFetchWords()
-})
-
-const bottom = ref<HTMLDivElement>()
-onMounted(() => {
-    useWordsLoadingOnScroll(bottom, isWordsLoading, isWordsLoaded, fetchWords)
-    fetchWords()
 })
 </script>
 
@@ -72,7 +73,7 @@ onMounted(() => {
             v-model:filters="wordsFilters"
             @addWord="toggleIsAddWordBlockNeeded"
             @toggleSelection="toggleAllWordsSelection"
-            :isAddWordButtonNeeded="hasFilteredWord"
+            :isAddWordButtonNeeded="!hasFilteredWord"
             :isAllWordsSelected="isAllWordsSelected"
         />
         <WordCreator
