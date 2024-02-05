@@ -1,21 +1,24 @@
 <script lang="ts" setup>
 import {
     computed,
-    onMounted,
     ref,
     unref,
     watch,
 } from 'vue'
 import { storeToRefs } from 'pinia'
-import WordsFilter from '@/modules/workspace/modules/words/components/WordsFilter/WordsFilter.vue'
+import { useElementVisibility, useToggle } from '@vueuse/core'
+import WordsContainerHeader from '@/modules/workspace/modules/words/components/WordsContainerHeader/WordsContainerHeader.vue'
 import WordsList from '@/modules/workspace/modules/words/components/WordsList/WordsList.vue'
 import WordCreator from '@/modules/workspace/modules/words/components/WordCreator/WordCreator.vue'
-import { useWords } from '@/modules/workspace/modules/words/composables/useWords'
 import { useWordsFilters } from '@/modules/workspace/modules/words/composables/useWordsFilters'
 import { useUserStore } from '@/store/modules/user'
-import { useWordsLoadingOnScroll } from '@/modules/workspace/modules/words/composables/useWordsLoadingOnScroll'
+import { useWordsList } from '@/modules/workspace/modules/words/composables/useWordsList'
+import { WordCreatorType } from '@/modules/workspace/modules/words/components/WordCreator/types'
 
-const { filters, reset: resetFilters } = useWordsFilters()
+const {
+    wordsFilters,
+    resetWordsFilters,
+} = useWordsFilters()
 const {
     words,
     isWordsLoaded,
@@ -30,54 +33,54 @@ const {
     updateWordStatus,
     fetchWords,
     resetAndFetchWords,
-} = useWords(filters)
+} = useWordsList(wordsFilters)
 const { customData } = storeToRefs(useUserStore())
 
 const addWord = async (newTranslations: string[]) => {
-    await baseAddWord(filters.text, newTranslations)
+    await baseAddWord(wordsFilters.text, newTranslations)
     isAddWordBlockNeededByUserRequest.value = false
 }
 
-const hasFilteredWord = computed(() => !Boolean(filters.text) || Boolean(unref(words).find(([word]) => word === filters.text)))
+const bottom = ref()
+const isBottomReached = useElementVisibility(bottom)
 
-const isAddWordBlockNeededByUserRequest = ref(false)
-const toggleIsAddWordBlockNeeded = () => {
-    isAddWordBlockNeededByUserRequest.value = !unref(isAddWordBlockNeededByUserRequest)
-}
-watch(() => filters.text, () => isAddWordBlockNeededByUserRequest.value = false)
+const hasFilteredWord = computed(() => !Boolean(wordsFilters.text) || Boolean(unref(words).has(wordsFilters.text)))
 
-const wordCreatorType = computed(() => unref(words).length > 0 || unref(isAddWordBlockNeededByUserRequest) ? 'new_word' : 'not_found')
+const [isAddWordBlockNeededByUserRequest, toggleIsAddWordBlockNeeded] = useToggle()
+
+const wordCreatorType = computed(() => unref(words).size > 0 || unref(isAddWordBlockNeededByUserRequest)
+    ? WordCreatorType.NEW_WORD
+    : WordCreatorType.NOT_FOUND)
 const isWordCreatorNeeded = computed(() => unref(isWordsLoaded) && !unref(isWordsLoading) &&
-    (unref(isAddWordBlockNeededByUserRequest) || (!unref(words).length && filters.text)),
+    (unref(isAddWordBlockNeededByUserRequest) || (!unref(words).size && wordsFilters.text)),
 )
 
-watch(() => unref(customData)?.activeLearningLanguage, () => {
-    resetFilters()
-    resetAndFetchWords()
+watch([isBottomReached, isWordsLoading], () => {
+    if (unref(isBottomReached) && !unref(isWordsLoading)) {
+        fetchWords()
+    }
 })
-
-const bottom = ref<HTMLDivElement>()
-onMounted(() => {
-    useWordsLoadingOnScroll(bottom, isWordsLoading, isWordsLoaded, fetchWords)
-    fetchWords()
+watch(() => wordsFilters.text, () => isAddWordBlockNeededByUserRequest.value = false)
+watch(() => unref(customData)?.activeLearningLanguage, () => {
+    resetWordsFilters()
+    resetAndFetchWords()
 })
 </script>
 
 <template>
     <div class="words-container">
-        <WordsFilter
-            v-model:text="filters.text"
-            v-model:status="filters.status"
+        <WordsContainerHeader
+            v-model:filters="wordsFilters"
             @addWord="toggleIsAddWordBlockNeeded"
             @toggleSelection="toggleAllWordsSelection"
-            :hasFilteredWord="hasFilteredWord"
+            :isAddWordButtonNeeded="!hasFilteredWord"
             :isAllWordsSelected="isAllWordsSelected"
         />
         <WordCreator
             v-if="isWordCreatorNeeded"
             @add="addWord"
             :type="wordCreatorType"
-            :sourceWord="filters.text"/>
+            :sourceWord="wordsFilters.text"/>
         <WordsList
             @deleteWord="deleteWord"
             @updateWordStatus="updateWordStatus"
