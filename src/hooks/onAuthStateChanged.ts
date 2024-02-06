@@ -13,7 +13,7 @@ export const initializeOnAuthStateChangedHook = (router: Router): void => {
     firebase.auth().onAuthStateChanged(async (user) => {
         const userStore = useUserStore()
         await router.isReady()
-        userStore.setUser(user)
+        await userStore.setUser(user)
 
         if (unref(route).meta.requiresAuth && !userStore.isLoggedIn) {
             await router.replace({
