@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { computed, unref } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/modules/user'
 
 const { profileData } = storeToRefs(useUserStore())

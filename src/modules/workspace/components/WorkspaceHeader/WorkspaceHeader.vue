@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import { EPageName } from '@/enums/EPageName'
 import WorkspaceHeaderUserAvatar from '@/modules/workspace/components/WorkspaceHeader/components/WorkspaceHeaderUserAvatar/WorkspaceHeaderUserAvatar.vue'
 import WorkspaceHeaderActiveLearningLanguage from '@/modules/workspace/components/WorkspaceHeader/components/WorkspaceHeaderActiveLearningLanguage/WorkspaceHeaderActiveLearningLanguage.vue'

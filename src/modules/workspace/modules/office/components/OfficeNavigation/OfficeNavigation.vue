@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { computed, h } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { RouterLink } from 'vue-router'
 import type { MenuOption } from 'naive-ui'
 import { EPageName } from '@/enums/EPageName'
 

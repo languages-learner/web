@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import UserAvatar from '@/modules/workspace/components/UserAvatar/UserAvatar.vue'
 import { useUserStore } from '@/store/modules/user'
 

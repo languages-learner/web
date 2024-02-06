@@ -1,11 +1,4 @@
 <script lang="ts" setup>
-import {
-    computed,
-    ref,
-    unref,
-    watch,
-} from 'vue'
-import { storeToRefs } from 'pinia'
 import { useElementVisibility, useToggle } from '@vueuse/core'
 import WordsContainerHeader from '@/modules/workspace/modules/words/components/WordsContainerHeader/WordsContainerHeader.vue'
 import WordsList from '@/modules/workspace/modules/words/components/WordsList/WordsList.vue'

@@ -1,6 +1,5 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { unref } from 'vue'
 import { type Router } from 'vue-router'
 import { EPageName } from '@/enums/EPageName'
 import { useUserStore } from '@/store/modules/user'

@@ -9,7 +9,6 @@ import {
 import { type MenuOption } from 'naive-ui'
 import { NIcon } from 'naive-ui'
 import { RouterLink } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 

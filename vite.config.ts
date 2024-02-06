@@ -23,7 +23,7 @@ export default defineConfig({
     plugins: [
         vue(),
         AutoImport({
-            imports: ['vue', 'vue-router'],
+            imports: ['vue', 'vue-router', 'vue-i18n', 'pinia'],
         }),
         Components({
             resolvers: [NaiveUiResolver()],

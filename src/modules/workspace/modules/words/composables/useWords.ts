@@ -1,10 +1,5 @@
-import {
-    reactive,
-    ref,
-    unref,
-} from 'vue'
 import { debounce } from 'lodash'
-import type { Word, Words } from '@/services/dbstore/dto/Words'
+import type { Words } from '@/services/dbstore/dto/Words'
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 import { type EWordStatus } from '@/services/dbstore/dto/Words'
 import { useDbStore } from '@/plugins/services'

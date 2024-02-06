@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import VirtualList from 'vue3-virtual-scroll-list'

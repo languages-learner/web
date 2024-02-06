@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import WordsContainer from '@/modules/workspace/modules/words/components/WordsContainer/WordsContainer.vue'
 import { useUserStore } from '@/store/modules/user'
 
