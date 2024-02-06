@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { computed, unref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { ComputedRef } from 'vue'
 import { EPageName } from '@/enums/EPageName'
 import OfficeNavigation from '@/modules/workspace/modules/office/components/OfficeNavigation/OfficeNavigation.vue'
+import { useAppBreakpoints } from '@/composables/useAppBreakpoints'
 
 const { t } = useI18n()
 
@@ -15,11 +13,12 @@ const officeRouteTitle: ComputedRef<Record<string, string>> = computed(() => ({
 
 const route = useRoute()
 const title = computed(() => unref(officeRouteTitle)[String(route.name)])
+const { isMobile } = useAppBreakpoints()
 </script>
 
 <template>
     <div class="office-layout">
-        <OfficeNavigation />
+        <OfficeNavigation v-if="!isMobile" />
         <div class="office-layout__container">
             <n-h2 class="office-layout__container-title">{{ title }}</n-h2>
             <router-view></router-view>

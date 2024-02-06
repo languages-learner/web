@@ -5,4 +5,10 @@
     min-height: calc(100vh - 64px);
     padding: 20px 10px;
   }
+
+  @media (max-width: $m) {
+    &__content {
+      padding: 15px 25px;
+    }
+  }
 }

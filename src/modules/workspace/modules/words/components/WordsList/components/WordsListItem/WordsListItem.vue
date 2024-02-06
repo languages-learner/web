@@ -30,32 +30,34 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
 
 <template>
     <div class="words-list-item">
-        <n-row
+        <n-grid
             class="words-list-item__container"
-            align-items="center">
-            <n-col span="1">
-                <div class="words-list-item__property">
-                    <n-checkbox
-                        :checked="source.isSelected"
-                        :on-update:checked="toggleSelection">
-                    </n-checkbox>
-                </div>
-            </n-col>
-            <n-col
-                span="1"
+            align-items="center"
+            cols="27 s:26 m:24"
+            responsive="screen"
+        >
+            <n-grid-item
+                span="2 m:1"
+                class="words-list-item__property">
+                <n-checkbox
+                    :checked="source.isSelected"
+                    :on-update:checked="toggleSelection">
+                </n-checkbox>
+            </n-grid-item>
+            <n-grid-item
+                span="3 s:2 m:1"
                 class="words-list-item__property">
                 <n-button text>
                     <template #icon>
                         <n-icon
-                            @click="deleteWord"
                             size="20"
                             :depth="3">
                             <VolumeMediumOutline />
                         </n-icon>
                     </template>
                 </n-button>
-            </n-col>
-            <n-col span="19">
+            </n-grid-item>
+            <n-grid-item span="16 s:16 m:19">
                 <n-space
                     vertical
                     class="words-list-item__property--translations">
@@ -67,9 +69,9 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
                     />
                     <div v-else>{{ source.wordData.translations.join(', ') }}</div>
                 </n-space>
-            </n-col>
-            <n-col
-                span="1"
+            </n-grid-item>
+            <n-grid-item
+                span="2 m:1"
                 class="words-list-item__property">
                 <n-button text>
                     <n-icon
@@ -79,16 +81,16 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
                         <Pencil />
                     </n-icon>
                 </n-button>
-            </n-col>
-            <n-col
-                span="1"
+            </n-grid-item>
+            <n-grid-item
+                span="2 m:1"
                 class="words-list-item__property">
                 <WordStatus
                     @update="updateStatus"
                     :status="source.wordData.status"/>
-            </n-col>
-            <n-col
-                span="1"
+            </n-grid-item>
+            <n-grid-item
+                span="2 m:1"
                 class="words-list-item__property">
                 <n-button text>
                     <n-icon
@@ -98,8 +100,8 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
                         <TrashOutline />
                     </n-icon>
                 </n-button>
-            </n-col>
-        </n-row>
+            </n-grid-item>
+        </n-grid>
     </div>
 </template>
 
