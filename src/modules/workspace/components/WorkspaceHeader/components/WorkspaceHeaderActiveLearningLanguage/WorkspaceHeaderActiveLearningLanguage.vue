@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { useUserStore } from '@/store/modules/user'
-import { useConfigStore } from '@/store/modules/config'
+import { useLearningLanguage } from '@/composables/useLearningLanguage'
 
-const { isUserDataLoaded, customData, activeLearningLanguageName } = storeToRefs(useUserStore())
-const { updateActiveLearningLanguage } = useUserStore()
-const { languagesAvailableForLearning, getTranslatedLanguageName } = useConfigStore()
+const { isUserDataLoaded } = storeToRefs(useUserStore())
+const { availableLearningLanguagesOptionsExceptActive, activeLearningLanguageName, updateActiveLearningLanguage } = useLearningLanguage()
 const { t } = useI18n()
 
 const learningLanguagesOptions = computed(() => ([
@@ -12,11 +11,7 @@ const learningLanguagesOptions = computed(() => ([
         type: 'group',
         label: t('available_languages'),
         key: 'main',
-        children: languagesAvailableForLearning.filter(languageId => languageId !== unref(customData)?.activeLearningLanguage)
-            .map(languageId => ({
-                key: languageId,
-                label: getTranslatedLanguageName(languageId),
-            })),
+        children: unref(availableLearningLanguagesOptionsExceptActive),
     },
 ]))
 </script>

@@ -33,7 +33,6 @@ export type State = StateForAuthorizedUser | StateForNotAuthorizedUser
 export const useUserStore = defineStore('user', () => {
     const { addErrorLogInfo } = useErrorLogStore()
     const { userCollection } = useDbStore()
-    const { getTranslatedLanguageName } = useConfigStore()
     const { setInterfaceLanguage, interfaceLanguageId } = useInterfaceLanguageStore()
 
     const isUserDataLoaded = ref(false)
@@ -41,9 +40,6 @@ export const useUserStore = defineStore('user', () => {
     const customData = ref<State['customData']>(undefined)
 
     const isLoggedIn = computed(() => unref(profileData) !== undefined)
-    const activeLearningLanguageName = computed(() =>
-        getTranslatedLanguageName(unref(customData)?.activeLearningLanguage ?? BASE_INTERFACE_LANGUAGE),
-    )
 
     const createBaseCustomData = (): StateForAuthorizedUser['customData'] => {
         const { languagesAvailableForLearning } = useConfigStore()
@@ -139,7 +135,6 @@ export const useUserStore = defineStore('user', () => {
         profileData,
         customData,
         isLoggedIn: skipHydrate(isLoggedIn),
-        activeLearningLanguageName,
         setUser,
         updateActiveLearningLanguage,
         updateInterfaceLanguage,

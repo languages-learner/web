@@ -4,12 +4,14 @@ import { useUserStore } from '@/store/modules/user'
 import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
 import { useConfigStore } from '@/store/modules/config'
 import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
+import { useLearningLanguage } from '@/composables/useLearningLanguage'
 
 const { interfaceLanguages, interfaceLanguageId } = storeToRefs(useInterfaceLanguageStore())
 const { setInterfaceLanguage } = useInterfaceLanguageStore()
 const { isUserDataLoaded, customData } = storeToRefs(useUserStore())
 const { updateInterfaceLanguage, updateNativeLanguage } = useUserStore()
 const { getTranslatedLanguageName, languages } = useConfigStore()
+const { availableLearningLanguagesOptions, activeLearningLanguage, updateActiveLearningLanguage } = useLearningLanguage()
 
 const interfaceLanguage: WritableComputedRef<number> = computed({
     get() {
@@ -64,6 +66,22 @@ const nativeLanguagesOptions = computed(() => Object.keys(unref(languages)).map(
                     v-model:value="interfaceLanguage"
                     :placeholder="$t('select')"
                     :options="interfaceLanguagesOptions"
+                />
+                <n-skeleton
+                    v-else
+                    height="34px"
+                    width="100%" />
+            </n-form-item>
+            <n-form-item
+                :label="$t('learning_language')"
+                path="selectValue">
+                <n-select
+                    v-if="isUserDataLoaded"
+                    @update-value="updateActiveLearningLanguage"
+                    :value="activeLearningLanguage"
+                    :placeholder="$t('select')"
+                    :options="availableLearningLanguagesOptions"
+                    value-field="key"
                 />
                 <n-skeleton
                     v-else
