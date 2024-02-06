@@ -3,7 +3,13 @@
   grid-gap: 10px;
   grid-template-columns: 200px 1fr;
 
+  @media (max-width: $m) {
+    display: flex;
+    justify-content: center;
+  }
+
   &__container {
+    width: 100%;
     max-width: 860px;
     margin: 0 auto;
   }

@@ -9,6 +9,10 @@
   background: white;
   box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
 
+  @media (max-width: $m) {
+    box-shadow: unset;
+  }
+
   &__menu {
     display: flex;
     flex-direction: row;
@@ -16,6 +20,10 @@
     align-items: center;
     height: 100%;
     padding: 0 40px;
+
+    @media (max-width: $m) {
+      padding: 0 30px;
+    }
   }
 
   &__navigations {
@@ -33,5 +41,6 @@
     display: flex;
     gap: 30px;
     align-items: center;
+    justify-content: flex-end;
   }
 }

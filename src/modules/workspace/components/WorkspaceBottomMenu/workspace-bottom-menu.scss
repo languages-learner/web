@@ -1,0 +1,35 @@
+.workspace-bottom-menu {
+  position: fixed;
+  bottom: 15px;
+  left: 10vw;
+  z-index: 100;
+  width: 80vw;
+  height: 55px;
+  background: #267b4a;
+  border: transparent solid 1px;
+  border-radius: 30px;
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+
+  >.n-menu {
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+  }
+
+  :deep(.n-menu-item-content__icon) {
+    margin-right: 0 !important;
+  }
+
+  :deep(.n-menu-item-content--child-active .n-menu-item-content__icon::after),
+  :deep(.n-menu-item-content--selected .n-menu-item-content__icon::after) {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background-color: #22c522;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    content: "";
+  }
+}
