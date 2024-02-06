@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import WorkspaceHeader from '@/modules/workspace/components/WorkspaceHeader/WorkspaceHeader.vue'
+import WorkspaceBottomMenu from '@/modules/workspace/components/WorkspaceBottomMenu/WorkspaceBottomMenu.vue'
+import { useAppBreakpoints } from '@/composables/useAppBreakpoints'
+
+const { isMobile } = useAppBreakpoints()
 </script>
 
 <template>
@@ -9,6 +13,7 @@ import WorkspaceHeader from '@/modules/workspace/components/WorkspaceHeader/Work
             <router-view></router-view>
         </div>
     </div>
+    <WorkspaceBottomMenu v-if="isMobile" />
 </template>
 
 <style scoped lang="scss">

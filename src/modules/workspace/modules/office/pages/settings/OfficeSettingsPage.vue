@@ -43,9 +43,6 @@ const nativeLanguagesOptions = computed(() => Object.keys(unref(languages)).map(
             require-mark-placement="right-hanging"
             size="medium"
             label-width="auto"
-            :style="{
-                maxWidth: '640px'
-            }"
         >
             <n-form-item
                 :label="$t('native_language')"

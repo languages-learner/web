@@ -30,10 +30,8 @@ const isSelectedStatus = (status: WordsFilters['status']) => filters.value.statu
 
 <template>
     <div class="words-container-header">
-        <n-row
-            align-items="center"
-            justify-content="space-between">
-            <n-col span="12">
+        <n-grid cols="5 m:2">
+            <n-grid-item span="3 m:1">
                 <n-row
                     align-items="center"
                     class="words-container-header__left-container">
@@ -64,9 +62,9 @@ const isSelectedStatus = (status: WordsFilters['status']) => filters.value.statu
                         </n-button>
                     </n-col>
                 </n-row>
-            </n-col>
-            <n-col>
-                <n-row justify-content="end">
+            </n-grid-item>
+            <n-grid-item span="2 m:1">
+                <n-flex justify="end">
                     <n-button-group>
                         <n-button
                             @click="() => updateStatus(-1)"
@@ -84,9 +82,9 @@ const isSelectedStatus = (status: WordsFilters['status']) => filters.value.statu
                             </template>
                         </n-button>
                     </n-button-group>
-                </n-row>
-            </n-col>
-        </n-row>
+                </n-flex>
+            </n-grid-item>
+        </n-grid>
     </div>
 </template>
 
