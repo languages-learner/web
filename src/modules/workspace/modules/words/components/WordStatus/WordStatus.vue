@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import WordStatusIcon from '@/modules/workspace/modules/words/components/WordStatus/WordStatusIcon.vue'
-import { EWordStatus } from '@/services/dbstore/dto/Words'
+import { type EWordStatus } from '@/services/dbstore/dto/Words'
+import { useWordStatuses } from '@/modules/workspace/modules/words/composables/useWordStatuses'
 
-const { t } = useI18n()
+const { wordStatusOptions } = useWordStatuses()
 
 const props = defineProps<{
     status: EWordStatus
@@ -12,21 +13,6 @@ const emit = defineEmits<{
     (e: 'update', status: EWordStatus): void
 }>()
 
-const statusOptions = [
-    {
-        label: t('new_word'),
-        value: EWordStatus.NEW_WORD,
-    },
-    {
-        label: t('learn'),
-        value: EWordStatus.LEARN,
-    },
-    {
-        label: t('learned'),
-        value: EWordStatus.LEARNED,
-    },
-]
-
 const updateStatus = (status: EWordStatus) => {
     emit('update', status)
 }
@@ -35,7 +21,7 @@ const updateStatus = (status: EWordStatus) => {
 <template>
     <n-popselect
         :value="props.status"
-        :options="statusOptions"
+        :options="wordStatusOptions"
         :on-update:value="updateStatus"
     >
         <WordStatusIcon :status="props.status" />

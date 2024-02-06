@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
-import WordStatusIcon from '@/modules/workspace/modules/words/components/WordStatus/WordStatusIcon.vue'
-import { getWordStatusesValues } from '@/services/dbstore/dto/Words'
+import WordsContainerHeaderStatuses from '@/modules/workspace/modules/words/components/WordsContainerHeader/WordsContainerHeaderStatuses/WordsContainerHeaderStatuses.vue'
 
 defineProps<{
     isAllWordsSelected: boolean
@@ -24,14 +23,12 @@ const updateStatus = (value: WordsFilters['status']) => {
 }
 const toggleSelection = () => emit('toggleSelection')
 const addWord = () => emit('addWord')
-
-const isSelectedStatus = (status: WordsFilters['status']) => filters.value.status === status
 </script>
 
 <template>
     <div class="words-container-header">
-        <n-grid cols="5 m:2">
-            <n-grid-item span="3 m:1">
+        <n-grid cols="7 m:2">
+            <n-grid-item span="5 m:1">
                 <n-row
                     align-items="center"
                     class="words-container-header__left-container">
@@ -43,7 +40,6 @@ const isSelectedStatus = (status: WordsFilters['status']) => filters.value.statu
                     </n-col>
                     <n-col span="14">
                         <n-input
-
                             :on-update:value="updateText"
                             class="words-container-header__search-input"
                             type="text"
@@ -65,23 +61,7 @@ const isSelectedStatus = (status: WordsFilters['status']) => filters.value.statu
             </n-grid-item>
             <n-grid-item span="2 m:1">
                 <n-flex justify="end">
-                    <n-button-group>
-                        <n-button
-                            @click="() => updateStatus(-1)"
-                            :secondary="isSelectedStatus(-1)">
-                            {{ $t('all') }}
-                        </n-button>
-                        <n-button
-                            v-for="(wordStatus, index) in getWordStatusesValues()"
-                            :key="`words-container-header-status-${index}`"
-                            @click="() => updateStatus(wordStatus)"
-                            :secondary="isSelectedStatus(wordStatus)"
-                        >
-                            <template #icon>
-                                <WordStatusIcon :status="wordStatus" />
-                            </template>
-                        </n-button>
-                    </n-button-group>
+                    <WordsContainerHeaderStatuses v-model:status="filters.status"/>
                 </n-flex>
             </n-grid-item>
         </n-grid>
