@@ -16,7 +16,7 @@ watch(() => props.type, () => authenticateType.value = props.type)
 const modalStyle = computed(() => unref(isMobile)
     ? {
         width: '100vw',
-        height: '100vh',
+        height: '100dvh',
     }
     : {
         width: '600px',
