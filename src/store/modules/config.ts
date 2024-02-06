@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { useI18n } from 'vue-i18n'
 import { useConfigService } from '@/plugins/services'
 import { useErrorLogStore } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'

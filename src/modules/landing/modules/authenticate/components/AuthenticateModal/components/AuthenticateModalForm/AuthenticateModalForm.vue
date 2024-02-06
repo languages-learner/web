@@ -1,12 +1,5 @@
 <script lang="ts" setup>
-import {
-    computed,
-    reactive,
-    ref,
-} from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useNotification } from 'naive-ui'
-import { useRouter } from 'vue-router'
 import { EPageName } from '@/enums/EPageName'
 import { type EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 import AuthenticateModalProviders from '@/modules/landing/modules/authenticate/components/AuthenticateModal/components/AuthenticateModalProviders/AuthenticateModalProviders.vue'

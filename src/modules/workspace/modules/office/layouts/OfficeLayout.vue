@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import { EPageName } from '@/enums/EPageName'
 import OfficeNavigation from '@/modules/workspace/modules/office/components/OfficeNavigation/OfficeNavigation.vue'
 import { useAppBreakpoints } from '@/composables/useAppBreakpoints'

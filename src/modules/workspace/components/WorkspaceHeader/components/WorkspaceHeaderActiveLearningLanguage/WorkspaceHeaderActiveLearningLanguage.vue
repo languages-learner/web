@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/store/modules/user'
 import { useConfigStore } from '@/store/modules/config'
 

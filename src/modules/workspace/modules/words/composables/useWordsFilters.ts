@@ -1,4 +1,3 @@
-import { reactive } from 'vue'
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 
 export const useWordsFilters = (baseFilters: WordsFilters = {

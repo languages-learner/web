@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
 import AuthenticateModalForm from '@/modules/landing/modules/authenticate/components/AuthenticateModal/components/AuthenticateModalForm/AuthenticateModalForm.vue'
 import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/components/AuthenticateModal/EAuthenticateModalType'
 

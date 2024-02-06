@@ -1,10 +1,3 @@
-import {
-    computed,
-    reactive,
-    unref,
-} from 'vue'
-
-
 export const useItemsSelection = <Key extends number | string | symbol, Data>(items: Map<Key, Data>) => {
     const selectedItems = reactive<Map<Key, boolean>>(new Map()) as Map<Key, boolean>
 

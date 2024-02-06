@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
 import type { ErrorLogInfo, ErrorLogInfoWithAdditionalData } from '@/models/ErrorLogInfo'
 import { store } from '@/store'
 import { formatToDateTime } from '@/utils/dateUtil'

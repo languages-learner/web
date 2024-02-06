@@ -1,4 +1,3 @@
-import { onScopeDispose } from 'vue'
 import { useErrorLogStore } from '@/store/modules/errorLog'
 import { noop } from '@/utils/noop'
 import { EErrorType } from '@/enums/EErrorType'

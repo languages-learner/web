@@ -1,9 +1,4 @@
-import {
-    type Ref,
-    onScopeDispose,
-    ref,
-    watchEffect,
-} from 'vue'
+import { type Ref } from 'vue'
 import { noop } from '@/utils/noop'
 import { useIntersectionObserver } from '@/composables/intersectionObserver/useIntersectionObserver'
 

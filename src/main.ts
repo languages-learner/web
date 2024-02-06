@@ -1,4 +1,3 @@
-import { createApp } from 'vue'
 import { setupFirebaseApp } from '@/plugins/firebase'
 import { setupStore } from '@/store'
 import { setupI18n } from '@/plugins/i18n'
