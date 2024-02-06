@@ -6,7 +6,7 @@
             align-items="center">
             <n-gradient-text
                 class="landing__title-text"
-                :size="100"
+                size="14vw"
                 type="success">
                 Languages<br/>
                 Learner
