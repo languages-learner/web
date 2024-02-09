@@ -29,4 +29,15 @@ export default defineConfig({
             resolvers: [NaiveUiResolver()],
         }),
     ],
+    server: {
+        host: true,
+        port: 3000,
+        watch: {
+            usePolling: true,
+        },
+    },
+    preview: {
+        host: true,
+        port: 8080,
+    },
 })

@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  languages_learner_web:
+    image: languages_learner_web_dev
+    container_name: languages_learner_web_dev
+    build:
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    command: ["npm", "run", "dev"]
+    environment:
+      - NODE_ENV=development
+
+volumes:
+  node_modules:

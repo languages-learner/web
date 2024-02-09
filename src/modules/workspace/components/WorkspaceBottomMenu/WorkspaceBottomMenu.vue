@@ -51,7 +51,7 @@ const menuOptions: MenuOption[] = [
             :icon-size="30"
             mode="horizontal"
             :options="menuOptions"
-            :value="$route.name"
+            :value="String($route.name)"
         />
     </div>
 </template>

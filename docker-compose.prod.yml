@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  languages_learner_web:
+    image: languages_learner_web_prod
+    container_name: languages_learner_web_prod
+    build:
+      dockerfile: Dockerfile.prod
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
