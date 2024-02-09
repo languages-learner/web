@@ -1,0 +1,12 @@
+.git
+.vscode
+.idea
+.dockerignore
+.gitignore
+docker-compose.dev.yml
+docker-compose.prod.yml
+docker-compose.yml
+Dockerfile.dev
+Dockerfile.prod
+node_modules
+dist
