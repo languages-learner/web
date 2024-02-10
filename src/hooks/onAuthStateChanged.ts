@@ -1,5 +1,5 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/auth'
 import { type Router } from 'vue-router'
 import { EPageName } from '@/enums/EPageName'
 import { useUserStore } from '@/store/modules/user'
