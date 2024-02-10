@@ -1,25 +1,24 @@
 import { setupFirebaseApp } from '@/plugins/firebase'
 import { setupStore } from '@/store'
 import { setupI18n } from '@/plugins/i18n'
-import { router, setupRouter } from '@/router'
+import { setupRouter } from '@/router'
 import { setupServices } from '@/plugins/services'
-import { setupErrorHandle } from '@/logics/error-handle'
+import { setupErrorHandler } from '@/plugins/errorHandler'
 import { setupRouterGuard } from '@/router/guard'
-import { initializeOnAuthStateChangedHook } from '@/hooks/onAuthStateChanged'
 
 import App from '@/App.vue'
 
-async function bootstrap() {
+export async function bootstrap(test= false) {
     const app = createApp(App)
 
-    setupErrorHandle(app)
+    setupErrorHandler(app)
 
     await setupFirebaseApp()
 
     await setupServices()
 
     // Configure routing
-    await setupRouter(app)
+    const router = await setupRouter(app, test)
 
     // Configure store
     setupStore(app)
@@ -27,13 +26,10 @@ async function bootstrap() {
     // Multilingual configuration
     await setupI18n(router, app)
 
-    app.mount('#app')
-
-    initializeOnAuthStateChangedHook(router)
+    app.mount(test ? document.createElement('div') : '#app')
 
     setupRouterGuard(router)
+
+    return app
 }
-
-bootstrap()
-
 

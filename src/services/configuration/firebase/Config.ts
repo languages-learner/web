@@ -15,22 +15,24 @@ export class Config implements IConfigService {
         return Config.instance
     }
 
-    private _config: RemoteConfig
+    private _config: RemoteConfig | undefined
 
     constructor() {
-        this._config = firebase.remoteConfig()
+        if (typeof window !== 'undefined') {
+            this._config = firebase.remoteConfig()
 
-        /*
-        * Disable cache for development mode
-        * */
-        if (import.meta.env.DEV) {
-            firebase.remoteConfig().settings.fetchTimeoutMillis = 0
-            firebase.remoteConfig().settings.minimumFetchIntervalMillis = 0
+            /*
+                * Disable cache for development mode
+                * */
+            if (import.meta.env.DEV) {
+                firebase.remoteConfig().settings.fetchTimeoutMillis = 0
+                firebase.remoteConfig().settings.minimumFetchIntervalMillis = 0
+            }
         }
     }
 
     private async fetchConfig() {
-        await this._config.fetchAndActivate()
+        await this._config?.fetchAndActivate?.()
     }
 
     public async setup(): Promise<void> {
@@ -47,9 +49,9 @@ export class Config implements IConfigService {
 
     public getBaseConfig() {
         return {
-            languages: [],
+            languages: {},
             languagesAvailableForLearning: [],
             interfaceLanguages: [],
-        } as IConfig
+        } satisfies IConfig
     }
 }

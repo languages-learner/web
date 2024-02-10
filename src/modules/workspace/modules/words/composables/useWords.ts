@@ -23,6 +23,7 @@ export const useWords = (
 
     const words = reactive<Words>(new Map()) as Words
     const isAllWordsLoaded = ref(false)
+    const isAddingWord = ref(false)
 
     const {
         isLoading: isWordsLoading,
@@ -74,10 +75,12 @@ export const useWords = (
     const fetchWordsDebounced = debounce(fetchWords, 300)
 
     const addWord = async (word: string, translations: string[]) => {
+        isAddingWord.value = true
         const result = await wordControl.addWord(word, translations)
         if (result) {
             words.set(word, result)
         }
+        isAddingWord.value = false
     }
 
     const deleteWord = async (word: string) => {
@@ -112,6 +115,7 @@ export const useWords = (
         words,
         isWordsLoading,
         isWordsLoaded,
+        isAddingWord,
         isAllWordsLoaded,
         fetchWords,
         fetchWordsDebounced,

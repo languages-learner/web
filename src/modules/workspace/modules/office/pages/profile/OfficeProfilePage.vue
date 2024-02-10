@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import UserAvatar from '@/modules/workspace/components/UserAvatar/UserAvatar.vue'
 import { useUserStore } from '@/store/modules/user'
+import { EDataTest } from '@/enums/EDataTest'
 
 const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
 </script>
@@ -21,7 +22,7 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                         <UserAvatar
                             round
                             :size="64" />
-                        <n-text>
+                        <n-text :data-test="EDataTest.office_profile_email">
                             {{ profileData?.email }}
                         </n-text>
                     </n-space>

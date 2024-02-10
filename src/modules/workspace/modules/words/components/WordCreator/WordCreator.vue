@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { WordCreatorType } from '@/modules/workspace/modules/words/components/WordCreator/types'
+import { useI18n } from '@/plugins/i18n'
+import { EDataTest } from '@/enums/EDataTest'
 
 const { t } = useI18n()
 
@@ -27,18 +29,20 @@ const text = computed(() => {
     case WordCreatorType.NOT_FOUND: return t('no_suitable_words')
     case WordCreatorType.NEW_WORD: return t('add_new_word')
     }
-
-    return ''
 })
 </script>
 
 <template>
-    <div class="words-creator">
+    <div
+        class="words-creator"
+        :data-test="EDataTest.words_creator">
         <n-row
             justify-content="center"
             class="words-creator__container">
             <span>{{ text }}</span>
-            <n-dynamic-tags v-model:value="newTranslations" />
+            <n-dynamic-tags
+                v-model:value="newTranslations"
+                :data-test="EDataTest.words_creator_translations" />
             <n-button
                 v-if="newTranslations.length"
                 @click="addWord"
@@ -46,6 +50,7 @@ const text = computed(() => {
                 secondary
                 type="success"
                 class="words-creator__button"
+                :data-test="EDataTest.words_creator_add_button"
             >
                 {{ $t('add') }}
             </n-button>

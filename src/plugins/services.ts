@@ -5,7 +5,7 @@ import { FirebaseAuthentication } from '@/services/authentication/firebase/Fireb
 import { Firestore } from '@/services/dbstore/firestore/Firestore'
 import { Config } from '@/services/configuration/firebase/Config'
 
-export async function setupServices() {
+export const setupServices = async () => {
     const configService = Config.getInstance()
     await configService.setup()
 }

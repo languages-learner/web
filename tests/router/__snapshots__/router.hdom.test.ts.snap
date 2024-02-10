@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`router > redirect 1`] = `
+{
+  "fullPath": "/",
+  "hash": "",
+  "href": "/",
+  "matched": [
+    {
+      "aliasOf": undefined,
+      "beforeEnter": undefined,
+      "children": [],
+      "components": undefined,
+      "enterCallbacks": {},
+      "instances": {},
+      "leaveGuards": Set {},
+      "meta": {},
+      "name": undefined,
+      "path": "",
+      "props": {},
+      "redirect": [Function],
+      "updateGuards": Set {},
+    },
+  ],
+  "meta": {},
+  "name": undefined,
+  "params": {},
+  "path": "/",
+  "query": {},
+  "redirectedFrom": undefined,
+}
+`;

@@ -1,10 +1,11 @@
 import { useErrorLogStore } from '@/store/modules/errorLog'
-import { noop } from '@/utils/noop'
 import { EErrorType } from '@/enums/EErrorType'
 import { getErrorMessage } from '@/utils/error'
+import { noop } from '@/utils/noop'
 
 type TypeListener = (entry: IntersectionObserverEntry) => void;
 
+// TODO Replace to useElementVisibility
 export const useIntersectionObserver = () => {
     const { addErrorLogInfo } = useErrorLogStore()
 

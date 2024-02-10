@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 import WordsContainerHeaderStatuses from '@/modules/workspace/modules/words/components/WordsContainerHeader/WordsContainerHeaderStatuses/WordsContainerHeaderStatuses.vue'
+import { EDataTest } from '@/enums/EDataTest'
 
 defineProps<{
     isAllWordsSelected: boolean
@@ -34,6 +35,7 @@ const addWord = () => emit('addWord')
                     class="words-container-header__left-container">
                     <n-col span="2">
                         <n-checkbox
+                            :data-test="EDataTest.words_container_header_checkbox"
                             :checked="isAllWordsSelected"
                             :on-update:checked="toggleSelection">
                         </n-checkbox>
@@ -41,6 +43,8 @@ const addWord = () => emit('addWord')
                     <n-col span="14">
                         <n-input
                             :on-update:value="updateText"
+                            :value="filters.text"
+                            :data-test="EDataTest.words_container_header_search"
                             class="words-container-header__search-input"
                             type="text"
                             :placeholder="$t('search')"
@@ -51,6 +55,7 @@ const addWord = () => emit('addWord')
                         span="2">
                         <n-button
                             @click="addWord"
+                            :data-test="EDataTest.words_container_header_add_word_button"
                             type="success"
                             strong
                             secondary>

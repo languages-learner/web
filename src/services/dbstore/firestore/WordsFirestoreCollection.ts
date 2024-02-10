@@ -9,7 +9,7 @@ import type { WordsCollectionFetchItemsFilter } from '@/services/dbstore/types/w
 import { EWordStatus } from '@/services/dbstore/dto/Words'
 import { EFirestoreCollectionFilterType } from '@/services/dbstore/firestore/enums/EFirestoreCollectionFilterType'
 import { BaseFirestoreCollection } from '@/services/dbstore/firestore/common/BaseFirestoreCollection'
-import { useUserStoreWithOut } from '@/store/modules/user'
+import { useUserStore } from '@/store/modules/user'
 
 const COLLECTION_NAME = 'words'
 
@@ -26,7 +26,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
 
     private getCollectionName = (sourceLanguageId: number, targetLanguageId: number) => `${sourceLanguageId}_${targetLanguageId}`
     private get wordCollection() {
-        const userStore = useUserStoreWithOut()
+        const userStore = useUserStore()
 
         if (!userStore.profileData || !userStore.customData){
             throw new Error('User data not initialized')

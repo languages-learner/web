@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import type { ErrorLogInfo, ErrorLogInfoWithAdditionalData } from '@/models/ErrorLogInfo'
-import { store } from '@/store'
 import { formatToDateTime } from '@/utils/dateUtil'
 
 export const useErrorLogStore = defineStore('error-log', () => {
@@ -19,10 +18,7 @@ export const useErrorLogStore = defineStore('error-log', () => {
     }
 
     return {
+        errorLogInfoList,
         addErrorLogInfo,
     }
 })
-
-export function useErrorLogStoreWithOut() {
-    return useErrorLogStore(store)
-}

@@ -9,10 +9,11 @@ import {
 import { type MenuOption } from 'naive-ui'
 import { NIcon } from 'naive-ui'
 import { RouterLink } from 'vue-router'
+import { useI18n } from '@/plugins/i18n'
 
 const { t } = useI18n()
 
-function renderIcon (icon: Component, color = 'white') {
+const renderIcon = (icon: Component, color = 'white') => {
     return () => h(NIcon, null, { default: () => h(icon, { 'color': color }) })
 }
 const menuOptions: MenuOption[] = [

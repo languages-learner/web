@@ -7,7 +7,7 @@
     margin: 10px 0;
     padding: 12px 0;
 
-    @media (max-width: $m) {
+    @media (max-width: $mobile) {
       margin: 5px 0;
       padding: 8px 0;
     }
@@ -15,5 +15,11 @@
 
   &__item + &__item {
     border-top: rgb(239, 239, 245) 1px solid;
+  }
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
   }
 }
