@@ -1,5 +1,5 @@
-import firebase from 'firebase/app'
-import 'firebase/remote-config'
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/remote-config'
 import RemoteConfig = firebase.remoteConfig.RemoteConfig;
 import type { IConfig } from '@/services/configuration/common/IConfig'
 import type { IConfigService } from '@/services/configuration/common/IConfigService'

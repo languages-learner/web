@@ -1,5 +1,5 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/firestore'
 import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
 import CollectionReference = firebase.firestore.CollectionReference;
 import type { Word, Words } from '@/services/dbstore/dto/Words'
@@ -75,12 +75,12 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
         return collection.orderBy('created', 'desc')
     }
 
-    private _lastItem: QueryDocumentSnapshot | null = null
+    private _lastItem: QueryDocumentSnapshot | undefined = undefined
     public items = async (
         paginate: boolean,
         limit: number,
         filters: Array<WordsCollectionFetchItemsFilter>,
-        abortController?: AbortController): Promise<Words | null> => {
+        abortController?: AbortController): Promise<Words | undefined> => {
         const items: Words = new Map()
         let query = this.setFetchItemsFilters(this.wordCollection, filters)
 
@@ -94,7 +94,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
             .get()
 
         if (abortController?.signal.aborted) {
-            return null
+            return undefined
         }
 
         if (paginate) {
@@ -109,7 +109,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
     }
 
     public resetWordsPagination = () => {
-        this._lastItem = null
+        this._lastItem = undefined
     }
 
     public create = async (word: string, translations: Word['translations']) => {

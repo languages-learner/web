@@ -1,5 +1,5 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/firestore'
 import CollectionReference = firebase.firestore.CollectionReference;
 import Query = firebase.firestore.Query;
 import DocumentData = firebase.firestore.DocumentData;
