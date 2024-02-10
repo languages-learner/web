@@ -3,6 +3,8 @@ import UserAvatar from '@/modules/workspace/components/UserAvatar/UserAvatar.vue
 import { useUserStore } from '@/store/modules/user'
 import { EPageName } from '@/enums/EPageName'
 import { useAuthenticationService } from '@/plugins/services'
+import { useI18n } from '@/plugins/i18n'
+import { EDataTest } from '@/enums/EDataTest'
 
 const router = useRouter()
 const { isUserDataLoaded } = storeToRefs(useUserStore())
@@ -46,7 +48,9 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
         @select="handleSelectAvatarDropdownMenuItem"
         trigger="hover"
         :options="avatarDropdownMenuOptions">
-        <UserAvatar size="medium" />
+        <UserAvatar
+            size="medium"
+            :data-test="EDataTest.workspace_header_user_avatar" />
     </n-dropdown>
     <n-skeleton
         v-else

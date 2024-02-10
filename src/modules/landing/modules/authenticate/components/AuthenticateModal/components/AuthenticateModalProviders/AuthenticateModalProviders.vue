@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
+import { EDataTest } from '@/enums/EDataTest'
 
 const emit = defineEmits<{
     (e: 'signInWithProvider', provider: EAuthenticationProvider): void
@@ -14,6 +15,7 @@ const signInWithProvider = (provider: EAuthenticationProvider) => emit('signInWi
         justify="center">
         <n-button
             @click="() => signInWithProvider(EAuthenticationProvider.GOOGLE)"
+            :data-test="EDataTest.authentication_modal_provider"
             class="authenticate-modal-providers__button"
             type="success"
             ghost>

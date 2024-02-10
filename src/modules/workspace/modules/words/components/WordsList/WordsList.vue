@@ -4,6 +4,7 @@
 import VirtualList from 'vue3-virtual-scroll-list'
 import type { Word, Words } from '@/services/dbstore/dto/Words'
 import WordsListItem from '@/modules/workspace/modules/words/components/WordsList/components/WordsListItem/WordsListItem.vue'
+import { EDataTest } from '@/enums/EDataTest'
 
 const props = defineProps<{
     words: Words
@@ -33,19 +34,28 @@ const items = computed(() => Array.from(props.words).map(([word, wordData]) => (
 </script>
 
 <template>
-    <virtual-list
-        @deleteWord="deleteWord"
-        @updateWordStatus="updateWordStatus"
-        @updateWordTranslations="updateWordTranslations"
-        @toggleWordSelection="toggleWordSelection"
-        class="words-list"
-        data-key="word"
-        :data-sources="items"
-        :data-component="WordsListItem"
-        :estimate-size="77"
-        :item-class="'words-list__item'"
-        :page-mode="true"
-    />
+    <div class="words-list">
+        <virtual-list
+            v-if="!isWordsLoading && isWordsLoaded"
+            @deleteWord="deleteWord"
+            @updateWordStatus="updateWordStatus"
+            @updateWordTranslations="updateWordTranslations"
+            @toggleWordSelection="toggleWordSelection"
+            data-key="word"
+            :data-sources="items"
+            :data-component="WordsListItem"
+            :data-test="EDataTest.words_list"
+            :estimate-size="77"
+            :item-class="'words-list__item'"
+            :page-mode="true"
+        />
+        <div
+            v-else
+            class="words-list__loader"
+            :data-test="EDataTest.words_list_loader">
+            <n-spin size="large" />
+        </div>
+    </div>
 </template>
 
 <style lang="scss">

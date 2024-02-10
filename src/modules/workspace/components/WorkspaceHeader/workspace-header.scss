@@ -9,7 +9,7 @@
   background: white;
   box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
 
-  @media (max-width: $m) {
+  @media (max-width: $mobile) {
     box-shadow: unset;
   }
 
@@ -21,7 +21,7 @@
     height: 100%;
     padding: 0 40px;
 
-    @media (max-width: $m) {
+    @media (max-width: $mobile) {
       padding: 0 30px;
     }
   }

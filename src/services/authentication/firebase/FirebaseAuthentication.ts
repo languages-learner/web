@@ -1,5 +1,6 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
+import { getAuth, useDeviceLanguage } from 'firebase/auth'
 import type { IAuthentication } from '@/services/authentication/common/IAuthentication'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 import { getErrorMessage } from '@/utils/error'
@@ -16,7 +17,7 @@ export class FirebaseAuthentication implements IAuthentication {
     }
 
     constructor() {
-        firebase.auth().useDeviceLanguage()
+        useDeviceLanguage(getAuth())
     }
 
     public createUserWithEmailAndPassword = async (email: string, password: string) => {

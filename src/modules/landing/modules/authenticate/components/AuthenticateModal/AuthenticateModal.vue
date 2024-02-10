@@ -2,6 +2,7 @@
 import AuthenticateModalForm from '@/modules/landing/modules/authenticate/components/AuthenticateModal/components/AuthenticateModalForm/AuthenticateModalForm.vue'
 import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/components/AuthenticateModal/EAuthenticateModalType'
 import { useAppBreakpoints } from '@/composables/useAppBreakpoints'
+import { EDataTest } from '@/enums/EDataTest'
 
 const props = defineProps<{
     type: EAuthenticateModalType
@@ -38,6 +39,7 @@ const updateShow = (value: boolean) => emit('update:show', value)
         size="huge"
         :title="$t('authentication')"
         :style="modalStyle"
+        :data-test="EDataTest.authentication_modal"
     >
         <n-tabs
             v-model:value="authenticateType"
@@ -46,11 +48,13 @@ const updateShow = (value: boolean) => emit('update:show', value)
             animated
         >
             <n-tab-pane
+                :data-test="EDataTest.authentication_modal_sign_in_tab"
                 :name="EAuthenticateModalType.SIGNIN"
                 :tab="$t('sign_in')">
                 <AuthenticateModalForm :type="EAuthenticateModalType.SIGNIN"/>
             </n-tab-pane>
             <n-tab-pane
+                :data-test="EDataTest.authentication_modal_sign_up_tab"
                 :name="EAuthenticateModalType.SIGNUP"
                 :tab="$t('sign_up')">
                 <AuthenticateModalForm :type="EAuthenticateModalType.SIGNUP"/>

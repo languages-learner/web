@@ -7,6 +7,8 @@ import { useAuthenticationService } from '@/plugins/services'
 import { useErrorLogStore } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
 import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/components/AuthenticateModal/EAuthenticateModalType'
+import { useI18n } from '@/plugins/i18n'
+import { EDataTest } from '@/enums/EDataTest'
 
 const { t } = useI18n()
 const { addErrorLogInfo } = useErrorLogStore()
@@ -75,8 +77,6 @@ const action = computed(() => {
         handler: createUserWithEmailAndPassword,
     }
     }
-
-    return undefined
 })
 </script>
 
@@ -85,6 +85,7 @@ const action = computed(() => {
         <n-form-item-row :label="$t('email')">
             <n-input
                 v-model:value="form.email"
+                type="email"
                 :placeholder="$t('email')"/>
         </n-form-item-row>
         <n-form-item-row :label="$t('password')">
@@ -97,13 +98,16 @@ const action = computed(() => {
     </n-form>
     <n-button
         @click="action?.handler"
+        :data-test="EDataTest.authentication_modal_action_button"
         type="primary"
         block
         secondary
         strong>
         {{ action?.text }}
     </n-button>
-    <div class="authenticate-modal-form__error">
+    <div
+        class="authenticate-modal-form__error"
+        :data-test="EDataTest.authentication_modal_error">
         <n-text type="error">{{ currentError }}</n-text>
     </div>
     <n-divider />

@@ -1,2 +1,3 @@
 export const BASE_INTERFACE_LANGUAGE = 0
 export const BASE_INTERFACE_LANGUAGE_NAME = 'en'
+export const TEST_INTERFACE_LANGUAGE_NAME = 'xx'

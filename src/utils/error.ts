@@ -12,7 +12,13 @@ const isErrorWithMessage = (error: unknown): error is ErrorWithMessage => {
 }
 
 const toErrorWithMessage = (maybeError: unknown): ErrorWithMessage => {
-    if (isErrorWithMessage(maybeError)) return maybeError
+    if (isErrorWithMessage(maybeError)) {
+        if (maybeError instanceof Error) {
+            return maybeError
+        }
+
+        return new Error(maybeError.message)
+    }
 
     try {
         return new Error(JSON.stringify(maybeError))

@@ -16,6 +16,7 @@ const {
     words,
     isWordsLoaded,
     isWordsLoading,
+    isAddingWord,
     selectedWords,
     isAllWordsSelected,
     toggleWordSelection,
@@ -44,9 +45,10 @@ const [isAddWordBlockNeededByUserRequest, toggleIsAddWordBlockNeeded] = useToggl
 const wordCreatorType = computed(() => unref(words).size > 0 || unref(isAddWordBlockNeededByUserRequest)
     ? WordCreatorType.NEW_WORD
     : WordCreatorType.NOT_FOUND)
-const isWordCreatorNeeded = computed(() => unref(isWordsLoaded) && !unref(isWordsLoading) &&
+const isWordCreatorNeeded = computed(() => unref(isWordsLoaded) && !unref(isWordsLoading) && !unref(isAddingWord) &&
     (unref(isAddWordBlockNeededByUserRequest) || (!unref(words).size && wordsFilters.text)),
 )
+const isAddWordButtonNeeded = computed(() => unref(isWordsLoaded) && !unref(hasFilteredWord) && !unref(isAddingWord))
 
 watch([isBottomReached, isWordsLoading], () => {
     if (unref(isBottomReached) && !unref(isWordsLoading)) {
@@ -66,7 +68,7 @@ watch(() => unref(customData)?.activeLearningLanguage, () => {
             v-model:filters="wordsFilters"
             @addWord="toggleIsAddWordBlockNeeded"
             @toggleSelection="toggleAllWordsSelection"
-            :isAddWordButtonNeeded="!hasFilteredWord"
+            :isAddWordButtonNeeded="isAddWordButtonNeeded"
             :isAllWordsSelected="isAllWordsSelected"
         />
         <WordCreator
@@ -80,7 +82,7 @@ watch(() => unref(customData)?.activeLearningLanguage, () => {
             @toggleWordSelection="toggleWordSelection"
             @updateWordTranslations="updateWordTranslations"
             :isWordsLoaded="isWordsLoaded"
-            :isWordsLoading="isWordsLoading"
+            :isWordsLoading="isWordsLoading || isAddingWord"
             :words="words"
             :selectedWords="selectedWords"
         />

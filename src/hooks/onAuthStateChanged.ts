@@ -1,17 +1,16 @@
-import firebase from 'firebase/compat/app'
-import 'firebase/compat/auth'
 import { type Router } from 'vue-router'
-import { EPageName } from '@/enums/EPageName'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useUserStore } from '@/store/modules/user'
-import { useErrorLogStoreWithOut } from '@/store/modules/errorLog'
+import { useErrorLogStore } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
+import { EPageName } from '@/enums/EPageName'
 
 export const initializeOnAuthStateChangedHook = (router: Router): void => {
     const route = router.currentRoute
-    const { addErrorLogInfo } = useErrorLogStoreWithOut()
+    const { addErrorLogInfo } = useErrorLogStore()
+    const userStore = useUserStore()
 
-    firebase.auth().onAuthStateChanged(async (user) => {
-        const userStore = useUserStore()
+    onAuthStateChanged(getAuth(), async (user) => {
         await router.isReady()
         await userStore.setUser(user)
 

@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
@@ -10,7 +11,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@@': path.resolve(__dirname, '.'),
-            '@': path.resolve(__dirname, 'src'),
+            '@': path.resolve(__dirname, './src'),
         },
     },
     css: {
@@ -23,12 +24,32 @@ export default defineConfig({
     plugins: [
         vue(),
         AutoImport({
-            imports: ['vue', 'vue-router', 'vue-i18n', 'pinia'],
+            imports: ['vue', 'vue-router', 'pinia'],
+            // TODO Fix using auto imported enum in template
+            // dirs: ['./src/enums'],
         }),
         Components({
             resolvers: [NaiveUiResolver()],
         }),
     ],
+    test: {
+        // https://vitest.dev/guide/common-errors#failed-to-terminate-worker
+        pool: 'forks',
+        setupFiles: 'vitest-setup.ts',
+        typecheck: {
+            enabled: true,
+            ignoreSourceErrors: false,
+            tsconfig: 'tsconfig.json',
+        },
+        environmentMatchGlobs: [
+            ['tests/**/*.dom.test.{js,ts}', 'jsdom'],
+            ['tests/**/*.hdom.test.{js,ts}', 'happy-dom'],
+        ],
+        includeSource: ['src/**/*.{js,ts}', 'tests/**/*.test.{js,ts}'],
+    },
+    define: {
+        'import.meta.vitest': 'undefined',
+    },
     server: {
         host: true,
         port: 3000,

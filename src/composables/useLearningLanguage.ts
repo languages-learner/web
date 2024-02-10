@@ -1,5 +1,5 @@
 import { useUserStore } from '@/store/modules/user'
-import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
+import { BASE_INTERFACE_LANGUAGE } from '@/const/InterfaceLanguage'
 import { useConfigStore } from '@/store/modules/config'
 
 export const useLearningLanguage = () => {

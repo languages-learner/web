@@ -4,8 +4,10 @@ import { useDbStore } from '@/plugins/services'
 import { useErrorLogStore } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
 import { getErrorMessage } from '@/utils/error'
+import { useI18n } from '@/plugins/i18n'
+import { TEST_INTERFACE_LANGUAGE_NAME } from '@/const/InterfaceLanguage'
 
-export const useInterfaceLanguageStore = defineStore('language', () => {
+export const useInterfaceLanguageStore = defineStore('interfaceLanguage', () => {
     const {
         locale,
         availableLocales,
@@ -24,7 +26,7 @@ export const useInterfaceLanguageStore = defineStore('language', () => {
             const languageName = getLanguageName(languageId)
             const translations = await translationCollection.get(languageName)
             loadedLanguages.value.push(languageName)
-            setLocaleMessage(languageName, translations)
+            setLocaleMessage(languageName, translations as never)
         } catch (e) {
             addErrorLogInfo({ type: EErrorType.INTERFACE_LANGUAGE_STORE, message: getErrorMessage(e) })
         }
@@ -32,7 +34,7 @@ export const useInterfaceLanguageStore = defineStore('language', () => {
 
     const setInterfaceLanguage = async (languageId: number) => {
         const languageName = getLanguageName(languageId)
-        if (unref(locale) === languageName) {
+        if ([languageName, TEST_INTERFACE_LANGUAGE_NAME].includes(unref(locale))) {
             return
         }
 
