@@ -1,5 +1,6 @@
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 import { EWordStatus, getWordStatusesValues } from '@/services/dbstore/dto/Words'
+import { useI18n } from '@/plugins/i18n'
 
 export const useWordStatuses = () => {
     const { t } = useI18n()

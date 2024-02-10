@@ -3,8 +3,9 @@ import type { WritableComputedRef } from 'vue'
 import { useUserStore } from '@/store/modules/user'
 import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
 import { useConfigStore } from '@/store/modules/config'
-import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
+import { BASE_INTERFACE_LANGUAGE } from '@/const/InterfaceLanguage'
 import { useLearningLanguage } from '@/composables/useLearningLanguage'
+import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
 
 const { interfaceLanguages, interfaceLanguageId } = storeToRefs(useInterfaceLanguageStore())
 const { setInterfaceLanguage } = useInterfaceLanguageStore()
@@ -22,7 +23,11 @@ const interfaceLanguage: WritableComputedRef<number> = computed({
         setInterfaceLanguage(value)
     },
 })
-const interfaceLanguagesOptions = computed(() => unref(interfaceLanguages).map(languageId => ({ label: getTranslatedLanguageName(languageId), value: languageId })))
+const interfaceLanguagesOptions = computed(() => unref(interfaceLanguages).map(languageId => ({
+    label: getTranslatedLanguageName(languageId),
+    value: languageId,
+    class: EDataTestClass.office_settings_interface_language_item,
+})))
 
 const nativeLanguage = computed({
     get() {
@@ -64,6 +69,7 @@ const nativeLanguagesOptions = computed(() => Object.keys(unref(languages)).map(
                 <n-select
                     v-if="isUserDataLoaded"
                     v-model:value="interfaceLanguage"
+                    :data-test="EDataTest.office_settings_interface_language"
                     :placeholder="$t('select')"
                     :options="interfaceLanguagesOptions"
                 />

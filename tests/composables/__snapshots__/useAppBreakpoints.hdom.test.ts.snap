@@ -1,0 +1,2006 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`composable/useAppBreakpoints > returns 1`] = `
+[
+  {
+    "isMobile": true,
+    "width": 10,
+  },
+  {
+    "isMobile": true,
+    "width": 20,
+  },
+  {
+    "isMobile": true,
+    "width": 30,
+  },
+  {
+    "isMobile": true,
+    "width": 40,
+  },
+  {
+    "isMobile": true,
+    "width": 50,
+  },
+  {
+    "isMobile": true,
+    "width": 60,
+  },
+  {
+    "isMobile": true,
+    "width": 70,
+  },
+  {
+    "isMobile": true,
+    "width": 80,
+  },
+  {
+    "isMobile": true,
+    "width": 90,
+  },
+  {
+    "isMobile": true,
+    "width": 100,
+  },
+  {
+    "isMobile": true,
+    "width": 110,
+  },
+  {
+    "isMobile": true,
+    "width": 120,
+  },
+  {
+    "isMobile": true,
+    "width": 130,
+  },
+  {
+    "isMobile": true,
+    "width": 140,
+  },
+  {
+    "isMobile": true,
+    "width": 150,
+  },
+  {
+    "isMobile": true,
+    "width": 160,
+  },
+  {
+    "isMobile": true,
+    "width": 170,
+  },
+  {
+    "isMobile": true,
+    "width": 180,
+  },
+  {
+    "isMobile": true,
+    "width": 190,
+  },
+  {
+    "isMobile": true,
+    "width": 200,
+  },
+  {
+    "isMobile": true,
+    "width": 210,
+  },
+  {
+    "isMobile": true,
+    "width": 220,
+  },
+  {
+    "isMobile": true,
+    "width": 230,
+  },
+  {
+    "isMobile": true,
+    "width": 240,
+  },
+  {
+    "isMobile": true,
+    "width": 250,
+  },
+  {
+    "isMobile": true,
+    "width": 260,
+  },
+  {
+    "isMobile": true,
+    "width": 270,
+  },
+  {
+    "isMobile": true,
+    "width": 280,
+  },
+  {
+    "isMobile": true,
+    "width": 290,
+  },
+  {
+    "isMobile": true,
+    "width": 300,
+  },
+  {
+    "isMobile": true,
+    "width": 310,
+  },
+  {
+    "isMobile": true,
+    "width": 320,
+  },
+  {
+    "isMobile": true,
+    "width": 330,
+  },
+  {
+    "isMobile": true,
+    "width": 340,
+  },
+  {
+    "isMobile": true,
+    "width": 350,
+  },
+  {
+    "isMobile": true,
+    "width": 360,
+  },
+  {
+    "isMobile": true,
+    "width": 370,
+  },
+  {
+    "isMobile": true,
+    "width": 380,
+  },
+  {
+    "isMobile": true,
+    "width": 390,
+  },
+  {
+    "isMobile": true,
+    "width": 400,
+  },
+  {
+    "isMobile": true,
+    "width": 410,
+  },
+  {
+    "isMobile": true,
+    "width": 420,
+  },
+  {
+    "isMobile": true,
+    "width": 430,
+  },
+  {
+    "isMobile": true,
+    "width": 440,
+  },
+  {
+    "isMobile": true,
+    "width": 450,
+  },
+  {
+    "isMobile": true,
+    "width": 460,
+  },
+  {
+    "isMobile": true,
+    "width": 470,
+  },
+  {
+    "isMobile": true,
+    "width": 480,
+  },
+  {
+    "isMobile": true,
+    "width": 490,
+  },
+  {
+    "isMobile": true,
+    "width": 500,
+  },
+  {
+    "isMobile": true,
+    "width": 510,
+  },
+  {
+    "isMobile": true,
+    "width": 520,
+  },
+  {
+    "isMobile": true,
+    "width": 530,
+  },
+  {
+    "isMobile": true,
+    "width": 540,
+  },
+  {
+    "isMobile": true,
+    "width": 550,
+  },
+  {
+    "isMobile": true,
+    "width": 560,
+  },
+  {
+    "isMobile": true,
+    "width": 570,
+  },
+  {
+    "isMobile": true,
+    "width": 580,
+  },
+  {
+    "isMobile": true,
+    "width": 590,
+  },
+  {
+    "isMobile": true,
+    "width": 600,
+  },
+  {
+    "isMobile": true,
+    "width": 610,
+  },
+  {
+    "isMobile": true,
+    "width": 620,
+  },
+  {
+    "isMobile": true,
+    "width": 630,
+  },
+  {
+    "isMobile": false,
+    "width": 640,
+  },
+  {
+    "isMobile": false,
+    "width": 650,
+  },
+  {
+    "isMobile": false,
+    "width": 660,
+  },
+  {
+    "isMobile": false,
+    "width": 670,
+  },
+  {
+    "isMobile": false,
+    "width": 680,
+  },
+  {
+    "isMobile": false,
+    "width": 690,
+  },
+  {
+    "isMobile": false,
+    "width": 700,
+  },
+  {
+    "isMobile": false,
+    "width": 710,
+  },
+  {
+    "isMobile": false,
+    "width": 720,
+  },
+  {
+    "isMobile": false,
+    "width": 730,
+  },
+  {
+    "isMobile": false,
+    "width": 740,
+  },
+  {
+    "isMobile": false,
+    "width": 750,
+  },
+  {
+    "isMobile": false,
+    "width": 760,
+  },
+  {
+    "isMobile": false,
+    "width": 770,
+  },
+  {
+    "isMobile": false,
+    "width": 780,
+  },
+  {
+    "isMobile": false,
+    "width": 790,
+  },
+  {
+    "isMobile": false,
+    "width": 800,
+  },
+  {
+    "isMobile": false,
+    "width": 810,
+  },
+  {
+    "isMobile": false,
+    "width": 820,
+  },
+  {
+    "isMobile": false,
+    "width": 830,
+  },
+  {
+    "isMobile": false,
+    "width": 840,
+  },
+  {
+    "isMobile": false,
+    "width": 850,
+  },
+  {
+    "isMobile": false,
+    "width": 860,
+  },
+  {
+    "isMobile": false,
+    "width": 870,
+  },
+  {
+    "isMobile": false,
+    "width": 880,
+  },
+  {
+    "isMobile": false,
+    "width": 890,
+  },
+  {
+    "isMobile": false,
+    "width": 900,
+  },
+  {
+    "isMobile": false,
+    "width": 910,
+  },
+  {
+    "isMobile": false,
+    "width": 920,
+  },
+  {
+    "isMobile": false,
+    "width": 930,
+  },
+  {
+    "isMobile": false,
+    "width": 940,
+  },
+  {
+    "isMobile": false,
+    "width": 950,
+  },
+  {
+    "isMobile": false,
+    "width": 960,
+  },
+  {
+    "isMobile": false,
+    "width": 970,
+  },
+  {
+    "isMobile": false,
+    "width": 980,
+  },
+  {
+    "isMobile": false,
+    "width": 990,
+  },
+  {
+    "isMobile": false,
+    "width": 1000,
+  },
+  {
+    "isMobile": false,
+    "width": 1010,
+  },
+  {
+    "isMobile": false,
+    "width": 1020,
+  },
+  {
+    "isMobile": false,
+    "width": 1030,
+  },
+  {
+    "isMobile": false,
+    "width": 1040,
+  },
+  {
+    "isMobile": false,
+    "width": 1050,
+  },
+  {
+    "isMobile": false,
+    "width": 1060,
+  },
+  {
+    "isMobile": false,
+    "width": 1070,
+  },
+  {
+    "isMobile": false,
+    "width": 1080,
+  },
+  {
+    "isMobile": false,
+    "width": 1090,
+  },
+  {
+    "isMobile": false,
+    "width": 1100,
+  },
+  {
+    "isMobile": false,
+    "width": 1110,
+  },
+  {
+    "isMobile": false,
+    "width": 1120,
+  },
+  {
+    "isMobile": false,
+    "width": 1130,
+  },
+  {
+    "isMobile": false,
+    "width": 1140,
+  },
+  {
+    "isMobile": false,
+    "width": 1150,
+  },
+  {
+    "isMobile": false,
+    "width": 1160,
+  },
+  {
+    "isMobile": false,
+    "width": 1170,
+  },
+  {
+    "isMobile": false,
+    "width": 1180,
+  },
+  {
+    "isMobile": false,
+    "width": 1190,
+  },
+  {
+    "isMobile": false,
+    "width": 1200,
+  },
+  {
+    "isMobile": false,
+    "width": 1210,
+  },
+  {
+    "isMobile": false,
+    "width": 1220,
+  },
+  {
+    "isMobile": false,
+    "width": 1230,
+  },
+  {
+    "isMobile": false,
+    "width": 1240,
+  },
+  {
+    "isMobile": false,
+    "width": 1250,
+  },
+  {
+    "isMobile": false,
+    "width": 1260,
+  },
+  {
+    "isMobile": false,
+    "width": 1270,
+  },
+  {
+    "isMobile": false,
+    "width": 1280,
+  },
+  {
+    "isMobile": false,
+    "width": 1290,
+  },
+  {
+    "isMobile": false,
+    "width": 1300,
+  },
+  {
+    "isMobile": false,
+    "width": 1310,
+  },
+  {
+    "isMobile": false,
+    "width": 1320,
+  },
+  {
+    "isMobile": false,
+    "width": 1330,
+  },
+  {
+    "isMobile": false,
+    "width": 1340,
+  },
+  {
+    "isMobile": false,
+    "width": 1350,
+  },
+  {
+    "isMobile": false,
+    "width": 1360,
+  },
+  {
+    "isMobile": false,
+    "width": 1370,
+  },
+  {
+    "isMobile": false,
+    "width": 1380,
+  },
+  {
+    "isMobile": false,
+    "width": 1390,
+  },
+  {
+    "isMobile": false,
+    "width": 1400,
+  },
+  {
+    "isMobile": false,
+    "width": 1410,
+  },
+  {
+    "isMobile": false,
+    "width": 1420,
+  },
+  {
+    "isMobile": false,
+    "width": 1430,
+  },
+  {
+    "isMobile": false,
+    "width": 1440,
+  },
+  {
+    "isMobile": false,
+    "width": 1450,
+  },
+  {
+    "isMobile": false,
+    "width": 1460,
+  },
+  {
+    "isMobile": false,
+    "width": 1470,
+  },
+  {
+    "isMobile": false,
+    "width": 1480,
+  },
+  {
+    "isMobile": false,
+    "width": 1490,
+  },
+  {
+    "isMobile": false,
+    "width": 1500,
+  },
+  {
+    "isMobile": false,
+    "width": 1510,
+  },
+  {
+    "isMobile": false,
+    "width": 1520,
+  },
+  {
+    "isMobile": false,
+    "width": 1530,
+  },
+  {
+    "isMobile": false,
+    "width": 1540,
+  },
+  {
+    "isMobile": false,
+    "width": 1550,
+  },
+  {
+    "isMobile": false,
+    "width": 1560,
+  },
+  {
+    "isMobile": false,
+    "width": 1570,
+  },
+  {
+    "isMobile": false,
+    "width": 1580,
+  },
+  {
+    "isMobile": false,
+    "width": 1590,
+  },
+  {
+    "isMobile": false,
+    "width": 1600,
+  },
+  {
+    "isMobile": false,
+    "width": 1610,
+  },
+  {
+    "isMobile": false,
+    "width": 1620,
+  },
+  {
+    "isMobile": false,
+    "width": 1630,
+  },
+  {
+    "isMobile": false,
+    "width": 1640,
+  },
+  {
+    "isMobile": false,
+    "width": 1650,
+  },
+  {
+    "isMobile": false,
+    "width": 1660,
+  },
+  {
+    "isMobile": false,
+    "width": 1670,
+  },
+  {
+    "isMobile": false,
+    "width": 1680,
+  },
+  {
+    "isMobile": false,
+    "width": 1690,
+  },
+  {
+    "isMobile": false,
+    "width": 1700,
+  },
+  {
+    "isMobile": false,
+    "width": 1710,
+  },
+  {
+    "isMobile": false,
+    "width": 1720,
+  },
+  {
+    "isMobile": false,
+    "width": 1730,
+  },
+  {
+    "isMobile": false,
+    "width": 1740,
+  },
+  {
+    "isMobile": false,
+    "width": 1750,
+  },
+  {
+    "isMobile": false,
+    "width": 1760,
+  },
+  {
+    "isMobile": false,
+    "width": 1770,
+  },
+  {
+    "isMobile": false,
+    "width": 1780,
+  },
+  {
+    "isMobile": false,
+    "width": 1790,
+  },
+  {
+    "isMobile": false,
+    "width": 1800,
+  },
+  {
+    "isMobile": false,
+    "width": 1810,
+  },
+  {
+    "isMobile": false,
+    "width": 1820,
+  },
+  {
+    "isMobile": false,
+    "width": 1830,
+  },
+  {
+    "isMobile": false,
+    "width": 1840,
+  },
+  {
+    "isMobile": false,
+    "width": 1850,
+  },
+  {
+    "isMobile": false,
+    "width": 1860,
+  },
+  {
+    "isMobile": false,
+    "width": 1870,
+  },
+  {
+    "isMobile": false,
+    "width": 1880,
+  },
+  {
+    "isMobile": false,
+    "width": 1890,
+  },
+  {
+    "isMobile": false,
+    "width": 1900,
+  },
+  {
+    "isMobile": false,
+    "width": 1910,
+  },
+  {
+    "isMobile": false,
+    "width": 1920,
+  },
+  {
+    "isMobile": false,
+    "width": 1930,
+  },
+  {
+    "isMobile": false,
+    "width": 1940,
+  },
+  {
+    "isMobile": false,
+    "width": 1950,
+  },
+  {
+    "isMobile": false,
+    "width": 1960,
+  },
+  {
+    "isMobile": false,
+    "width": 1970,
+  },
+  {
+    "isMobile": false,
+    "width": 1980,
+  },
+  {
+    "isMobile": false,
+    "width": 1990,
+  },
+  {
+    "isMobile": false,
+    "width": 2000,
+  },
+  {
+    "isMobile": false,
+    "width": 2010,
+  },
+  {
+    "isMobile": false,
+    "width": 2020,
+  },
+  {
+    "isMobile": false,
+    "width": 2030,
+  },
+  {
+    "isMobile": false,
+    "width": 2040,
+  },
+  {
+    "isMobile": false,
+    "width": 2050,
+  },
+  {
+    "isMobile": false,
+    "width": 2060,
+  },
+  {
+    "isMobile": false,
+    "width": 2070,
+  },
+  {
+    "isMobile": false,
+    "width": 2080,
+  },
+  {
+    "isMobile": false,
+    "width": 2090,
+  },
+  {
+    "isMobile": false,
+    "width": 2100,
+  },
+  {
+    "isMobile": false,
+    "width": 2110,
+  },
+  {
+    "isMobile": false,
+    "width": 2120,
+  },
+  {
+    "isMobile": false,
+    "width": 2130,
+  },
+  {
+    "isMobile": false,
+    "width": 2140,
+  },
+  {
+    "isMobile": false,
+    "width": 2150,
+  },
+  {
+    "isMobile": false,
+    "width": 2160,
+  },
+  {
+    "isMobile": false,
+    "width": 2170,
+  },
+  {
+    "isMobile": false,
+    "width": 2180,
+  },
+  {
+    "isMobile": false,
+    "width": 2190,
+  },
+  {
+    "isMobile": false,
+    "width": 2200,
+  },
+  {
+    "isMobile": false,
+    "width": 2210,
+  },
+  {
+    "isMobile": false,
+    "width": 2220,
+  },
+  {
+    "isMobile": false,
+    "width": 2230,
+  },
+  {
+    "isMobile": false,
+    "width": 2240,
+  },
+  {
+    "isMobile": false,
+    "width": 2250,
+  },
+  {
+    "isMobile": false,
+    "width": 2260,
+  },
+  {
+    "isMobile": false,
+    "width": 2270,
+  },
+  {
+    "isMobile": false,
+    "width": 2280,
+  },
+  {
+    "isMobile": false,
+    "width": 2290,
+  },
+  {
+    "isMobile": false,
+    "width": 2300,
+  },
+  {
+    "isMobile": false,
+    "width": 2310,
+  },
+  {
+    "isMobile": false,
+    "width": 2320,
+  },
+  {
+    "isMobile": false,
+    "width": 2330,
+  },
+  {
+    "isMobile": false,
+    "width": 2340,
+  },
+  {
+    "isMobile": false,
+    "width": 2350,
+  },
+  {
+    "isMobile": false,
+    "width": 2360,
+  },
+  {
+    "isMobile": false,
+    "width": 2370,
+  },
+  {
+    "isMobile": false,
+    "width": 2380,
+  },
+  {
+    "isMobile": false,
+    "width": 2390,
+  },
+  {
+    "isMobile": false,
+    "width": 2400,
+  },
+  {
+    "isMobile": false,
+    "width": 2410,
+  },
+  {
+    "isMobile": false,
+    "width": 2420,
+  },
+  {
+    "isMobile": false,
+    "width": 2430,
+  },
+  {
+    "isMobile": false,
+    "width": 2440,
+  },
+  {
+    "isMobile": false,
+    "width": 2450,
+  },
+  {
+    "isMobile": false,
+    "width": 2460,
+  },
+  {
+    "isMobile": false,
+    "width": 2470,
+  },
+  {
+    "isMobile": false,
+    "width": 2480,
+  },
+  {
+    "isMobile": false,
+    "width": 2490,
+  },
+  {
+    "isMobile": false,
+    "width": 2500,
+  },
+  {
+    "isMobile": false,
+    "width": 2510,
+  },
+  {
+    "isMobile": false,
+    "width": 2520,
+  },
+  {
+    "isMobile": false,
+    "width": 2530,
+  },
+  {
+    "isMobile": false,
+    "width": 2540,
+  },
+  {
+    "isMobile": false,
+    "width": 2550,
+  },
+  {
+    "isMobile": false,
+    "width": 2560,
+  },
+  {
+    "isMobile": false,
+    "width": 2570,
+  },
+  {
+    "isMobile": false,
+    "width": 2580,
+  },
+  {
+    "isMobile": false,
+    "width": 2590,
+  },
+  {
+    "isMobile": false,
+    "width": 2600,
+  },
+  {
+    "isMobile": false,
+    "width": 2610,
+  },
+  {
+    "isMobile": false,
+    "width": 2620,
+  },
+  {
+    "isMobile": false,
+    "width": 2630,
+  },
+  {
+    "isMobile": false,
+    "width": 2640,
+  },
+  {
+    "isMobile": false,
+    "width": 2650,
+  },
+  {
+    "isMobile": false,
+    "width": 2660,
+  },
+  {
+    "isMobile": false,
+    "width": 2670,
+  },
+  {
+    "isMobile": false,
+    "width": 2680,
+  },
+  {
+    "isMobile": false,
+    "width": 2690,
+  },
+  {
+    "isMobile": false,
+    "width": 2700,
+  },
+  {
+    "isMobile": false,
+    "width": 2710,
+  },
+  {
+    "isMobile": false,
+    "width": 2720,
+  },
+  {
+    "isMobile": false,
+    "width": 2730,
+  },
+  {
+    "isMobile": false,
+    "width": 2740,
+  },
+  {
+    "isMobile": false,
+    "width": 2750,
+  },
+  {
+    "isMobile": false,
+    "width": 2760,
+  },
+  {
+    "isMobile": false,
+    "width": 2770,
+  },
+  {
+    "isMobile": false,
+    "width": 2780,
+  },
+  {
+    "isMobile": false,
+    "width": 2790,
+  },
+  {
+    "isMobile": false,
+    "width": 2800,
+  },
+  {
+    "isMobile": false,
+    "width": 2810,
+  },
+  {
+    "isMobile": false,
+    "width": 2820,
+  },
+  {
+    "isMobile": false,
+    "width": 2830,
+  },
+  {
+    "isMobile": false,
+    "width": 2840,
+  },
+  {
+    "isMobile": false,
+    "width": 2850,
+  },
+  {
+    "isMobile": false,
+    "width": 2860,
+  },
+  {
+    "isMobile": false,
+    "width": 2870,
+  },
+  {
+    "isMobile": false,
+    "width": 2880,
+  },
+  {
+    "isMobile": false,
+    "width": 2890,
+  },
+  {
+    "isMobile": false,
+    "width": 2900,
+  },
+  {
+    "isMobile": false,
+    "width": 2910,
+  },
+  {
+    "isMobile": false,
+    "width": 2920,
+  },
+  {
+    "isMobile": false,
+    "width": 2930,
+  },
+  {
+    "isMobile": false,
+    "width": 2940,
+  },
+  {
+    "isMobile": false,
+    "width": 2950,
+  },
+  {
+    "isMobile": false,
+    "width": 2960,
+  },
+  {
+    "isMobile": false,
+    "width": 2970,
+  },
+  {
+    "isMobile": false,
+    "width": 2980,
+  },
+  {
+    "isMobile": false,
+    "width": 2990,
+  },
+  {
+    "isMobile": false,
+    "width": 3000,
+  },
+  {
+    "isMobile": false,
+    "width": 3010,
+  },
+  {
+    "isMobile": false,
+    "width": 3020,
+  },
+  {
+    "isMobile": false,
+    "width": 3030,
+  },
+  {
+    "isMobile": false,
+    "width": 3040,
+  },
+  {
+    "isMobile": false,
+    "width": 3050,
+  },
+  {
+    "isMobile": false,
+    "width": 3060,
+  },
+  {
+    "isMobile": false,
+    "width": 3070,
+  },
+  {
+    "isMobile": false,
+    "width": 3080,
+  },
+  {
+    "isMobile": false,
+    "width": 3090,
+  },
+  {
+    "isMobile": false,
+    "width": 3100,
+  },
+  {
+    "isMobile": false,
+    "width": 3110,
+  },
+  {
+    "isMobile": false,
+    "width": 3120,
+  },
+  {
+    "isMobile": false,
+    "width": 3130,
+  },
+  {
+    "isMobile": false,
+    "width": 3140,
+  },
+  {
+    "isMobile": false,
+    "width": 3150,
+  },
+  {
+    "isMobile": false,
+    "width": 3160,
+  },
+  {
+    "isMobile": false,
+    "width": 3170,
+  },
+  {
+    "isMobile": false,
+    "width": 3180,
+  },
+  {
+    "isMobile": false,
+    "width": 3190,
+  },
+  {
+    "isMobile": false,
+    "width": 3200,
+  },
+  {
+    "isMobile": false,
+    "width": 3210,
+  },
+  {
+    "isMobile": false,
+    "width": 3220,
+  },
+  {
+    "isMobile": false,
+    "width": 3230,
+  },
+  {
+    "isMobile": false,
+    "width": 3240,
+  },
+  {
+    "isMobile": false,
+    "width": 3250,
+  },
+  {
+    "isMobile": false,
+    "width": 3260,
+  },
+  {
+    "isMobile": false,
+    "width": 3270,
+  },
+  {
+    "isMobile": false,
+    "width": 3280,
+  },
+  {
+    "isMobile": false,
+    "width": 3290,
+  },
+  {
+    "isMobile": false,
+    "width": 3300,
+  },
+  {
+    "isMobile": false,
+    "width": 3310,
+  },
+  {
+    "isMobile": false,
+    "width": 3320,
+  },
+  {
+    "isMobile": false,
+    "width": 3330,
+  },
+  {
+    "isMobile": false,
+    "width": 3340,
+  },
+  {
+    "isMobile": false,
+    "width": 3350,
+  },
+  {
+    "isMobile": false,
+    "width": 3360,
+  },
+  {
+    "isMobile": false,
+    "width": 3370,
+  },
+  {
+    "isMobile": false,
+    "width": 3380,
+  },
+  {
+    "isMobile": false,
+    "width": 3390,
+  },
+  {
+    "isMobile": false,
+    "width": 3400,
+  },
+  {
+    "isMobile": false,
+    "width": 3410,
+  },
+  {
+    "isMobile": false,
+    "width": 3420,
+  },
+  {
+    "isMobile": false,
+    "width": 3430,
+  },
+  {
+    "isMobile": false,
+    "width": 3440,
+  },
+  {
+    "isMobile": false,
+    "width": 3450,
+  },
+  {
+    "isMobile": false,
+    "width": 3460,
+  },
+  {
+    "isMobile": false,
+    "width": 3470,
+  },
+  {
+    "isMobile": false,
+    "width": 3480,
+  },
+  {
+    "isMobile": false,
+    "width": 3490,
+  },
+  {
+    "isMobile": false,
+    "width": 3500,
+  },
+  {
+    "isMobile": false,
+    "width": 3510,
+  },
+  {
+    "isMobile": false,
+    "width": 3520,
+  },
+  {
+    "isMobile": false,
+    "width": 3530,
+  },
+  {
+    "isMobile": false,
+    "width": 3540,
+  },
+  {
+    "isMobile": false,
+    "width": 3550,
+  },
+  {
+    "isMobile": false,
+    "width": 3560,
+  },
+  {
+    "isMobile": false,
+    "width": 3570,
+  },
+  {
+    "isMobile": false,
+    "width": 3580,
+  },
+  {
+    "isMobile": false,
+    "width": 3590,
+  },
+  {
+    "isMobile": false,
+    "width": 3600,
+  },
+  {
+    "isMobile": false,
+    "width": 3610,
+  },
+  {
+    "isMobile": false,
+    "width": 3620,
+  },
+  {
+    "isMobile": false,
+    "width": 3630,
+  },
+  {
+    "isMobile": false,
+    "width": 3640,
+  },
+  {
+    "isMobile": false,
+    "width": 3650,
+  },
+  {
+    "isMobile": false,
+    "width": 3660,
+  },
+  {
+    "isMobile": false,
+    "width": 3670,
+  },
+  {
+    "isMobile": false,
+    "width": 3680,
+  },
+  {
+    "isMobile": false,
+    "width": 3690,
+  },
+  {
+    "isMobile": false,
+    "width": 3700,
+  },
+  {
+    "isMobile": false,
+    "width": 3710,
+  },
+  {
+    "isMobile": false,
+    "width": 3720,
+  },
+  {
+    "isMobile": false,
+    "width": 3730,
+  },
+  {
+    "isMobile": false,
+    "width": 3740,
+  },
+  {
+    "isMobile": false,
+    "width": 3750,
+  },
+  {
+    "isMobile": false,
+    "width": 3760,
+  },
+  {
+    "isMobile": false,
+    "width": 3770,
+  },
+  {
+    "isMobile": false,
+    "width": 3780,
+  },
+  {
+    "isMobile": false,
+    "width": 3790,
+  },
+  {
+    "isMobile": false,
+    "width": 3800,
+  },
+  {
+    "isMobile": false,
+    "width": 3810,
+  },
+  {
+    "isMobile": false,
+    "width": 3820,
+  },
+  {
+    "isMobile": false,
+    "width": 3830,
+  },
+  {
+    "isMobile": false,
+    "width": 3840,
+  },
+  {
+    "isMobile": false,
+    "width": 3850,
+  },
+  {
+    "isMobile": false,
+    "width": 3860,
+  },
+  {
+    "isMobile": false,
+    "width": 3870,
+  },
+  {
+    "isMobile": false,
+    "width": 3880,
+  },
+  {
+    "isMobile": false,
+    "width": 3890,
+  },
+  {
+    "isMobile": false,
+    "width": 3900,
+  },
+  {
+    "isMobile": false,
+    "width": 3910,
+  },
+  {
+    "isMobile": false,
+    "width": 3920,
+  },
+  {
+    "isMobile": false,
+    "width": 3930,
+  },
+  {
+    "isMobile": false,
+    "width": 3940,
+  },
+  {
+    "isMobile": false,
+    "width": 3950,
+  },
+  {
+    "isMobile": false,
+    "width": 3960,
+  },
+  {
+    "isMobile": false,
+    "width": 3970,
+  },
+  {
+    "isMobile": false,
+    "width": 3980,
+  },
+  {
+    "isMobile": false,
+    "width": 3990,
+  },
+  {
+    "isMobile": false,
+    "width": 4000,
+  },
+  {
+    "isMobile": false,
+    "width": 4010,
+  },
+  {
+    "isMobile": false,
+    "width": 4020,
+  },
+  {
+    "isMobile": false,
+    "width": 4030,
+  },
+  {
+    "isMobile": false,
+    "width": 4040,
+  },
+  {
+    "isMobile": false,
+    "width": 4050,
+  },
+  {
+    "isMobile": false,
+    "width": 4060,
+  },
+  {
+    "isMobile": false,
+    "width": 4070,
+  },
+  {
+    "isMobile": false,
+    "width": 4080,
+  },
+  {
+    "isMobile": false,
+    "width": 4090,
+  },
+  {
+    "isMobile": false,
+    "width": 4100,
+  },
+  {
+    "isMobile": false,
+    "width": 4110,
+  },
+  {
+    "isMobile": false,
+    "width": 4120,
+  },
+  {
+    "isMobile": false,
+    "width": 4130,
+  },
+  {
+    "isMobile": false,
+    "width": 4140,
+  },
+  {
+    "isMobile": false,
+    "width": 4150,
+  },
+  {
+    "isMobile": false,
+    "width": 4160,
+  },
+  {
+    "isMobile": false,
+    "width": 4170,
+  },
+  {
+    "isMobile": false,
+    "width": 4180,
+  },
+  {
+    "isMobile": false,
+    "width": 4190,
+  },
+  {
+    "isMobile": false,
+    "width": 4200,
+  },
+  {
+    "isMobile": false,
+    "width": 4210,
+  },
+  {
+    "isMobile": false,
+    "width": 4220,
+  },
+  {
+    "isMobile": false,
+    "width": 4230,
+  },
+  {
+    "isMobile": false,
+    "width": 4240,
+  },
+  {
+    "isMobile": false,
+    "width": 4250,
+  },
+  {
+    "isMobile": false,
+    "width": 4260,
+  },
+  {
+    "isMobile": false,
+    "width": 4270,
+  },
+  {
+    "isMobile": false,
+    "width": 4280,
+  },
+  {
+    "isMobile": false,
+    "width": 4290,
+  },
+  {
+    "isMobile": false,
+    "width": 4300,
+  },
+  {
+    "isMobile": false,
+    "width": 4310,
+  },
+  {
+    "isMobile": false,
+    "width": 4320,
+  },
+  {
+    "isMobile": false,
+    "width": 4330,
+  },
+  {
+    "isMobile": false,
+    "width": 4340,
+  },
+  {
+    "isMobile": false,
+    "width": 4350,
+  },
+  {
+    "isMobile": false,
+    "width": 4360,
+  },
+  {
+    "isMobile": false,
+    "width": 4370,
+  },
+  {
+    "isMobile": false,
+    "width": 4380,
+  },
+  {
+    "isMobile": false,
+    "width": 4390,
+  },
+  {
+    "isMobile": false,
+    "width": 4400,
+  },
+  {
+    "isMobile": false,
+    "width": 4410,
+  },
+  {
+    "isMobile": false,
+    "width": 4420,
+  },
+  {
+    "isMobile": false,
+    "width": 4430,
+  },
+  {
+    "isMobile": false,
+    "width": 4440,
+  },
+  {
+    "isMobile": false,
+    "width": 4450,
+  },
+  {
+    "isMobile": false,
+    "width": 4460,
+  },
+  {
+    "isMobile": false,
+    "width": 4470,
+  },
+  {
+    "isMobile": false,
+    "width": 4480,
+  },
+  {
+    "isMobile": false,
+    "width": 4490,
+  },
+  {
+    "isMobile": false,
+    "width": 4500,
+  },
+  {
+    "isMobile": false,
+    "width": 4510,
+  },
+  {
+    "isMobile": false,
+    "width": 4520,
+  },
+  {
+    "isMobile": false,
+    "width": 4530,
+  },
+  {
+    "isMobile": false,
+    "width": 4540,
+  },
+  {
+    "isMobile": false,
+    "width": 4550,
+  },
+  {
+    "isMobile": false,
+    "width": 4560,
+  },
+  {
+    "isMobile": false,
+    "width": 4570,
+  },
+  {
+    "isMobile": false,
+    "width": 4580,
+  },
+  {
+    "isMobile": false,
+    "width": 4590,
+  },
+  {
+    "isMobile": false,
+    "width": 4600,
+  },
+  {
+    "isMobile": false,
+    "width": 4610,
+  },
+  {
+    "isMobile": false,
+    "width": 4620,
+  },
+  {
+    "isMobile": false,
+    "width": 4630,
+  },
+  {
+    "isMobile": false,
+    "width": 4640,
+  },
+  {
+    "isMobile": false,
+    "width": 4650,
+  },
+  {
+    "isMobile": false,
+    "width": 4660,
+  },
+  {
+    "isMobile": false,
+    "width": 4670,
+  },
+  {
+    "isMobile": false,
+    "width": 4680,
+  },
+  {
+    "isMobile": false,
+    "width": 4690,
+  },
+  {
+    "isMobile": false,
+    "width": 4700,
+  },
+  {
+    "isMobile": false,
+    "width": 4710,
+  },
+  {
+    "isMobile": false,
+    "width": 4720,
+  },
+  {
+    "isMobile": false,
+    "width": 4730,
+  },
+  {
+    "isMobile": false,
+    "width": 4740,
+  },
+  {
+    "isMobile": false,
+    "width": 4750,
+  },
+  {
+    "isMobile": false,
+    "width": 4760,
+  },
+  {
+    "isMobile": false,
+    "width": 4770,
+  },
+  {
+    "isMobile": false,
+    "width": 4780,
+  },
+  {
+    "isMobile": false,
+    "width": 4790,
+  },
+  {
+    "isMobile": false,
+    "width": 4800,
+  },
+  {
+    "isMobile": false,
+    "width": 4810,
+  },
+  {
+    "isMobile": false,
+    "width": 4820,
+  },
+  {
+    "isMobile": false,
+    "width": 4830,
+  },
+  {
+    "isMobile": false,
+    "width": 4840,
+  },
+  {
+    "isMobile": false,
+    "width": 4850,
+  },
+  {
+    "isMobile": false,
+    "width": 4860,
+  },
+  {
+    "isMobile": false,
+    "width": 4870,
+  },
+  {
+    "isMobile": false,
+    "width": 4880,
+  },
+  {
+    "isMobile": false,
+    "width": 4890,
+  },
+  {
+    "isMobile": false,
+    "width": 4900,
+  },
+  {
+    "isMobile": false,
+    "width": 4910,
+  },
+  {
+    "isMobile": false,
+    "width": 4920,
+  },
+  {
+    "isMobile": false,
+    "width": 4930,
+  },
+  {
+    "isMobile": false,
+    "width": 4940,
+  },
+  {
+    "isMobile": false,
+    "width": 4950,
+  },
+  {
+    "isMobile": false,
+    "width": 4960,
+  },
+  {
+    "isMobile": false,
+    "width": 4970,
+  },
+  {
+    "isMobile": false,
+    "width": 4980,
+  },
+  {
+    "isMobile": false,
+    "width": 4990,
+  },
+  {
+    "isMobile": false,
+    "width": 5000,
+  },
+]
+`;

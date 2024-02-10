@@ -7,7 +7,7 @@
     padding: 20px 10px;
   }
 
-  @media (max-width: $m) {
+  @media (max-width: $mobile) {
     &__content {
       padding: 15px 25px 70px 25px;
     }

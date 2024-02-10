@@ -1,12 +1,10 @@
 import { defineStore, skipHydrate } from 'pinia'
 
-import type firebase from 'firebase'
+import type firebase from 'firebase/auth'
 import type User from '@/services/dbstore/dto/User'
-import { store } from '@/store'
 import { useDbStore } from '@/plugins/services'
 import { useConfigStore } from '@/store/modules/config'
 import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
-import { BASE_INTERFACE_LANGUAGE } from '@/const/BaseInterfaceLanguage'
 import { useErrorLogStore } from '@/store/modules/errorLog'
 import { EErrorType } from '@/enums/EErrorType'
 import { getErrorMessage } from '@/utils/error'
@@ -141,7 +139,3 @@ export const useUserStore = defineStore('user', () => {
         updateNativeLanguage,
     }
 })
-
-export function useUserStoreWithOut() {
-    return useUserStore(store)
-}

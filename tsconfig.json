@@ -13,22 +13,22 @@
     "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "paths": {
-      "@@/*": [
-        "./*"
-      ],
-      "@/*": [
-        "src/*"
-      ],
+      "@/*": ["./src/*"],
+      "@@/*": ["./*"]
     },
+    "types": [
+      "vitest/importMeta",
+    ]
   },
   "include": [
-    "src/**/*.ts",
+    "src/**/*.{ts,vue}",
+    "src/**/*.cy.{js,ts}",
     "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "types/**/*.d.ts",
     "types/**/*.ts",
+    "types/**/*.d.ts",
+    "tests/**/*.ts",
+    "tests/**/*.d.ts",
     "auto-imports.d.ts",
-    "components.d.ts"
-  ]
+    "components.d.ts",
+  ],
 }

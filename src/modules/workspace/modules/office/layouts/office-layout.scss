@@ -3,7 +3,7 @@
   grid-gap: 10px;
   grid-template-columns: 200px 1fr;
 
-  @media (max-width: $m) {
+  @media (max-width: $mobile) {
     display: flex;
     justify-content: center;
   }
@@ -13,7 +13,7 @@
     max-width: max(100%, 860px);
     margin: 0 auto;
 
-    @media (max-width: $m) {
+    @media (max-width: $mobile) {
       width: unset;
       min-width: min(100%, 500px);
     }

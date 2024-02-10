@@ -1,19 +1,14 @@
 import dayjs from 'dayjs'
 
-const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
-const DATE_FORMAT = 'YYYY-MM-DD'
-
-export function formatToDateTime(
-    date?: Date,
-    format = DATE_TIME_FORMAT,
-): string {
-    return dayjs(date).format(format)
+export const enum EDateFormat {
+    DATE_ONLY = 'YYYY-MM-DD',
+    DATE_WITH_TIME = 'YYYY-MM-DD HH:mm:ss',
 }
 
-export function formatToDate(
-    date: dayjs.Dayjs | undefined = undefined,
-    format = DATE_FORMAT,
-): string {
+export const formatToDateTime = (
+    date?: Date,
+    format: EDateFormat = EDateFormat.DATE_WITH_TIME,
+) => {
     return dayjs(date).format(format)
 }
 

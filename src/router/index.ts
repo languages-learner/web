@@ -1,34 +1,44 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+    createMemoryHistory,
+    createRouter,
+    createWebHistory,
+} from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
 import type { App } from 'vue'
 import { landingRoutes } from '@/modules/landing/router'
 import { workspaceRoutes } from '@/modules/workspace/router'
 
-import { BASE_INTERFACE_LANGUAGE_NAME } from '@/const/BaseInterfaceLanguage'
+import { BASE_INTERFACE_LANGUAGE_NAME } from '@/const/InterfaceLanguage'
 import { EPageName } from '@/enums/EPageName'
 
-let routes = [
-    ...landingRoutes,
-    ...workspaceRoutes,
+export const routes: RouteRecordRaw[] = [
+    {
+        path: '/:lang',
+        children: [
+            ...landingRoutes,
+            ...workspaceRoutes,
+        ],
+    },
+    // For fixing router warn in tests
+    {
+        path: '',
+        redirect(to) {
+            return { name: to.name ?? EPageName.LANDING, params: { lang: BASE_INTERFACE_LANGUAGE_NAME } }
+        },
+    },
 ]
 
-const addLangParameterToRoutes = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
-    return routes.map(route => {
-        route.path = `/:lang${route.path}`
-
-        return route
+export const createAppRouter = (test = false) => {
+    return createRouter({
+        history: test ? createMemoryHistory() : createWebHistory(),
+        routes,
     })
 }
 
-routes = addLangParameterToRoutes(routes)
+export const setupRouter = async (app: App<Element>, test = false) => {
+    const router = createAppRouter(test)
 
-export const router = createRouter({
-    history: createWebHistory(),
-    routes,
-})
-
-export async function setupRouter(app: App<Element>) {
     app.use(router)
 
     await router.isReady()
@@ -36,4 +46,6 @@ export async function setupRouter(app: App<Element>) {
     if (!router.currentRoute.value.params.lang) {
         await router.push({ name: router.currentRoute.value.name ?? EPageName.LANDING, params: { lang: BASE_INTERFACE_LANGUAGE_NAME } })
     }
+
+    return router
 }

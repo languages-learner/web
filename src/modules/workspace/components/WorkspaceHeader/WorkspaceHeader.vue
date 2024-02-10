@@ -2,6 +2,8 @@
 import { EPageName } from '@/enums/EPageName'
 import WorkspaceHeaderUserAvatar from '@/modules/workspace/components/WorkspaceHeader/components/WorkspaceHeaderUserAvatar/WorkspaceHeaderUserAvatar.vue'
 import WorkspaceHeaderActiveLearningLanguage from '@/modules/workspace/components/WorkspaceHeader/components/WorkspaceHeaderActiveLearningLanguage/WorkspaceHeaderActiveLearningLanguage.vue'
+import { useI18n } from '@/plugins/i18n'
+import { EDataTest } from '@/enums/EDataTest'
 
 const { t } = useI18n()
 
@@ -21,10 +23,10 @@ const navigationItems = computed(() => ([
     <div class="workspace-header">
         <n-grid
             class="workspace-header__menu"
-            cols="2 m:19"
+            cols="2 s:19"
             responsive="screen"
         >
-            <n-grid-item span="1 m:4">
+            <n-grid-item span="1 s:4">
                 <router-link :to="{name: EPageName.DICTIONARY}">
                     <n-gradient-text
                         size="24"
@@ -33,13 +35,16 @@ const navigationItems = computed(() => ([
                     </n-gradient-text>
                 </router-link>
             </n-grid-item>
+            <!--            TODO Fix menu view for "m" size-->
             <n-grid-item
                 class="workspace-header__navigations"
-                span="0 m:10"
+                span="0 s:10"
             >
                 <div
                     v-for="navigationItem in navigationItems"
-                    :key="`navigation-item-${navigationItem.name}`">
+                    :key="`navigation-item-${navigationItem.name}`"
+                    :data-test="EDataTest.workspace_navigation_item"
+                >
                     <n-button
                         quaternary
                         round>
@@ -50,12 +55,12 @@ const navigationItems = computed(() => ([
                 </div>
             </n-grid-item>
             <n-grid-item
-                span="0 m:5"
+                span="0 s:5"
                 class="workspace-header__controllers">
                 <WorkspaceHeaderActiveLearningLanguage />
                 <WorkspaceHeaderUserAvatar />
             </n-grid-item>
-            <n-grid-item span="1 m:0">
+            <n-grid-item span="1 s:0">
                 <n-flex justify="end">
                     <WorkspaceHeaderUserAvatar />
                 </n-flex>

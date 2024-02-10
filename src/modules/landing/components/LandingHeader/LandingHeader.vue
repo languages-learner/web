@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useUserStore } from '@/store/modules/user'
 import { EPageName } from '@/enums/EPageName'
+import { EDataTest } from '@/enums/EDataTest'
 import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/components/AuthenticateModal/EAuthenticateModalType'
 import AuthenticateModal from '@/modules/landing/modules/authenticate/components/AuthenticateModal/AuthenticateModal.vue'
 
@@ -23,17 +24,20 @@ const showAuthenticateModal = (type: EAuthenticateModalType) => {
             <template v-if="!isLoggedIn">
                 <n-button
                     @click="() => showAuthenticateModal(EAuthenticateModalType.SIGNIN)"
+                    :data-test="EDataTest.landing_sign_in_button"
                     type="success">
                     {{ $t('sign_in') }}
                 </n-button>
                 <n-button
                     @click="() => showAuthenticateModal(EAuthenticateModalType.SIGNUP)"
+                    :data-test="EDataTest.landing_sign_up_button"
                     type="success">
                     {{ $t('sign_up') }}
                 </n-button>
             </template>
             <n-button
                 v-else
+                :data-test="EDataTest.landing_go_to_workspace_button"
                 type="success">
                 <router-link :to="{name: EPageName.DICTIONARY}">
                     {{ $t('go_to_workspace') }}

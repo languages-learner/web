@@ -19,11 +19,13 @@ const updateStatus = (status: EWordStatus) => {
 </script>
 
 <template>
-    <n-popselect
-        :value="props.status"
-        :options="wordStatusOptions"
-        :on-update:value="updateStatus"
-    >
-        <WordStatusIcon :status="props.status" />
-    </n-popselect>
+    <div :data-test-value="props.status" >
+        <n-popselect
+            :value="props.status"
+            :options="wordStatusOptions"
+            :on-update:value="updateStatus"
+        >
+            <WordStatusIcon :status="props.status" />
+        </n-popselect>
+    </div>
 </template>

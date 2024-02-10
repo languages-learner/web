@@ -7,6 +7,7 @@ import {
 import type { Word } from '@/services/dbstore/dto/Words'
 import WordStatus from '@/modules/workspace/modules/words/components/WordStatus/WordStatus.vue'
 import { useVirtualScrollListItemEmits } from '@/composables/useVirtualScrollListItemEmits'
+import { EDataTest } from '@/enums/EDataTest'
 
 const props = defineProps<{
     source: {
@@ -28,7 +29,9 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
 </script>
 
 <template>
-    <div class="words-list-item">
+    <div
+        class="words-list-item"
+        :data-test="EDataTest.words_list_item">
         <n-grid
             class="words-list-item__container"
             align-items="center"
@@ -39,6 +42,7 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
                 span="2 m:1"
                 class="words-list-item__property">
                 <n-checkbox
+                    :data-test="EDataTest.words_list_item_checkbox"
                     :checked="source.isSelected"
                     :on-update:checked="toggleSelection">
                 </n-checkbox>
@@ -60,19 +64,28 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
                 <n-space
                     vertical
                     class="words-list-item__property--translations">
-                    <n-text type="success">{{ source.word }}</n-text>
+                    <n-text
+                        type="success"
+                        :data-test="EDataTest.words_list_item_source_word">
+                        {{ source.word }}
+                    </n-text>
                     <n-dynamic-tags
                         v-if="isChangeableView"
                         :value="source.wordData.translations"
                         :on-update:value="updateTranslations"
+                        :data-test="EDataTest.words_list_item_edit_translations"
                     />
-                    <div v-else>{{ source.wordData.translations.join(', ') }}</div>
+                    <div
+                        v-else
+                        :data-test="EDataTest.words_list_item_translations">{{ source.wordData.translations.join(', ') }}</div>
                 </n-space>
             </n-grid-item>
             <n-grid-item
                 span="2 m:1"
                 class="words-list-item__property">
-                <n-button text>
+                <n-button
+                    text
+                    :data-test="EDataTest.words_list_item_edit_button">
                     <n-icon
                         @click="toggleChangeableView"
                         size="20"
@@ -86,12 +99,16 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
                 class="words-list-item__property">
                 <WordStatus
                     @update="updateStatus"
-                    :status="source.wordData.status"/>
+                    :data-test="EDataTest.words_list_item_status"
+                    :status="source.wordData.status"
+                />
             </n-grid-item>
             <n-grid-item
                 span="2 m:1"
                 class="words-list-item__property">
-                <n-button text>
+                <n-button
+                    text
+                    :data-test="EDataTest.words_list_item_delete_button">
                     <n-icon
                         @click="deleteWord"
                         size="20"

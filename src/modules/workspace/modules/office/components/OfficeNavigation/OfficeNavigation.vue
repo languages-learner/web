@@ -2,6 +2,8 @@
 import { RouterLink } from 'vue-router'
 import type { MenuOption } from 'naive-ui'
 import { EPageName } from '@/enums/EPageName'
+import { useI18n } from '@/plugins/i18n'
+import { EDataTest } from '@/enums/EDataTest'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -39,6 +41,8 @@ const menuOptions: MenuOption[] = [
 
 <template>
     <n-menu
+        :data-test="EDataTest.office_menu"
+        :data-test-value="currentRoute"
         :value="currentRoute"
         :options="menuOptions">
     </n-menu>
