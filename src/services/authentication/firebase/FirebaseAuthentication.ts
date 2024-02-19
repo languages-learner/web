@@ -63,10 +63,10 @@ export class FirebaseAuthentication implements IAuthentication {
         }
     }
 
-    private getErrorMessage = (error: any) => {
+    private getErrorMessage = (error: unknown) => {
         let message = getErrorMessage(error)
 
-        if (error.code === 'auth/account-exists-with-different-credential') {
+        if ((error as {code: string}).code === 'auth/account-exists-with-different-credential') {
             message = 'You have already signed up with a different auth provider for that email.'
         }
 

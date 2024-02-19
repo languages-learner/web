@@ -12,8 +12,11 @@
     "stylelint:fix": "stylelint \"src/**/*.{scss,vue}\" --fix",
     "prepare": "husky install",
     "test": "vitest",
+    "test:ci": "vitest --run",
     "cypress:open": "cypress open",
-    "cypress:open:mobile": "cypress open --config \"{\\\"e2e\\\":{\\\"viewportWidth\\\":400,\\\"viewportHeight\\\":660}}\""
+    "cypress:open:mobile": "cypress open --config \"{\\\"e2e\\\":{\\\"viewportWidth\\\":400,\\\"viewportHeight\\\":660}}\"",
+    "cypress:run": "cypress run",
+    "cypress:run:mobile": "cypress run --config \"{\\\"e2e\\\":{\\\"viewportWidth\\\":400,\\\"viewportHeight\\\":660}}\""
   },
   "lint-staged": {
     "src/**/*.{scss,vue}": [

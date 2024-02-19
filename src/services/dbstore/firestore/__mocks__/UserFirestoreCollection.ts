@@ -11,6 +11,7 @@ export class UserFirestoreCollection implements IUserCollection {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public create = async (user: User) => {
         this.checkCurrentUser()
     }

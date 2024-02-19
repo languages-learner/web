@@ -4,6 +4,8 @@ export enum EDataTest {
     landing_go_to_workspace_button,
 
     authentication_modal,
+    authentication_modal_email,
+    authentication_modal_password,
     authentication_modal_sign_in_tab,
     authentication_modal_sign_up_tab,
     authentication_modal_action_button,
