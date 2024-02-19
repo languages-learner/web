@@ -2,8 +2,13 @@
 import WordStatusIcon from '@/modules/workspace/modules/words/components/WordStatus/WordStatusIcon.vue'
 import { type EWordStatus } from '@/services/dbstore/dto/Words'
 import { useWordStatuses } from '@/modules/workspace/modules/words/composables/useWordStatuses'
+import { EDataTestClass } from '@/enums/EDataTest'
 
 const { wordStatusOptions } = useWordStatuses()
+const options = computed(() => unref(wordStatusOptions).map(option => ({
+    ...option,
+    class: EDataTestClass.word_status,
+})))
 
 const props = defineProps<{
     status: EWordStatus
@@ -22,7 +27,7 @@ const updateStatus = (status: EWordStatus) => {
     <div :data-test-value="props.status" >
         <n-popselect
             :value="props.status"
-            :options="wordStatusOptions"
+            :options="options"
             :on-update:value="updateStatus"
         >
             <WordStatusIcon :status="props.status" />
