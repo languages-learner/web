@@ -13,6 +13,8 @@ export enum EDataTest {
     workspace_content,
     workspace_navigation_item,
     workspace_header_user_avatar,
+    workspace_bottom_menu,
+    workspace_bottom_menu_item,
 
     words_container_header_checkbox,
     words_container_header_search,
@@ -41,6 +43,8 @@ export enum EDataTest {
 
 export enum EDataTestClass {
     app_notifications = 'app_notifications',
+
+    word_status = 'data-test__word_status',
 
     words_container_header_status = 'data-test__words-container-header-status',
     words_container_header_status_active = 'data-test__words-container-header-status--active',
