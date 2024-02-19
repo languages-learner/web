@@ -61,5 +61,5 @@ Cypress.Commands.add('logout', () => {
 })
 
 Cypress.Commands.add('waitWorkspacePageInit', () => {
-    cy.el(EDataTest.workspace_header_user_avatar).should('exist').and('not.be.empty')
+    cy.el(EDataTest.workspace_header_user_avatar, { timeout: 15000 }).should('exist').and('not.be.empty')
 })

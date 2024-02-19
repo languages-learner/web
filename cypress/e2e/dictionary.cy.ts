@@ -1,8 +1,13 @@
 /// <reference types="cypress" />
 
-import { elSelector, withLang } from '@@/cypress/utils'
+import {
+    elSelector,
+    isMobile,
+    withLang,
+} from '@@/cypress/utils'
 import { EWordStatus } from '@/services/dbstore/dto/Words'
 import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
+import { EPageName } from '@/enums/EPageName'
 
 describe('workspace dictionary', () => {
     beforeEach(() => {
@@ -17,19 +22,24 @@ describe('workspace dictionary', () => {
                 .el(EDataTest.landing_go_to_workspace_button).click()
                 .location('pathname').should('equal', withLang('/dictionary'))
 
+            cy
                 .log('visit dictionary using workspace menu')
                 .visit(withLang('/trainings'))
-                .el(EDataTest.workspace_navigation_item).contains('dictionary').click()
-                .location('pathname').should('equal', withLang('/dictionary'))
+            if (isMobile())
+                cy.getWorkspaceBottomMenuItem(EPageName.DICTIONARY).click()
+            else
+                cy.el(EDataTest.workspace_navigation_item).contains('dictionary').click()
+            cy.location('pathname').should('equal', withLang('/dictionary'))
 
-                .log('check if filters are clear')
+            cy.log('check if filters are clear')
                 .el(EDataTest.words_container_header_checkbox).should('not.be.checked')
                 .el(EDataTest.words_container_header_search).should('have.value', '')
-                .elByClass(EDataTestClass.words_container_header_status_active).contains('all')
 
-            // For mobile
-            // cy.el(EDataTest.words_container_header_status)
-            //     .contains('All')
+            if (isMobile())
+                cy.el(EDataTest.words_container_header_status).contains('all')
+            else
+                cy.elByClass(EDataTestClass.words_container_header_status_active).contains('all')
+
         })
     })
 
@@ -182,15 +192,28 @@ describe('workspace dictionary', () => {
                 .log('check if all source words contain search word')
                 .el(EDataTest.words_list_item_source_word).should('contain', searchText)
 
+            cy
                 .log('change filtered status to "Learned"')
-                .el(EDataTest.words_container_header_status).eq(EWordStatus.LEARNED + 1).click()
+            if (isMobile())
+                cy
+                    .el(EDataTest.words_container_header_status).click()
+                    .elByClass(EDataTestClass.words_container_header_status).contains('learned').click()
+            else
+                cy.el(EDataTest.words_container_header_status).eq(EWordStatus.LEARNED + 1).click()
 
+            cy
                 .log('check if words not found')
                 .el(EDataTest.words_list_item).should('not.exist')
 
-                .log('change filtered status to "Learn"')
-                .el(EDataTest.words_container_header_status).eq(EWordStatus.NEW_WORD + 1).click()
+            cy.log('change filtered status to "New work"')
+            if (isMobile())
+                cy
+                    .el(EDataTest.words_container_header_status).click()
+                    .elByClass(EDataTestClass.words_container_header_status).contains('new_word').click()
+            else
+                cy.el(EDataTest.words_container_header_status).eq(EWordStatus.NEW_WORD + 1).click()
 
+            cy
                 .log('check if words found')
                 .el(EDataTest.words_list_item).should('exist')
 
@@ -199,20 +222,24 @@ describe('workspace dictionary', () => {
 
                 .log('change status of first word to "Learn"')
                 .el(EDataTest.words_list_item_status).eq(0).trigger('mouseenter')
-                .get('.n-base-select-menu-option-wrapper > :nth-child(2)').click()
+                .elByClass(EDataTestClass.word_status).contains('learn').should('be.visible').click()
 
                 .log('check if word with another status still in list')
                 .el(EDataTest.words_list_item_status).eq(0).should('have.attr', 'data-test-value', EWordStatus.LEARN)
 
-                .log('recover word status')
+                .log('change status of first word to "New word"')
                 .el(EDataTest.words_list_item_status).eq(0).trigger('mouseenter')
-                .get('.n-base-select-menu-option-wrapper > :nth-child(1)').click()
+                .elByClass(EDataTestClass.word_status).contains('new_word').should('be.visible').click()
 
                 .log('change filtered text')
                 .get(`${elSelector(EDataTest.words_container_header_search)} input`).clear().should('have.value', '')
 
+            cy
                 .log('check if filtered status changed to "All"')
-                .elByClass(EDataTestClass.words_container_header_status_active).contains('all')
+            if (isMobile())
+                cy.el(EDataTest.words_container_header_status).contains('all')
+            else
+                cy.elByClass(EDataTestClass.words_container_header_status_active).contains('all')
         })
     })
 })
