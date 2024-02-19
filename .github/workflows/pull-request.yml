@@ -1,7 +1,7 @@
-name: Main
+name: Pull request
 
 on:
-  push:
+  pull_request:
     branches: [ main ]
   workflow_dispatch:
 
@@ -45,6 +45,7 @@ jobs:
           path: dist
 
   e2e-chrome-tests:
+    environment: manual
     timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
@@ -95,6 +96,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   e2e-chrome-mobile-tests:
+    environment: manual
     timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
@@ -143,23 +145,3 @@ jobs:
           TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME_2 }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD_2 }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  deploy_live_website:
-    name: Deploy Prod
-    needs: [ build, e2e-chrome-tests, e2e-chrome-mobile-tests ]
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@main
-      - name: Download artifact
-        uses: actions/download-artifact@main
-        with:
-          name: dist
-          path: dist
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}"
-          projectId: "${{ secrets.GOOGLE_PROJECT_ID }}"
-          channelId: live
