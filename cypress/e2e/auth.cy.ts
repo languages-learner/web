@@ -6,6 +6,7 @@ import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
 describe('user sign-in, sign-up and logout', () => {
     beforeEach(() => {
         cy.visit(withLang())
+        cy.location('pathname').should('equal', withLang())
         cy.logout()
     })
 

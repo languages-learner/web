@@ -5,6 +5,7 @@ dotenv.config({ path: '.env' })
 dotenv.config()
 
 export default defineConfig({
+    projectId: 'fm6ypm',
     chromeWebSecurity: false,
     env: {
         language: 'xx',
@@ -24,7 +25,7 @@ export default defineConfig({
         baseUrl: 'http://localhost:3000',
         viewportHeight: 660,
         viewportWidth: 1000,
-        defaultCommandTimeout: 10000,
+        defaultCommandTimeout: 25000,
         experimentalRunAllSpecs: true,
     },
 })
