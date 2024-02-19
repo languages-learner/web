@@ -85,15 +85,16 @@ const action = computed(() => {
         <n-form-item-row :label="$t('email')">
             <n-input
                 v-model:value="form.email"
-                type="email"
-                :placeholder="$t('email')"/>
+                :placeholder="$t('email')"
+                :data-test="EDataTest.authentication_modal_email"/>
         </n-form-item-row>
         <n-form-item-row :label="$t('password')">
             <n-input
                 v-model:value="form.password"
                 type="password"
                 show-password-on="mousedown"
-                :placeholder="$t('password')"/>
+                :placeholder="$t('password')"
+                :data-test="EDataTest.authentication_modal_password"/>
         </n-form-item-row>
     </n-form>
     <n-button
