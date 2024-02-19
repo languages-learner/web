@@ -150,7 +150,7 @@ jobs:
 
   deploy_live_website:
     name: Deploy Prod
-    needs: build
+    needs: [ build, e2e-chrome-tests, e2e-chrome-mobile-tests ]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
