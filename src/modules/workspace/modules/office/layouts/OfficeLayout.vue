@@ -1,8 +1,6 @@
 <script setup lang="ts">
+import { type ComputedRef } from 'vue'
 import OfficeNavigation from '@/modules/workspace/modules/office/components/OfficeNavigation/OfficeNavigation.vue'
-import { useAppBreakpoints } from '@/composables/useAppBreakpoints'
-import { useI18n } from '@/plugins/i18n'
-import { EPageName } from '@/enums/EPageName'
 
 const { t } = useI18n()
 

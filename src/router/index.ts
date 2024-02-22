@@ -9,9 +9,6 @@ import type { App } from 'vue'
 import { landingRoutes } from '@/modules/landing/router'
 import { workspaceRoutes } from '@/modules/workspace/router'
 
-import { BASE_INTERFACE_LANGUAGE_NAME } from '@/const/InterfaceLanguage'
-import { EPageName } from '@/enums/EPageName'
-
 export const routes: RouteRecordRaw[] = [
     {
         path: '/:lang',

@@ -9,7 +9,6 @@ import type { WordsCollectionFetchItemsFilter } from '@/services/dbstore/types/w
 import { EWordStatus } from '@/services/dbstore/dto/Words'
 import { EFirestoreCollectionFilterType } from '@/services/dbstore/firestore/enums/EFirestoreCollectionFilterType'
 import { BaseFirestoreCollection } from '@/services/dbstore/firestore/common/BaseFirestoreCollection'
-import { useUserStore } from '@/store/modules/user'
 
 const COLLECTION_NAME = 'words'
 

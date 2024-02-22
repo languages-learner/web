@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { WordCreatorType } from '@/modules/workspace/modules/words/components/WordCreator/types'
-import { useI18n } from '@/plugins/i18n'
-import { EDataTest } from '@/enums/EDataTest'
 
 const { t } = useI18n()
 

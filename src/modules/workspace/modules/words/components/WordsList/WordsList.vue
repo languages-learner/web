@@ -4,7 +4,6 @@
 import VirtualList from 'vue3-virtual-scroll-list'
 import type { Word, Words } from '@/services/dbstore/dto/Words'
 import WordsListItem from '@/modules/workspace/modules/words/components/WordsList/components/WordsListItem/WordsListItem.vue'
-import { EDataTest } from '@/enums/EDataTest'
 
 const props = defineProps<{
     words: Words

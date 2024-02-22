@@ -16,4 +16,4 @@ yarn-error.log
 .firebase
 
 # Generated files
-components.d.ts
+auto-generated-imports

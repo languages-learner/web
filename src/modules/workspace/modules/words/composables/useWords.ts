@@ -2,11 +2,6 @@ import { debounce } from 'lodash'
 import type { Words } from '@/services/dbstore/dto/Words'
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 import { type EWordStatus } from '@/services/dbstore/dto/Words'
-import { useDbStore } from '@/plugins/services'
-import { useErrorLogStore } from '@/store/modules/errorLog'
-import { EErrorType } from '@/enums/EErrorType'
-import { getErrorMessage } from '@/utils/error'
-import { useRequestMethod } from '@/composables/useRequestMethod'
 import { useWord } from '@/modules/workspace/modules/words/composables/useWord'
 
 export type WordsLoaderSettings = {

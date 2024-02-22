@@ -1,5 +1,4 @@
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
-import { useItemsSelection } from '@/composables/useItemsSelection'
 import { type WordsLoaderSettings, useWords } from '@/modules/workspace/modules/words/composables/useWords'
 
 export const useWordsList = (

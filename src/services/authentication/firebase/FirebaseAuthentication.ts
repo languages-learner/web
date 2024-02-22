@@ -3,7 +3,6 @@ import 'firebase/compat/auth'
 import { getAuth, useDeviceLanguage } from 'firebase/auth'
 import type { IAuthentication } from '@/services/authentication/common/IAuthentication'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
-import { getErrorMessage } from '@/utils/error'
 
 export class FirebaseAuthentication implements IAuthentication {
     private static instance: FirebaseAuthentication
