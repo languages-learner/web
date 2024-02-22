@@ -8,6 +8,7 @@ import {
 import { EWordStatus } from '@/services/dbstore/dto/Words'
 import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
 import { EPageName } from '@/enums/EPageName'
+import { WordStatusTranslationKey } from '@/modules/workspace/modules/words/composables/useWordStatuses'
 
 describe('workspace dictionary', () => {
     beforeEach(() => {
@@ -139,107 +140,109 @@ describe('workspace dictionary', () => {
                 .el(EDataTest.words_list_item_edit_translations).should('not.exist')
 
                 .log('check if word deleted')
-                .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_source_word)}`).first().should('not.have.text', wordSourceEdited)
+                .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_source_word)}[data-test-value="${wordSourceEdited}"]`)
+                .should('not.exist')
 
             cy
                 .log('delete word using delete button')
                 .el(EDataTest.words_list_item_delete_button).eq(0).click()
 
                 .log('check if word deleted')
-                .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_source_word)}`).first().should('not.contain.text', wordSource)
+                .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_source_word)}[data-test-value="${wordSource}"]`)
+                .should('not.exist')
         })
 
-        // Note: test account has words
         it('select words', () => {
-            cy
-                .log('select all words using header checkbox')
-                .el(EDataTest.words_container_header_checkbox).should('not.have.class', 'n-checkbox--checked')
-                .click().should('have.class', 'n-checkbox--checked')
+            cy.get(`${elSelector(EDataTest.words_list_item)}`).should(() => expect(true).eq(true)).then(($words) => {
+                const wordSource = `word-${new Date().valueOf()}`
+                for (let i = $words.length; i < 2; i++) {
+                    cy.dictionaryAddWordWithTranslations(wordSource + `_${i}`, ['translation1'])
+                }
+            }).then(() => {
+                cy
+                    .log('select all words using header checkbox')
+                    .el(EDataTest.words_container_header_checkbox).should('not.have.class', 'n-checkbox--checked')
+                    .click().should('have.class', 'n-checkbox--checked')
 
-                .log('check if all words selected')
-                .el(EDataTest.words_list_item_checkbox).should('have.class', 'n-checkbox--checked')
+                    .log('check if all words selected')
+                    .el(EDataTest.words_list_item_checkbox).should('have.class', 'n-checkbox--checked')
 
-                .log('unselect first word')
-                .el(EDataTest.words_list_item_checkbox).eq(0).click()
+                    .log('unselect first word')
+                    .el(EDataTest.words_list_item_checkbox).eq(0).click()
 
-                .log('check if not all items selected')
-                .el(EDataTest.words_container_header_checkbox).should('not.have.class', 'n-checkbox--checked')
+                    .log('check if not all items selected')
+                    .el(EDataTest.words_container_header_checkbox).should('not.have.class', 'n-checkbox--checked')
 
-                .log('select all words using header checkbox')
-                .el(EDataTest.words_container_header_checkbox).click()
+                    .log('select all words using header checkbox')
+                    .el(EDataTest.words_container_header_checkbox).click()
 
-                .log('check if all words selected')
-                .el(EDataTest.words_list_item_checkbox).should('have.class', 'n-checkbox--checked')
+                    .log('check if all words selected')
+                    .el(EDataTest.words_list_item_checkbox).should('have.class', 'n-checkbox--checked')
 
-                .log('unselect all words using header checkbox')
-                .el(EDataTest.words_container_header_checkbox).click()
+                    .log('unselect all words using header checkbox')
+                    .el(EDataTest.words_container_header_checkbox).click()
 
-                .log('check if all words unselected')
-                .el(EDataTest.words_list_item_checkbox).should('not.have.class', 'n-checkbox--checked')
+                    .log('check if all words unselected')
+                    .el(EDataTest.words_list_item_checkbox).should('not.have.class', 'n-checkbox--checked')
+            })
         })
 
-        // Note: test account has words with the necessary source words and statuses
-        it('filter by text and status', () => {
-            const searchText = 'test1'
-            cy
-                .log('enter search text with all words selected')
-                .el(EDataTest.words_container_header_checkbox).click()
-                .get(`${elSelector(EDataTest.words_container_header_search)} input`).type(searchText).should('have.value', searchText)
+        it('filter words by text and status', () => {
+            let wordSource: string = ''
+            cy.dictionaryGetWordsByStatus(EWordStatus.NEW_WORD).should(() => expect(true).eq(true)).then($words => {
+                if (!$words.length) {
+                    wordSource = `word-${new Date().valueOf()}`
+                    cy.dictionaryAddWordWithTranslations(wordSource, ['translation1'])
+                }
 
-                .log('check if all words unselected')
-                .el(EDataTest.words_list_item_checkbox).should('not.have.class', 'n-checkbox--checked')
-
-                .log('check if all source words contain search word')
-                .el(EDataTest.words_list_item_source_word).should('contain', searchText)
-
-            cy
-                .log('change filtered status to "Learned"')
-            if (isMobile())
                 cy
-                    .el(EDataTest.words_container_header_status).click()
-                    .elByClass(EDataTestClass.words_container_header_status).contains('learned').click()
-            else
-                cy.el(EDataTest.words_container_header_status).eq(EWordStatus.LEARNED + 1).click()
-
-            cy
-                .log('check if words not found')
-                .el(EDataTest.words_list_item).should('not.exist')
-
-            cy.log('change filtered status to "New work"')
-            if (isMobile())
+                    .dictionaryGetWordsByStatus(EWordStatus.NEW_WORD).eq(0)
+                    .find(`${elSelector(EDataTest.words_list_item_source_word)}`)
+                    .then($word => {
+                        wordSource = $word.text()
+                    })
+            }).then(() => {
                 cy
-                    .el(EDataTest.words_container_header_status).click()
-                    .elByClass(EDataTestClass.words_container_header_status).contains('new_word').click()
-            else
-                cy.el(EDataTest.words_container_header_status).eq(EWordStatus.NEW_WORD + 1).click()
+                    .log('enter search text with all words selected')
+                    .el(EDataTest.words_container_header_checkbox).click()
+                    .get(`${elSelector(EDataTest.words_container_header_search)} input`).type(wordSource).should('have.value', wordSource)
 
-            cy
-                .log('check if words found')
-                .el(EDataTest.words_list_item).should('exist')
+                    .log('check if all words unselected')
+                    .el(EDataTest.words_list_item_checkbox).should('not.have.class', 'n-checkbox--checked')
 
-                .log('check if each founded word has filtered status')
-                .el(EDataTest.words_list_item_status).should('have.attr', 'data-test-value', EWordStatus.NEW_WORD)
+                    .log('check if all source words contain search word')
+                    .el(EDataTest.words_list_item_source_word).should('contain', wordSource)
 
-                .log('change status of first word to "Learn"')
-                .el(EDataTest.words_list_item_status).eq(0).trigger('mouseenter')
-                .elByClass(EDataTestClass.word_status).contains('learn').should('be.visible').click()
+                    .log('change filtered status to "New work"')
+                    .dictionaryFilterByWordStatus(EWordStatus.NEW_WORD)
 
-                .log('check if word with another status still in list')
-                .el(EDataTest.words_list_item_status).eq(0).should('have.attr', 'data-test-value', EWordStatus.LEARN)
+                    .log('check if words found')
+                    .el(EDataTest.words_list_item).should('exist')
 
-                .log('change status of first word to "New word"')
-                .el(EDataTest.words_list_item_status).eq(0).trigger('mouseenter')
-                .elByClass(EDataTestClass.word_status).contains('new_word').should('be.visible').click()
+                    .log('check if each founded word has filtered status')
+                    .el(EDataTest.words_list_item_status).should('have.attr', 'data-test-value', EWordStatus.NEW_WORD)
 
-                .log('change filtered text')
-                .get(`${elSelector(EDataTest.words_container_header_search)} input`).clear().should('have.value', '')
+                    .log('change status of first word to "Learn"')
+                    .el(EDataTest.words_list_item_status).eq(0).trigger('mouseenter')
+                    .elByClass(EDataTestClass.word_status).contains(WordStatusTranslationKey[EWordStatus.LEARN]).should('be.visible').click()
 
-            cy
-                .log('check if filtered status changed to "All"')
-            if (isMobile())
-                cy.el(EDataTest.words_container_header_status).contains('all')
-            else
-                cy.elByClass(EDataTestClass.words_container_header_status_active).contains('all')
+                    .log('check if word with another status still in list')
+                    .el(EDataTest.words_list_item_status).eq(0).should('have.attr', 'data-test-value', EWordStatus.LEARN)
+
+                    .log('change status of first word to "New word"')
+                    .el(EDataTest.words_list_item_status).eq(0).trigger('mouseenter')
+                    .elByClass(EDataTestClass.word_status).contains('new_word').should('be.visible').click()
+
+                    .log('change filtered text')
+                    .get(`${elSelector(EDataTest.words_container_header_search)} input`).clear().should('have.value', '')
+
+                cy
+                    .log('check if filtered status changed to "All"')
+                if (isMobile())
+                    cy.el(EDataTest.words_container_header_status).contains('all')
+                else
+                    cy.elByClass(EDataTestClass.words_container_header_status_active).contains('all')
+            })
         })
     })
 })
