@@ -8,7 +8,6 @@ describe('composable/useAppBreakpoints', () => {
         for (let i = 10; i <= 5000; i += 10) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
-            // TODO Try vi.stubGlobal('innerWidth', 100)
             window.happyDOM.setInnerWidth(i)
 
             const useF = withSetup(() => useAppBreakpoints())
