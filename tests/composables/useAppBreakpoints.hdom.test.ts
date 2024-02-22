@@ -1,7 +1,6 @@
 import { withSetup } from '@@/tests/support/withSetup'
 import { describe, expect } from 'vitest'
 import { testApp } from '@@/tests/support/testApp'
-import { useAppBreakpoints } from '@/composables/useAppBreakpoints'
 
 describe('composable/useAppBreakpoints', () => {
     testApp('returns', () => {

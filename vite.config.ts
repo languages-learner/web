@@ -4,7 +4,8 @@ import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import AutoImport from 'unplugin-auto-import/vite'
-import path from 'path'
+// https://github.com/TypeStrong/ts-node/issues/1096
+import * as path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,11 +25,26 @@ export default defineConfig({
     plugins: [
         vue(),
         AutoImport({
-            imports: ['vue', 'vue-router', 'pinia'],
-            // TODO Fix using auto imported enum in template
-            // dirs: ['./src/enums'],
+            dts: './auto-generated-imports/auto-imports.d.ts',
+            vueTemplate: true,
+            imports: ['vue', 'vue-router', 'pinia',
+                { from: '@/plugins/i18n.ts', imports: ['useI18n'] },
+                { from: '@/plugins/services.ts', imports: ['useAuthenticationService', 'useDbStore', 'useConfigService'] },
+            ],
+            dirs: [
+                './src/utils/**',
+                './src/const/**',
+                './src/enums/**',
+                './src/store/modules',
+                './src/composables/**',
+            ],
+            eslintrc: {
+                enabled: true,
+                filepath: './auto-generated-imports/.eslintrc-auto-import.json',
+            },
         }),
         Components({
+            dts: './auto-generated-imports/components.d.ts',
             resolvers: [NaiveUiResolver()],
         }),
     ],

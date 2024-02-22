@@ -1,10 +1,6 @@
 import { cloneDeep } from 'lodash'
 import type { Word } from '@/services/dbstore/dto/Words'
 import { type EWordStatus } from '@/services/dbstore/dto/Words'
-import { useDbStore } from '@/plugins/services'
-import { useErrorLogStore } from '@/store/modules/errorLog'
-import { EErrorType } from '@/enums/EErrorType'
-import { getErrorMessage } from '@/utils/error'
 
 export const useWord = () => {
     const { addErrorLogInfo } = useErrorLogStore()

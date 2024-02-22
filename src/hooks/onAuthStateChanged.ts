@@ -1,9 +1,5 @@
 import { type Router } from 'vue-router'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { useUserStore } from '@/store/modules/user'
-import { useErrorLogStore } from '@/store/modules/errorLog'
-import { EErrorType } from '@/enums/EErrorType'
-import { EPageName } from '@/enums/EPageName'
 
 export const initializeOnAuthStateChangedHook = (router: Router): void => {
     const route = router.currentRoute

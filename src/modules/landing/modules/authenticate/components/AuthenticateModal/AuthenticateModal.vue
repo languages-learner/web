@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import AuthenticateModalForm from '@/modules/landing/modules/authenticate/components/AuthenticateModal/components/AuthenticateModalForm/AuthenticateModalForm.vue'
 import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/components/AuthenticateModal/EAuthenticateModalType'
-import { useAppBreakpoints } from '@/composables/useAppBreakpoints'
-import { EDataTest } from '@/enums/EDataTest'
 
 const props = defineProps<{
     type: EAuthenticateModalType

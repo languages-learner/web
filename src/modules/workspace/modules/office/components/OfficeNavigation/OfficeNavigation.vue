@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 import { RouterLink } from 'vue-router'
 import type { MenuOption } from 'naive-ui'
-import { EPageName } from '@/enums/EPageName'
-import { useI18n } from '@/plugins/i18n'
-import { EDataTest } from '@/enums/EDataTest'
 
 const { t } = useI18n()
 const route = useRoute()

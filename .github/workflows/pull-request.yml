@@ -33,9 +33,9 @@ jobs:
       - run: npx cypress info
       - run: node --version
       - run: node -p 'os.cpus()'
+      - run: npm run build
       - run: npm run lint
       - run: npm run test:ci
-      - run: npm run build
 
       - name: Save build folder
         uses: actions/upload-artifact@v4

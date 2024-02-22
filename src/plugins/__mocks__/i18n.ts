@@ -1,4 +1,3 @@
-import { TEST_INTERFACE_LANGUAGE_NAME } from '../../const/InterfaceLanguage'
 import type { App } from 'vue'
 import type { Router } from 'vue-router'
 

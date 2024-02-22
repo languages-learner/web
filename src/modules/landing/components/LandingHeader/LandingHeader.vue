@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useUserStore } from '@/store/modules/user'
-import { EPageName } from '@/enums/EPageName'
-import { EDataTest } from '@/enums/EDataTest'
 import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/components/AuthenticateModal/EAuthenticateModalType'
 import AuthenticateModal from '@/modules/landing/modules/authenticate/components/AuthenticateModal/AuthenticateModal.vue'
 

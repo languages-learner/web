@@ -1,5 +1,6 @@
 import { defineConfig } from 'cypress'
-import dotenv from 'dotenv'
+// https://github.com/TypeStrong/ts-node/issues/1096
+import * as dotenv from 'dotenv'
 
 dotenv.config({ path: '.env' })
 dotenv.config()

@@ -1,4 +1,3 @@
-import { BASE_INTERFACE_LANGUAGE, BASE_INTERFACE_LANGUAGE_NAME } from '../../../../const/InterfaceLanguage'
 import type { IConfig } from '@/services/configuration/common/IConfig'
 import type { IConfigService } from '@/services/configuration/common/IConfigService'
 

@@ -21,14 +21,14 @@
     ]
   },
   "include": [
-    "src/**/*.{ts,vue}",
-    "src/**/*.cy.{js,ts}",
+    "src/**/*.vue",
+    "src/**/*.ts",
+    "src/**/*.cy.ts",
     "src/**/*.d.ts",
     "types/**/*.ts",
     "types/**/*.d.ts",
     "tests/**/*.ts",
     "tests/**/*.d.ts",
-    "auto-imports.d.ts",
-    "components.d.ts",
+    "auto-generated-imports/**/*.d.ts",
   ],
 }

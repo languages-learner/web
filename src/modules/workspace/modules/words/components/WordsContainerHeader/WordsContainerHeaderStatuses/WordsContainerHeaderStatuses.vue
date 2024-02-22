@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 import WordStatusIcon from '@/modules/workspace/modules/words/components/WordStatus/WordStatusIcon.vue'
-import { useAppBreakpoints } from '@/composables/useAppBreakpoints'
 import { useWordStatuses } from '@/modules/workspace/modules/words/composables/useWordStatuses'
-import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
 
 const { isMobile } = useAppBreakpoints()
 const { wordStatusOptionsWithAll, getWordStatusesValues } = useWordStatuses()

@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { useUserStore } from '@/store/modules/user'
-import { useLearningLanguage } from '@/composables/useLearningLanguage'
-import { useI18n } from '@/plugins/i18n'
-
 const { isUserDataLoaded } = storeToRefs(useUserStore())
 const { availableLearningLanguagesOptionsExceptActive, activeLearningLanguageName, updateActiveLearningLanguage } = useLearningLanguage()
 const { t } = useI18n()

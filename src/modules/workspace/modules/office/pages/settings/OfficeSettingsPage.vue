@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import type { WritableComputedRef } from 'vue'
-import { useUserStore } from '@/store/modules/user'
-import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
-import { useConfigStore } from '@/store/modules/config'
-import { BASE_INTERFACE_LANGUAGE } from '@/const/InterfaceLanguage'
-import { useLearningLanguage } from '@/composables/useLearningLanguage'
-import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
 
 const { interfaceLanguages, interfaceLanguageId } = storeToRefs(useInterfaceLanguageStore())
 const { setInterfaceLanguage } = useInterfaceLanguageStore()

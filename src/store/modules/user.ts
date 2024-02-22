@@ -2,12 +2,6 @@ import { defineStore, skipHydrate } from 'pinia'
 
 import type firebase from 'firebase/auth'
 import type User from '@/services/dbstore/dto/User'
-import { useDbStore } from '@/plugins/services'
-import { useConfigStore } from '@/store/modules/config'
-import { useInterfaceLanguageStore } from '@/store/modules/interfaceLanguage'
-import { useErrorLogStore } from '@/store/modules/errorLog'
-import { EErrorType } from '@/enums/EErrorType'
-import { getErrorMessage } from '@/utils/error'
 
 type StateForAuthorizedUser = {
     profileData: {

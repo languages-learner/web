@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import UserAvatar from '@/modules/workspace/components/UserAvatar/UserAvatar.vue'
-import { useUserStore } from '@/store/modules/user'
-import { EDataTest } from '@/enums/EDataTest'
 
 const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
 </script>

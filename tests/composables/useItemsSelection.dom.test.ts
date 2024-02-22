@@ -4,7 +4,6 @@ import {
     it,
 } from 'vitest'
 import { withSetup } from '@@/tests/support/withSetup'
-import { useItemsSelection } from '@/composables/useItemsSelection'
 
 describe('composable/useItemsSelection', () => {
     it('correct initialization, select and unselect items', () => {

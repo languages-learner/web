@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
-import { EDataTest } from '@/enums/EDataTest'
 
 const emit = defineEmits<{
     (e: 'signInWithProvider', provider: EAuthenticationProvider): void

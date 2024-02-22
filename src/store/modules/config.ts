@@ -1,9 +1,4 @@
 import { defineStore } from 'pinia'
-import { useConfigService } from '@/plugins/services'
-import { useErrorLogStore } from '@/store/modules/errorLog'
-import { EErrorType } from '@/enums/EErrorType'
-import { getErrorMessage } from '@/utils/error'
-import { useI18n } from '@/plugins/i18n'
 
 
 export const useConfigStore = defineStore('config', () => {
