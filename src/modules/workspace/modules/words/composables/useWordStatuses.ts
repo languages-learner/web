@@ -1,6 +1,12 @@
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 import { EWordStatus, getWordStatusesValues } from '@/services/dbstore/dto/Words'
 
+export const WordStatusTranslationKey: Record<EWordStatus, string> = {
+    [EWordStatus.NEW_WORD]: 'new_word',
+    [EWordStatus.LEARN]: 'learn',
+    [EWordStatus.LEARNED]: 'learned',
+}
+
 export const useWordStatuses = () => {
     const { t } = useI18n()
 
@@ -9,15 +15,15 @@ export const useWordStatuses = () => {
         value: WordsFilters['status']
     }> = [
         {
-            label: t('new_word'),
+            label: t(WordStatusTranslationKey[EWordStatus.NEW_WORD]),
             value: EWordStatus.NEW_WORD,
         },
         {
-            label: t('learn'),
+            label: t(WordStatusTranslationKey[EWordStatus.LEARN]),
             value: EWordStatus.LEARN,
         },
         {
-            label: t('learned'),
+            label: t(WordStatusTranslationKey[EWordStatus.LEARNED]),
             value: EWordStatus.LEARNED,
         },
     ]

@@ -1,8 +1,10 @@
 /// <reference types="cypress" />
 
-import { elSelector } from '@@/cypress/utils'
-import { EDataTest, type EDataTestClass } from '@/enums/EDataTest'
+import { elSelector, isMobile } from '@@/cypress/utils'
+import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
 import { EPageName } from '@/enums/EPageName'
+import { type EWordStatus } from '@/services/dbstore/dto/Words'
+import { WordStatusTranslationKey } from '@/modules/workspace/modules/words/composables/useWordStatuses'
 
 Cypress.Commands.add('el', (dataTest: EDataTest, options?: Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow>) =>
     cy.get(elSelector(dataTest), options))
@@ -30,4 +32,53 @@ Cypress.Commands.add('getWorkspaceBottomMenuItem', (page: EPageName) => {
             .parent()
             .parent()
     }
+})
+
+Cypress.Commands.add('dictionaryAddWordWithTranslations', (word, translations, options = {
+    clearInput: true,
+}) => {
+    cy
+        .get(`${elSelector(EDataTest.words_container_header_search)} input`).type(word)
+        .el(EDataTest.words_list_loader).should('not.exist')
+        .el(EDataTest.words_list_item).should('not.exist')
+        .el(EDataTest.words_container_header_add_word_button).click()
+        .el(EDataTest.words_creator).should('contain.text', 'add_new_word')
+
+    translations.forEach((translation, index) => {
+        cy.get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(index).type(translation).clickOutside()
+    })
+
+    cy
+        .el(EDataTest.words_creator_add_button).click()
+        .el(EDataTest.words_creator).should('not.exist')
+        .el(EDataTest.words_container_header_add_word_button).should('not.exist')
+        .el(EDataTest.words_list_loader).should('not.exist')
+        .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_source_word)}`).first().should('contain.text', word)
+        .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_translations)}`).first().then($translations => {
+            translations.forEach((translation) => {
+                cy.wrap($translations).should('contain.text', translation)
+            })
+        })
+
+    if (options.clearInput)
+        cy
+            .get(`${elSelector(EDataTest.words_container_header_search)} input`).clear().should('have.value', '')
+            .el(EDataTest.words_list_loader).should('not.exist')
+})
+
+Cypress.Commands.add('dictionaryFilterByWordStatus', (status: EWordStatus) => {
+    if (isMobile())
+        cy
+            .el(EDataTest.words_container_header_status).click()
+            .elByClass(EDataTestClass.words_container_header_status).contains(WordStatusTranslationKey[status]).click()
+    else
+        cy.el(EDataTest.words_container_header_status).eq(status + 1).click()
+})
+
+Cypress.Commands.add('dictionaryDeleteFirstWord', () => {
+    cy.el(EDataTest.words_list_item_delete_button).eq(0).click()
+})
+
+Cypress.Commands.add('dictionaryGetWordsByStatus', (status: EWordStatus) => {
+    return cy.get(`${elSelector(EDataTest.words_list_item)}:has(${elSelector(EDataTest.words_list_item_status)}[data-test-value="${status}"])`)
 })
