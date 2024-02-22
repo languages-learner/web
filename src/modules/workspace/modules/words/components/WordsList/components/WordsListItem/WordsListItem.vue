@@ -64,7 +64,9 @@ const toggleChangeableView = () => isChangeableView.value = !isChangeableView.va
                     class="words-list-item__property--translations">
                     <n-text
                         type="success"
-                        :data-test="EDataTest.words_list_item_source_word">
+                        :data-test="EDataTest.words_list_item_source_word"
+                        :data-test-value="source.word"
+                    >
                         {{ source.word }}
                     </n-text>
                     <n-dynamic-tags
