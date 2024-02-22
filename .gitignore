@@ -1,9 +1,26 @@
+
+# dependencies
 node_modules
-.DS_Store
+
+# production
 dist
 dist-ssr
+
+# testing
+coverage
+
+# misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+cypress/videos
+cypress/screenshots
+.nyc_output
+
+# Ignore local files
+.env
 *.local
-.idea
 
 # Configs
 firebase.config.json
@@ -14,6 +31,14 @@ yarn-error.log
 
 # Cache files
 .firebase
+
+# IDE
+.DS_Store
+.idea
+components.d.ts
+auto-imports.d.ts
+
+.vscode
 
 # Generated files
 auto-generated-imports
