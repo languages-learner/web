@@ -1,5 +1,4 @@
 import { expect, it } from 'vitest'
-import { getErrorMessage } from '@/utils/error'
 
 it('util/error', () => {
     expect(getErrorMessage(1)).toBe('1')

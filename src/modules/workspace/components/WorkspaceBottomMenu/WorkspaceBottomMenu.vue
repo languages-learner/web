@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { EPageName } from '@@/src/enums/EPageName'
 import {
     BarbellOutline,
     BookOutline,
@@ -9,8 +8,7 @@ import {
 import { type MenuOption } from 'naive-ui'
 import { NIcon } from 'naive-ui'
 import { type RouteLocationNamedRaw, RouterLink } from 'vue-router'
-import { useI18n } from '@/plugins/i18n'
-import { EDataTest } from '@/enums/EDataTest'
+import { type Component } from 'vue'
 
 const { t } = useI18n()
 

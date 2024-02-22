@@ -1,14 +1,8 @@
 <script lang="ts" setup>
 import { useNotification } from 'naive-ui'
-import { EPageName } from '@/enums/EPageName'
 import { type EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 import AuthenticateModalProviders from '@/modules/landing/modules/authenticate/components/AuthenticateModal/components/AuthenticateModalProviders/AuthenticateModalProviders.vue'
-import { useAuthenticationService } from '@/plugins/services'
-import { useErrorLogStore } from '@/store/modules/errorLog'
-import { EErrorType } from '@/enums/EErrorType'
 import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/components/AuthenticateModal/EAuthenticateModalType'
-import { useI18n } from '@/plugins/i18n'
-import { EDataTest } from '@/enums/EDataTest'
 
 const { t } = useI18n()
 const { addErrorLogInfo } = useErrorLogStore()

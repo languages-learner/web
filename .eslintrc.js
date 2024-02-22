@@ -7,6 +7,7 @@ module.exports = {
         'plugin:vue/vue3-essential',
         '@vue/typescript',
         '@vue/typescript/recommended',
+        './auto-generated-imports/.eslintrc-auto-import.json',
     ],
     plugins: [
         'import',

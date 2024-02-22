@@ -1,6 +1,5 @@
 import type User from '@/services/dbstore/dto/User'
 import type { IUserCollection } from '@/services/dbstore/interfaces/IUserCollection'
-import { useUserStore } from '@/store/modules/user'
 
 export class UserFirestoreCollection implements IUserCollection {
     private checkCurrentUser() {

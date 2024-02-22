@@ -1,5 +1,5 @@
+// Without direct import get error in template
 import { type Ref, type WritableComputedRef } from 'vue'
-import { noop } from '@/utils/noop'
 
 type RequestMethodOptions = {
     allowConcurrentRequests: boolean

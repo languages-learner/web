@@ -6,8 +6,6 @@ import {
 } from '@vicons/ionicons5'
 import type { Word } from '@/services/dbstore/dto/Words'
 import WordStatus from '@/modules/workspace/modules/words/components/WordStatus/WordStatus.vue'
-import { useVirtualScrollListItemEmits } from '@/composables/useVirtualScrollListItemEmits'
-import { EDataTest } from '@/enums/EDataTest'
 
 const props = defineProps<{
     source: {

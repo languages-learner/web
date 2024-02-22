@@ -1,5 +1,4 @@
 import { type Ref } from 'vue'
-import { noop } from '@/utils/noop'
 import { useIntersectionObserver } from '@/composables/intersectionObserver/useIntersectionObserver'
 
 export const useVisibilityObserver = (target: Ref<HTMLDivElement | undefined>, autoUnobserve?: boolean) => {

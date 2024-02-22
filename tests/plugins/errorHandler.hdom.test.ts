@@ -6,9 +6,7 @@ import {
 } from 'vitest'
 import { createApp } from 'vue'
 import { createPinia, setActivePinia } from 'pinia'
-import { useErrorLogStore } from '@/store/modules/errorLog'
 import { setupErrorHandler } from '@/plugins/errorHandler'
-import { EErrorType } from '@/enums/EErrorType'
 
 describe('plugin/errorHandler', () => {
     beforeEach(() => {

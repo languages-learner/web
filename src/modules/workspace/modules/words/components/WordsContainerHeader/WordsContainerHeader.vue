@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 import WordsContainerHeaderStatuses from '@/modules/workspace/modules/words/components/WordsContainerHeader/WordsContainerHeaderStatuses/WordsContainerHeaderStatuses.vue'
-import { EDataTest } from '@/enums/EDataTest'
 
 defineProps<{
     isAllWordsSelected: boolean

@@ -1,7 +1,4 @@
 import type { App , ComponentPublicInstance } from 'vue'
-import { useErrorLogStore } from '@/store/modules/errorLog'
-import { EErrorType } from '@/enums/EErrorType'
-import { getErrorMessage } from '@/utils/error'
 
 const formatComponentName = (instance: ComponentPublicInstance | null) => {
     const anonymous = {

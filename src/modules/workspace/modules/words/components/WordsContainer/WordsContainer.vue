@@ -4,7 +4,6 @@ import WordsContainerHeader from '@/modules/workspace/modules/words/components/W
 import WordsList from '@/modules/workspace/modules/words/components/WordsList/WordsList.vue'
 import WordCreator from '@/modules/workspace/modules/words/components/WordCreator/WordCreator.vue'
 import { useWordsFilters } from '@/modules/workspace/modules/words/composables/useWordsFilters'
-import { useUserStore } from '@/store/modules/user'
 import { useWordsList } from '@/modules/workspace/modules/words/composables/useWordsList'
 import { WordCreatorType } from '@/modules/workspace/modules/words/components/WordCreator/types'
 

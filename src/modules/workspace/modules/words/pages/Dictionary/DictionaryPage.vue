@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import WordsContainer from '@/modules/workspace/modules/words/components/WordsContainer/WordsContainer.vue'
-import { useUserStore } from '@/store/modules/user'
 
 const { isUserDataLoaded } = storeToRefs(useUserStore())
 </script>

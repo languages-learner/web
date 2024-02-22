@@ -1,5 +1,4 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { EPageName } from '@/enums/EPageName'
 
 export const wordsRoutes: RouteRecordRaw[] = [{
     name: EPageName.DICTIONARY,

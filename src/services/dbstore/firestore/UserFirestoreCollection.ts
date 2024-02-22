@@ -1,7 +1,6 @@
 import type User from '@/services/dbstore/dto/User'
 import type { IUserCollection } from '@/services/dbstore/interfaces/IUserCollection'
 import { BaseFirestoreCollection } from '@/services/dbstore/firestore/common/BaseFirestoreCollection'
-import { useUserStore } from '@/store/modules/user'
 
 const COLLECTION_NAME = 'users'
 

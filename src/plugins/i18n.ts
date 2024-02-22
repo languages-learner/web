@@ -8,8 +8,6 @@ import {
 } from 'vue-i18n'
 import type { App } from 'vue'
 import type { Router } from 'vue-router'
-import { useDbStore } from '@/plugins/services'
-import { BASE_INTERFACE_LANGUAGE_NAME } from '@/const/InterfaceLanguage'
 
 let i18nGlobal:  Composer<
     Record<string, Record<string, LocaleMessageValue<VueMessageType>>>,

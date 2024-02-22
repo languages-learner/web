@@ -1,7 +1,5 @@
 import { vi } from 'vitest'
 import { createAppRouter } from '@/router'
-import { TEST_INTERFACE_LANGUAGE_NAME } from '@/const/InterfaceLanguage'
-import { EPageName } from '@/enums/EPageName'
 
 export const useMocks = () => {
     const mockServices = () => {

@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { EPageName } from '@/enums/EPageName'
 import WorkspaceHeaderUserAvatar from '@/modules/workspace/components/WorkspaceHeader/components/WorkspaceHeaderUserAvatar/WorkspaceHeaderUserAvatar.vue'
 import WorkspaceHeaderActiveLearningLanguage from '@/modules/workspace/components/WorkspaceHeader/components/WorkspaceHeaderActiveLearningLanguage/WorkspaceHeaderActiveLearningLanguage.vue'
-import { useI18n } from '@/plugins/i18n'
-import { EDataTest } from '@/enums/EDataTest'
 
 const { t } = useI18n()
 

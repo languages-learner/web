@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useUserStore } from '@/store/modules/user'
-
 const { profileData } = storeToRefs(useUserStore())
 const name = computed(() => unref(profileData)?.displayName ?? unref(profileData)?.email ?? 'U')
 const photoURL = computed(() => unref(profileData)?.photoURL ?? '')
