@@ -1,0 +1,22 @@
+.words-container-words-creator {
+  margin-top: 20px;
+
+  &__container {
+    flex-direction: column;
+    gap: 15px;
+
+    &__property {
+      span + div {
+        margin-top: 10px;
+      }
+    }
+
+    &__source-word {
+      max-width: 320px;
+    }
+  }
+
+  &__button {
+    max-width: fit-content;
+  }
+}

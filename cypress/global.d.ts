@@ -8,7 +8,7 @@ declare namespace Cypress {
     interface Chainable {
         el(dataTest: EDataTest, options?: Partial<Loggable & Timeoutable & Withinable & Shadow>): Chainable<JQuery<HTMLBodyElement>>
         elByClass(dataTestClass: EDataTestClass, options?: Partial<Loggable & Timeoutable & Withinable & Shadow>): Chainable<JQuery<HTMLBodyElement>>
-        clickOutside(): Chainable<JQuery<HTMLBodyElement>>
+        clickOutside(): Chainable<JQuery<HTMLHtmlElement>>
 
         // WorkspaceBottomMenu
         getWorkspaceBottomMenuItem(page: EPageName): Chainable<JQuery<HTMLBodyElement>>
@@ -18,5 +18,7 @@ declare namespace Cypress {
         dictionaryFilterByWordStatus(status: EWordStatus): Chainable<JQuery<HTMLBodyElement>>
         dictionaryDeleteFirstWord(): Chainable<JQuery<HTMLBodyElement>>
         dictionaryGetWordsByStatus(status: EWordStatus): Chainable<JQuery<HTMLBodyElement>>
+        dictionaryWaitWordsLoaded(): Chainable<never>
+        dictionarySetSearchText(text?: string): Chainable<JQuery<HTMLElement>>
     }
 }

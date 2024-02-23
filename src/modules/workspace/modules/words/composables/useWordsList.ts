@@ -7,14 +7,14 @@ export const useWordsList = (
         status: -1,
     },
     settings: WordsLoaderSettings = {
-        limitWordsToFetch: 10,
+        limitWordsToFetch: 20,
     },
 ) => {
     const {
         words,
+        wordsWithoutStatusFilter,
         isWordsLoading,
         isWordsLoaded,
-        isAddingWord,
         fetchWords,
         fetchWordsDebounced,
         resetWords,
@@ -48,9 +48,9 @@ export const useWordsList = (
 
     return {
         words,
+        wordsWithoutStatusFilter,
         isWordsLoaded,
         isWordsLoading,
-        isAddingWord,
         selectedWords,
         isAllWordsSelected,
         toggleWordSelection,

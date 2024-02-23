@@ -15,7 +15,7 @@ Cypress.Commands.add('clickOutside', () => {
     cy.log('click outside')
 
     return cy
-        .get('body', { log: false })
+        .root({ log: false })
         .click(0,0, { log: false })
 })
 
@@ -41,7 +41,7 @@ Cypress.Commands.add('dictionaryAddWordWithTranslations', (word, translations, o
         .get(`${elSelector(EDataTest.words_container_header_search)} input`).type(word)
         .el(EDataTest.words_list_loader).should('not.exist')
         .el(EDataTest.words_list_item).should('not.exist')
-        .el(EDataTest.words_container_header_add_word_button).click()
+        .el(EDataTest.words_container_add_word_button).click()
         .el(EDataTest.words_creator).should('contain.text', 'add_new_word')
 
     translations.forEach((translation, index) => {
@@ -51,7 +51,7 @@ Cypress.Commands.add('dictionaryAddWordWithTranslations', (word, translations, o
     cy
         .el(EDataTest.words_creator_add_button).click()
         .el(EDataTest.words_creator).should('not.exist')
-        .el(EDataTest.words_container_header_add_word_button).should('not.exist')
+        .el(EDataTest.words_container_add_word_button).should('not.exist')
         .el(EDataTest.words_list_loader).should('not.exist')
         .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_source_word)}`).first().should('contain.text', word)
         .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_translations)}`).first().then($translations => {
@@ -81,4 +81,17 @@ Cypress.Commands.add('dictionaryDeleteFirstWord', () => {
 
 Cypress.Commands.add('dictionaryGetWordsByStatus', (status: EWordStatus) => {
     return cy.get(`${elSelector(EDataTest.words_list_item)}:has(${elSelector(EDataTest.words_list_item_status)}[data-test-value="${status}"])`)
+})
+
+Cypress.Commands.add('dictionaryWaitWordsLoaded', () => {
+    cy
+        .el(EDataTest.words_list_loader).should('exist')
+        .el(EDataTest.words_list_loader).should('not.exist')
+})
+
+Cypress.Commands.add('dictionarySetSearchText', (text?: string) => {
+    if (text)
+        return cy.get(`${elSelector(EDataTest.words_container_header_search)} input`).type(text)
+    else
+        return cy.get(`${elSelector(EDataTest.words_container_header_search)} input`).clear()
 })

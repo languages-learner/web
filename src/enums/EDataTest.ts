@@ -18,9 +18,9 @@ export enum EDataTest {
     workspace_bottom_menu,
     workspace_bottom_menu_item,
 
+    words_container_add_word_button,
     words_container_header_checkbox,
     words_container_header_search,
-    words_container_header_add_word_button,
     words_container_header_status,
 
     words_creator,
@@ -44,7 +44,12 @@ export enum EDataTest {
 }
 
 export enum EDataTestClass {
-    app_notifications = 'app_notifications',
+    app_notifications = 'app-notifications',
+    app_dialog = 'n-dialog',
+    app_dialog_actions = 'n-dialog__action',
+    app_popover = 'n-popover',
+    app_checkbox_checked = 'n-checkbox--checked',
+    app_checkbox_disabled = 'n-checkbox--disabled',
 
     word_status = 'data-test__word_status',
 

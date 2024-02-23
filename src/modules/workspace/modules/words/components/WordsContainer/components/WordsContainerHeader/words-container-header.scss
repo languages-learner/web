@@ -1,0 +1,20 @@
+.words-container-header {
+  // x-padding for fixing checkbox animation
+  padding: 0 3px;
+
+  &__left-container {
+    gap: 10px;
+  }
+
+  &__checkbox {
+    height: 100%;
+  }
+
+  &__search-input {
+    max-width: 240px;
+  }
+
+  * + * {
+    margin-left: 15px;
+  }
+}

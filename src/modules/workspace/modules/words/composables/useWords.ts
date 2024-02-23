@@ -1,4 +1,5 @@
 import { debounce } from 'lodash'
+import { isDefined } from '@vueuse/core'
 import type { Words } from '@/services/dbstore/dto/Words'
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
 import { type EWordStatus } from '@/services/dbstore/dto/Words'
@@ -17,6 +18,7 @@ export const useWords = (
     const wordControl = useWord()
 
     const words = reactive<Words>(new Map()) as Words
+    const wordsWithoutStatusFilter = reactive<Words>(new Map()) as Words
     const isAllWordsLoaded = ref(false)
     const isAddingWord = ref(false)
 
@@ -27,6 +29,8 @@ export const useWords = (
         reset: resetFetchWords,
     } = useRequestMethod(async (abortController) => {
         try {
+            wordsWithoutStatusFilter.clear()
+
             const items = await wordsCollection.items(true,  settings.limitWordsToFetch, [{
                 type: 'word',
                 value: filters.text,
@@ -34,6 +38,25 @@ export const useWords = (
                 type: 'status',
                 value: filters.status,
             }], abortController)
+
+            if (!items?.has(filters.text) && filters.status !== -1) {
+                const itemsWithoutStatusFilter = await wordsCollection.items(false,  settings.limitWordsToFetch, [{
+                    type: 'word',
+                    value: filters.text,
+                }, {
+                    type: 'status',
+                    value: -1,
+                }], abortController)
+
+                if (itemsWithoutStatusFilter)
+                    Array.from(itemsWithoutStatusFilter).forEach(([word, wordData]) => {
+                        if (wordData.status === filters.status)
+                            return
+                        wordsWithoutStatusFilter.set(word, wordData)
+                    })
+            }
+
+
 
             if (abortController.signal.aborted) {
                 return Promise.reject()
@@ -76,6 +99,8 @@ export const useWords = (
             words.set(word, result)
         }
         isAddingWord.value = false
+
+        return isDefined(result)
     }
 
     const deleteWord = async (word: string) => {
@@ -108,9 +133,9 @@ export const useWords = (
 
     return {
         words,
-        isWordsLoading,
+        wordsWithoutStatusFilter,
+        isWordsLoading: computed(() => unref(isWordsLoading) || unref(isAddingWord)),
         isWordsLoaded,
-        isAddingWord,
         isAllWordsLoaded,
         fetchWords,
         fetchWordsDebounced,
