@@ -11,6 +11,7 @@ const options = computed(() => unref(wordStatusOptions).map(option => ({
 
 const props = defineProps<{
     status: EWordStatus
+    disabled?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -25,6 +26,7 @@ const updateStatus = (status: EWordStatus) => {
 <template>
     <div :data-test-value="props.status" >
         <n-popselect
+            :disabled="disabled"
             :value="props.status"
             :options="options"
             :on-update:value="updateStatus"

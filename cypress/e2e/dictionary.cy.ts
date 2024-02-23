@@ -10,6 +10,7 @@ import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
 import { EPageName } from '@/enums/EPageName'
 import { WordStatusTranslationKey } from '@/modules/workspace/modules/words/composables/useWordStatuses'
 
+// TODO Tests for empty dictionary
 describe('workspace dictionary', () => {
     beforeEach(() => {
         cy.auth()
@@ -48,7 +49,7 @@ describe('workspace dictionary', () => {
         beforeEach(() => {
             cy.visit(withLang('/dictionary'))
             cy.waitWorkspacePageInit()
-            cy.el(EDataTest.words_list_loader).should('not.exist')
+            cy.dictionaryWaitWordsLoaded()
         })
 
         it('add word, edit word translations, status, and delete word', () => {
@@ -57,85 +58,130 @@ describe('workspace dictionary', () => {
 
             cy
                 .log('create new word')
-                .get(`${elSelector(EDataTest.words_container_header_search)} input`).type(wordSource)
-                .el(EDataTest.words_list_loader).should('not.exist')
+                .dictionarySetSearchText(wordSource)
+                .dictionaryWaitWordsLoaded()
                 .el(EDataTest.words_list_item).should('not.exist')
-                .el(EDataTest.words_creator).should('contain.text', 'no_suitable_words')
-                .el(EDataTest.words_container_header_add_word_button).click()
-                .el(EDataTest.words_creator).should('contain.text', 'add_new_word')
+                .el(EDataTest.words_container_add_word_button).click()
 
-                .log('set three translations')
-                .get(`${elSelector(EDataTest.words_creator_translations)} button`).type(translations[0]).clickOutside()
-                .el(EDataTest.words_creator_add_button).should('exist')
-                .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(1).type(translations[1]).clickOutside()
-                .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(2).type(translations[2]).clickOutside()
+                .log('close words creator')
+                .el(EDataTest.words_creator).should('be.visible').within(() => {
+                    cy.get('.n-base-close').click()
+                })
+                .el(EDataTest.words_creator).should('not.exist')
 
-                .log('delete second translation')
-                .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(1).click()
+                .log('add translations')
+                .el(EDataTest.words_container_add_word_button).eq(0).click()
+                .el(EDataTest.words_creator).within(() => {
+                    cy
+                        .get('input').should('have.value', wordSource)
 
-                .log('invoke creation')
-                .el(EDataTest.words_creator_add_button).click()
+                        .log('set three translations')
+                        .get(`${elSelector(EDataTest.words_creator_translations)} button`).type(translations[0]).clickOutside()
+                        .el(EDataTest.words_creator_add_button).should('exist')
+                        .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(1).type(translations[1]).clickOutside()
+                        .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(2).type(translations[2]).clickOutside()
+
+                        .log('delete second translation')
+                        .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(1).click()
+
+                        .log('invoke creation')
+                        .el(EDataTest.words_creator_add_button).click()
+                })
 
                 .log('check if word added with correct translations')
                 .el(EDataTest.words_creator).should('not.exist')
-                .el(EDataTest.words_container_header_add_word_button).should('not.exist')
-                .el(EDataTest.words_list_loader).should('not.exist')
-                .get(`${elSelector(EDataTest.words_container_header_search)} input`).should('have.value', wordSource)
-                .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_source_word)}`).first().should('contain.text', wordSource)
-                .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_translations)}`).first()
-                .should('contain.text', translations[0])
-                .and('not.contain.text', translations[1])
-                .and('contain.text', translations[2])
+                .dictionaryWaitWordsLoaded()
+                .get(`${elSelector(EDataTest.words_container_header_search)} input`).should('have.value', '')
+            if (isMobile())
+                cy.el(EDataTest.words_container_header_status).contains('all')
+            else
+                cy.elByClass(EDataTestClass.words_container_header_status_active).contains('all')
+            cy.el(EDataTest.words_list_item).first().within(() => {
+                cy.el(EDataTest.words_list_item_source_word).should('contain.text', wordSource)
+                    .el(EDataTest.words_list_item_translations).first()
+                    .should('contain.text', translations[0])
+                    .and('not.contain.text', translations[1])
+                    .and('contain.text', translations[2])
+            })
 
             const wordSourceEdited = wordSource.slice(0, wordSource.length - 1)
             cy
                 .log('create similar word')
-                .get(`${elSelector(EDataTest.words_container_header_search)} input`).clear().type(wordSourceEdited)
-                .el(EDataTest.words_list_loader).should('not.exist')
+                .dictionarySetSearchText(wordSourceEdited)
+                .dictionaryWaitWordsLoaded()
                 .el(EDataTest.words_list_item).should('exist')
                 .el(EDataTest.words_creator).should('not.exist')
-                .el(EDataTest.words_container_header_add_word_button).click()
-                .el(EDataTest.words_creator).should('exist').and('contain.text', 'add_new_word')
+                .dictionaryFilterByWordStatus(EWordStatus.LEARN)
+
+                .log('check if words with other statuses are visible')
+                .el(EDataTest.words_list_item).should('exist')
+
+                .el(EDataTest.words_container_add_word_button).should('be.visible').click()
+                .el(EDataTest.words_creator).should('be.visible')
+
+                .log('check if words with other statuses are visible')
+                .el(EDataTest.words_list_item).should('exist')
 
                 .log('set translation')
                 .get(`${elSelector(EDataTest.words_creator_translations)} button`).type(translations[0]).clickOutside()
 
                 .log('invoke creation')
                 .el(EDataTest.words_creator_add_button).click()
+                .dictionaryWaitWordsLoaded()
 
-                .log('check if two words with similar translations found')
-                .el(EDataTest.words_list_item).should('have.length', 2)
+                .log('check if two word added')
+                .el(EDataTest.words_list_item).first().within(() => {
+                    cy.el(EDataTest.words_list_item_source_word).should('contain.text', wordSourceEdited)
+                })
 
             cy
-                .get(`${elSelector(EDataTest.words_container_header_search)} input`).clear()
-                .el(EDataTest.words_list_loader).should('not.exist')
-
-            cy
+                .log('check if unavailable add new word if word with other status exist')
                 .log('change word status')
                 .el(EDataTest.words_list_item_status).eq(0).trigger('mouseenter')
-                .get('.n-base-select-menu-option-wrapper > :nth-child(2)').click()
+                .elByClass(EDataTestClass.word_status).contains(WordStatusTranslationKey[EWordStatus.LEARN]).should('be.visible').click()
 
                 .log('check if status changed')
                 .el(EDataTest.words_list_item_status).eq(0).should('have.attr', 'data-test-value', EWordStatus.LEARN)
 
+                .log('check if there is word with other status and there is no "add word" button')
+                .dictionarySetSearchText(wordSourceEdited)
+                .dictionaryFilterByWordStatus(EWordStatus.NEW_WORD)
+                .dictionaryGetWordsByStatus(EWordStatus.NEW_WORD).should('not.exist')
+                .dictionaryGetWordsByStatus(EWordStatus.LEARN).should('exist').within(() => {
+                    cy.get(`[data-test-value="${wordSourceEdited}"]`).should('exist')
+                })
+                .el(EDataTest.words_container_add_word_button).should('not.exist')
+
+            cy.dictionarySetSearchText()
+
             const newTranslation = `translation-${new Date().valueOf()}`
             cy
-                .log('add translation to existing word')
-                .el(EDataTest.words_list_item_edit_button).eq(0).click()
-                .get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).last().type(newTranslation).clickOutside()
-                .el(EDataTest.words_list_item_edit_translations).should('contain.text', newTranslation)
+                .el(EDataTest.words_list_item).first().within(() => {
+                    cy
+                        .log('add translation to existing word')
+                        .el(EDataTest.words_list_item_edit_button).eq(0).click()
+                        .get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).last().type(newTranslation).clickOutside()
+                        .el(EDataTest.words_list_item_edit_translations).should('contain.text', newTranslation)
 
-                .log('delete word by deleting all translations')
-                .get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).eq(-2).click()
-                .el(EDataTest.words_list_item_edit_translations).should('not.contain.text', newTranslation)
-                .get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).each((_, index, $btns) => {
-                    if (index !== $btns.length - 1) {
-                        // Click to the first element each time
-                        cy.get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).eq(0).then(($btn) => {
-                            cy.wrap($btn).click()
+                        .log('delete word by deleting all translations')
+                        .get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).eq(-2).click()
+                        .el(EDataTest.words_list_item_edit_translations).should('not.contain.text', newTranslation)
+                        .get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).each((_, index, $btns) => {
+                            if (index !== $btns.length - 1) {
+                            // Click to the first element each time
+                                cy.get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).eq(0).then(($btn) => {
+                                    cy.wrap($btn).click()
+                                })
+                                cy.wait(1000)
+                            }
                         })
-                        cy.wait(1000)
-                    }
+                })
+
+                .log('confirm deletion of the last translation')
+                .elByClass(EDataTestClass.app_dialog).within(() => {
+                    cy.elByClass(EDataTestClass.app_dialog_actions).within(() => {
+                        cy.get('button').eq(1).click()
+                    })
                 })
                 .el(EDataTest.words_list_item_edit_translations).should('not.exist')
 
@@ -146,6 +192,9 @@ describe('workspace dictionary', () => {
             cy
                 .log('delete word using delete button')
                 .el(EDataTest.words_list_item_delete_button).eq(0).click()
+                .elByClass(EDataTestClass.app_popover).should('be.visible').within(() => {
+                    cy.get('button').click()
+                })
 
                 .log('check if word deleted')
                 .get(`${elSelector(EDataTest.words_list_item)} ${elSelector(EDataTest.words_list_item_source_word)}[data-test-value="${wordSource}"]`)
@@ -153,7 +202,7 @@ describe('workspace dictionary', () => {
         })
 
         it('select words', () => {
-            cy.get(`${elSelector(EDataTest.words_list_item)}`).should(() => expect(true).eq(true)).then(($words) => {
+            cy.el(EDataTest.words_list_item).should(() => expect(true).eq(true)).then(($words) => {
                 const wordSource = `word-${new Date().valueOf()}`
                 for (let i = $words.length; i < 2; i++) {
                     cy.dictionaryAddWordWithTranslations(wordSource + `_${i}`, ['translation1'])
@@ -161,29 +210,29 @@ describe('workspace dictionary', () => {
             }).then(() => {
                 cy
                     .log('select all words using header checkbox')
-                    .el(EDataTest.words_container_header_checkbox).should('not.have.class', 'n-checkbox--checked')
-                    .click().should('have.class', 'n-checkbox--checked')
+                    .el(EDataTest.words_container_header_checkbox).should('not.have.class', EDataTestClass.app_checkbox_checked)
+                    .click().should('have.class', EDataTestClass.app_checkbox_checked)
 
                     .log('check if all words selected')
-                    .el(EDataTest.words_list_item_checkbox).should('have.class', 'n-checkbox--checked')
+                    .el(EDataTest.words_list_item_checkbox).should('have.class', EDataTestClass.app_checkbox_checked)
 
                     .log('unselect first word')
                     .el(EDataTest.words_list_item_checkbox).eq(0).click()
 
                     .log('check if not all items selected')
-                    .el(EDataTest.words_container_header_checkbox).should('not.have.class', 'n-checkbox--checked')
+                    .el(EDataTest.words_container_header_checkbox).should('not.have.class', EDataTestClass.app_checkbox_checked)
 
                     .log('select all words using header checkbox')
                     .el(EDataTest.words_container_header_checkbox).click()
 
                     .log('check if all words selected')
-                    .el(EDataTest.words_list_item_checkbox).should('have.class', 'n-checkbox--checked')
+                    .el(EDataTest.words_list_item_checkbox).should('have.class', EDataTestClass.app_checkbox_checked)
 
                     .log('unselect all words using header checkbox')
                     .el(EDataTest.words_container_header_checkbox).click()
 
                     .log('check if all words unselected')
-                    .el(EDataTest.words_list_item_checkbox).should('not.have.class', 'n-checkbox--checked')
+                    .el(EDataTest.words_list_item_checkbox).should('not.have.class', EDataTestClass.app_checkbox_checked)
             })
         })
 
@@ -205,10 +254,10 @@ describe('workspace dictionary', () => {
                 cy
                     .log('enter search text with all words selected')
                     .el(EDataTest.words_container_header_checkbox).click()
-                    .get(`${elSelector(EDataTest.words_container_header_search)} input`).type(wordSource).should('have.value', wordSource)
+                    .dictionarySetSearchText(wordSource)
 
                     .log('check if all words unselected')
-                    .el(EDataTest.words_list_item_checkbox).should('not.have.class', 'n-checkbox--checked')
+                    .el(EDataTest.words_list_item_checkbox).should('not.have.class', EDataTestClass.app_checkbox_checked)
 
                     .log('check if all source words contain search word')
                     .el(EDataTest.words_list_item_source_word).should('contain', wordSource)
@@ -234,7 +283,7 @@ describe('workspace dictionary', () => {
                     .elByClass(EDataTestClass.word_status).contains('new_word').should('be.visible').click()
 
                     .log('change filtered text')
-                    .get(`${elSelector(EDataTest.words_container_header_search)} input`).clear().should('have.value', '')
+                    .dictionarySetSearchText()
 
                 cy
                     .log('check if filtered status changed to "All"')
@@ -242,6 +291,12 @@ describe('workspace dictionary', () => {
                     cy.el(EDataTest.words_container_header_status).contains('all')
                 else
                     cy.elByClass(EDataTestClass.words_container_header_status_active).contains('all')
+
+                const notExitedWordSource = `word-${new Date().valueOf()}`
+                cy
+                    .log('check if checkbox disabled if there is no words')
+                    .dictionarySetSearchText(notExitedWordSource)
+                    .el(EDataTest.words_container_header_checkbox).should('have.class', EDataTestClass.app_checkbox_disabled)
             })
         })
     })

@@ -1,0 +1,5 @@
+.words-container {
+  &__word-creator + &__words-list {
+    margin-top: 15px;
+  }
+}

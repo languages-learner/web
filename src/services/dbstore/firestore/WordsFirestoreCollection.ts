@@ -23,7 +23,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
         super(COLLECTION_NAME)
     }
 
-    private getCollectionName = (sourceLanguageId: number, targetLanguageId: number) => `${sourceLanguageId}_${targetLanguageId}`
+    private getCollectionName = (sourceLanguageId: number) => String(sourceLanguageId)
     private get wordCollection() {
         const userStore = useUserStore()
 
@@ -33,7 +33,7 @@ export class WordsFirestoreCollection extends BaseFirestoreCollection<WordsColle
 
         return this._collection
             .doc(userStore.profileData.uid)
-            .collection(this.getCollectionName(userStore.customData.activeLearningLanguage, userStore.customData.nativeLanguage))
+            .collection(this.getCollectionName(userStore.customData.activeLearningLanguage))
     }
 
     private setFetchItemsFilters = (collection: CollectionReference, filters: Array<WordsCollectionFetchItemsFilter>) => {

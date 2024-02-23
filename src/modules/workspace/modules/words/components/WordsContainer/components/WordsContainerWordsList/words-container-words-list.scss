@@ -1,0 +1,39 @@
+.words-container-words-list {
+  width: 100%;
+  overflow-y: auto;
+  border-radius: 3px;
+
+  &__item {
+    margin: 10px 0;
+    // x-padding for fixing checkbox animation
+    padding: 12px 3px;
+
+    @media (max-width: $mobile) {
+      margin: 5px 0;
+      // x-padding for fixing checkbox animation
+      padding: 8px 3px;
+    }
+  }
+
+  &__item + &__item {
+    border-top: rgb(239, 239, 245) 1px solid;
+  }
+
+  &__item--other+ &__item--other {
+    border-top: rgba(208, 138, 24, 0.24) 1px solid;
+  }
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  &__other-words {
+    margin-top: 20px;
+  }
+
+  &__empty {
+    padding-top: 30px;
+  }
+}

@@ -6,9 +6,11 @@ initializeOnAuthStateChangedHook(router)
 </script>
 
 <template>
-    <n-notification-provider
-        placement="bottom-left"
-        container-class="app_notifications">
-        <router-view></router-view>
-    </n-notification-provider>
+    <n-dialog-provider>
+        <n-notification-provider
+            placement="bottom-left"
+            container-class="app-notifications">
+            <router-view></router-view>
+        </n-notification-provider>
+    </n-dialog-provider>
 </template>
