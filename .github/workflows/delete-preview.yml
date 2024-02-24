@@ -1,0 +1,18 @@
+name: Delete PR preview website
+
+on:
+  pull_request:
+    types: [ closed ]
+
+jobs:
+  delete_preview_website:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: w9jds/firebase-action@v12.4.0
+        with:
+          # https://github.com/FirebaseExtended/action-hosting-deploy/issues/60
+          args: hosting:channel:list | awk -v pr_number="pr${{ github.event.pull_request.number }}" '$0 ~ pr_number { print $2 }' | xargs -I {} firebase hosting:channel:delete {} --force
+        env:
+          GCP_SA_KEY: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}"
+          PROJECT_ID: "${{ secrets.GOOGLE_PROJECT_ID }}"
