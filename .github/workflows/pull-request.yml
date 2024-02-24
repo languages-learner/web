@@ -48,7 +48,6 @@ jobs:
     environment: manual_e2e_tests
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == false
     container:
       image: cypress/browsers:node-18.16.0-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
       options: --user 1001
@@ -100,7 +99,6 @@ jobs:
     environment: manual_e2e_tests
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == false
     container:
       image: cypress/browsers:node-18.16.0-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
       options: --user 1001
@@ -152,7 +150,6 @@ jobs:
     environment: deploy_preview
     needs: [ build ]
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == false
     steps:
       - name: Checkout repository
         uses: actions/checkout@main
@@ -167,16 +164,3 @@ jobs:
           firebaseServiceAccount: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}"
           expires: 7d
           projectId: "${{ secrets.GOOGLE_PROJECT_ID }}"
-
-  delete_preview_website:
-    runs-on: ubuntu-latest
-    if: github.event.action == 'closed' && github.event.pull_request.merged == true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: w9jds/firebase-action@v12.4.0
-        with:
-          # https://github.com/FirebaseExtended/action-hosting-deploy/issues/60
-          args: hosting:channel:list | awk -v pr_number="pr${{ github.event.pull_request.number }}" '$0 ~ pr_number { print $2 }' | xargs -I {} firebase hosting:channel:delete {} --force
-        env:
-          GCP_SA_KEY: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}"
-          PROJECT_ID: "${{ secrets.GOOGLE_PROJECT_ID }}"
