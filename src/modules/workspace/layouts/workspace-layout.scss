@@ -4,7 +4,7 @@
 
   &__content {
     min-height: calc(100dvh - 64px);
-    padding: 20px 10px;
+    padding: 25px 10px 0 10px;
   }
 
   @media (max-width: $mobile) {
