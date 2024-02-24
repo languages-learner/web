@@ -1,4 +1,4 @@
-name: Delete PR preview website
+name: Pull request (Closed)
 
 on:
   pull_request:
@@ -16,3 +16,13 @@ jobs:
         env:
           GCP_SA_KEY: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}"
           PROJECT_ID: "${{ secrets.GOOGLE_PROJECT_ID }}"
+
+  reject-pending-deployments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Reject pending deployments
+        uses: ./.github/actions/reject-pending-deployments
+        with:
+          branch: ${{ github.event.deployment.ref }}
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
