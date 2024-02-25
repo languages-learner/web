@@ -55,7 +55,9 @@ jobs:
     strategy:
       fail-fast: false # https://github.com/cypress-io/github-action/issues/48
       matrix:
-        containers: [ 1, 2 ]
+#        https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
+#        containers: [ 1, 2 ]
+        containers: [ 1 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -80,20 +82,22 @@ jobs:
           wait-on: "http://localhost:8080"
           wait-on-timeout: 120
           browser: chrome
-          record: true
-          parallel: true
-          group: "E2E - Chrome"
+#          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
+#          record: true
+#          parallel: true
+#          group: "E2E - Chrome"
           spec: cypress/e2e/*
           config-file: cypress.config.ts
           config: "{\"e2e\":{\"baseUrl\":\"http://localhost:8080\"}}"
         env:
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
-          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
           TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME_1 }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD_1 }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
+#          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+#          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+#          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
+#          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   e2e-chrome-mobile-tests:
     environment: manual_e2e_tests
@@ -106,7 +110,9 @@ jobs:
     strategy:
       fail-fast: false # https://github.com/cypress-io/github-action/issues/48
       matrix:
-        containers: [ 1, 2 ]
+#        https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
+#        containers: [ 1, 2 ]
+        containers: [ 1 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -131,20 +137,22 @@ jobs:
           wait-on: "http://localhost:8080"
           wait-on-timeout: 120
           browser: chrome
-          record: true
-          parallel: true
-          group: "E2E - Chrome - Mobile"
+#          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
+#          record: true
+#          parallel: true
+#          group: "E2E - Chrome - Mobile"
           spec: cypress/e2e/*
           config-file: cypress.config.ts
           config: "{\"e2e\":{\"baseUrl\":\"http://localhost:8080\",\"viewportWidth\":400,\"viewportHeight\":660}}"
         env:
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
-          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
           TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME_2 }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD_2 }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
+#          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+#          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+#          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
+#          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy_preview_website:
     environment: deploy_preview
