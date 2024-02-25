@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node18.12.0-chrome106-ff106
+      options: --user 1001
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,6 +40,7 @@ jobs:
       - run: npm run build
       - run: npm run lint
       - run: npm run test:ci
+      - run: npm run build:test
 
       - name: Save build folder
         uses: actions/upload-artifact@v4
@@ -44,6 +48,13 @@ jobs:
           name: dist
           if-no-files-found: error
           path: dist
+
+      - name: Save test build folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-test
+          if-no-files-found: error
+          path: dist-test
 
   e2e-chrome-tests:
     environment: manual_e2e_tests
@@ -78,7 +89,7 @@ jobs:
       - name: Download the build folders
         uses: actions/download-artifact@v4
         with:
-          name: dist
+          name: dist-test
           path: dist
 
       - name: Install dependencies
@@ -152,7 +163,7 @@ jobs:
       - name: Download the build folders
         uses: actions/download-artifact@v4
         with:
-          name: dist
+          name: dist-test
           path: dist
 
       - name: Install dependencies

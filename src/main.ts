@@ -1,4 +1,5 @@
 import { setupFirebaseApp } from '@/plugins/firebase'
+import { setupPWA } from '@/plugins/pwa'
 import { setupStore } from '@/store'
 import { setupI18n } from '@/plugins/i18n'
 import { setupRouter } from '@/router'
@@ -29,6 +30,8 @@ export async function bootstrap(test= false) {
     app.mount(test ? document.createElement('div') : '#app')
 
     setupRouterGuard(router)
+
+    await setupPWA()
 
     return app
 }

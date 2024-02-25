@@ -6,7 +6,11 @@ node_modules
 dist
 dist-ssr
 
+# pwa
+dev-dist
+
 # testing
+dist-test
 coverage
 
 # misc

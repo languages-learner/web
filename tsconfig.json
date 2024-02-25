@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom", "WebWorker"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
@@ -18,6 +18,7 @@
     },
     "types": [
       "vitest/importMeta",
+      "vite-plugin-pwa/client",
     ]
   },
   "include": [
