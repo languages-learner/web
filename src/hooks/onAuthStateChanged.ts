@@ -15,6 +15,13 @@ export const initializeOnAuthStateChangedHook = (router: Router): void => {
                 name: EPageName.LANDING,
             })
         }
+
+        // Open dictionary page after open PWA
+        if (isPWA() && userStore.isLoggedIn) {
+            await router.replace({
+                name: EPageName.DICTIONARY,
+            })
+        }
     }, (e) => {
         addErrorLogInfo({ type: EErrorType.AUTHENTICATE, message: e.message, detail: 'onAuthStateChanged' })
     })

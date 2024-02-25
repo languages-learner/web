@@ -24,7 +24,9 @@ const updateStatus = (status: EWordStatus) => {
 </script>
 
 <template>
-    <div :data-test-value="props.status" >
+    <n-flex
+        :data-test-value="props.status"
+        align="center" >
         <n-popselect
             :disabled="disabled"
             :value="props.status"
@@ -33,5 +35,5 @@ const updateStatus = (status: EWordStatus) => {
         >
             <WordStatusIcon :status="props.status" />
         </n-popselect>
-    </div>
+    </n-flex>
 </template>
