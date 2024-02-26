@@ -8,29 +8,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node-18.16.0-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
-      options: --user 1001
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Cache node_modules
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
 
-      - name: Cypress install
-        uses: cypress-io/github-action@v6
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
         with:
-          runTests: false
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Write Firebase config
         run: |
           echo ${{ secrets.FIREBASE_CONFIG }} | base64 -d > firebase.config.json
 
-      - run: npx cypress info
       - run: node --version
       - run: node -p 'os.cpus()'
       - run: npm run build
@@ -48,7 +49,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node-18.16.0-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
+      image: cypress/browsers:node18.12.0-chrome106-ff106
       options: --user 1001
     needs: build
     strategy:
@@ -61,22 +62,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
       - name: Download the build folders
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
 
+      - name: "Cypress install"
+        run: yarn cypress install --force
+
       - name: Node info
         run: node -v
 
-      - name: __e Dir
-        run: ls /__e
+#      - name: __e Dir
+#        run: ls /__e
 
       - name: "E2E Tests - Chrome"
         uses: cypress-io/github-action@v6
         with:
-          build: npx cypress info
+          install: false
           start: npm run preview
           wait-on: "http://localhost:8080"
           wait-on-timeout: 120
@@ -102,7 +118,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node-18.16.0-chrome-114.0.5735.133-1-ff-114.0.2-edge-114.0.1823.51-1
+      image: cypress/browsers:node18.12.0-chrome106-ff106
       options: --user 1001
     needs: build
     strategy:
@@ -115,22 +131,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
       - name: Download the build folders
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
 
+      - name: "Cypress install"
+        run: yarn cypress install --force
+
       - name: Node info
         run: node -v
 
-      - name: __e Dir
-        run: ls /__e
+#      - name: __e Dir
+#        run: ls /__e
 
       - name: "E2E Tests - Chrome - Mobile"
         uses: cypress-io/github-action@v6
         with:
-          build: npx cypress info
+          install: false
           start: npm run preview
           wait-on: "http://localhost:8080"
           wait-on-timeout: 120
