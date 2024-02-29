@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import LandingAbout from '@/modules/landing/components/LandingAbout/LandingAbout.vue'
 import LandingHeader from '@/modules/landing/components/LandingHeader/LandingHeader.vue'
 </script>
 
 <template>
-    <LandingHeader />
     <div class="landing-layout">
+        <LandingHeader class="landing-layout__header" />
         <div class="landing-layout__content">
             <router-view></router-view>
         </div>
+        <LandingAbout class="landing-layout__footer" />
     </div>
 </template>
 
