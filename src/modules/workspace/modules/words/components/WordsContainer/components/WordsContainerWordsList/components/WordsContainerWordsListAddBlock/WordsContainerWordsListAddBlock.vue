@@ -16,7 +16,7 @@ const {
             align="center">
             <div>{{ $t('new_word:') }}</div>
             <n-input
-                :value="wordsFilters.text"
+                :value="wordsFilters.formattedText"
                 disabled
                 class="words-container-words-list-add-block__input"/>
             <WordsContainerAddWordButton />

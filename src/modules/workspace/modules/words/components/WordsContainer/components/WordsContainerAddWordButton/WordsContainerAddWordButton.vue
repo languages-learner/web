@@ -2,7 +2,7 @@
 import { useWordsContainerStore } from '@/modules/workspace/modules/words/components/WordsContainer/useWordsContainerStore'
 
 withDefaults(defineProps<{
-    textKey: string
+    textKey?: string
 }>(), {
     textKey: 'add',
 })
