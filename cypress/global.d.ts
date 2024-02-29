@@ -10,6 +10,9 @@ declare namespace Cypress {
         elByClass(dataTestClass: EDataTestClass, options?: Partial<Loggable & Timeoutable & Withinable & Shadow>): Chainable<JQuery<HTMLBodyElement>>
         clickOutside(): Chainable<JQuery<HTMLHtmlElement>>
 
+        // Common
+        changeInterfaceLanguageUsingSelector(lang: string, options: {validate?: boolean} = {}): Chainable<JQuery<HTMLBodyElement>>
+
         // WorkspaceBottomMenu
         getWorkspaceBottomMenuItem(page: EPageName): Chainable<JQuery<HTMLBodyElement>>
 

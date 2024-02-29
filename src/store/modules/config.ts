@@ -31,8 +31,8 @@ export const useConfigStore = defineStore('config', () => {
         return language ? Number(language[0]) : -1
     }
 
-    const getTranslatedLanguageName = (id: number) => {
-        return t(`language.${getLanguageName(id)}`)
+    const getTranslatedLanguageName = (id: number, format: 'full' | 'short' = 'full') => {
+        return format === 'full' ? t(`language.${getLanguageName(id)}`) : getLanguageName(id).toUpperCase()
     }
 
     return {

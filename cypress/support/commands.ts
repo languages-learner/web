@@ -95,3 +95,16 @@ Cypress.Commands.add('dictionarySetSearchText', (text?: string) => {
     else
         return cy.get(`${elSelector(EDataTest.words_container_header_search)} input`).clear()
 })
+
+Cypress.Commands.add('changeInterfaceLanguageUsingSelector', (lang: string, options = {}) => {
+    cy
+        .el(EDataTest.interface_language_selector).should('exist').click()
+        .get(`${elSelector(EDataTest.interface_language_selector_item)}[data-test-value="${lang}"]`).eq(0).should('exist').click()
+        .wait(1000)
+
+    if (options.validate) {
+        cy
+            .location('pathname').should('have.string', `/${lang}`)
+            .get('html').should('have.attr', 'lang', lang)
+    }
+})
