@@ -1,27 +1,10 @@
 <script setup lang="ts">
-import type { WritableComputedRef } from 'vue'
+import InterfaceLanguageSelector from '@/components/InterfaceLanguageSelector/InterfaceLanguageSelector.vue'
 
-const { interfaceLanguages, interfaceLanguageId } = storeToRefs(useInterfaceLanguageStore())
-const { setInterfaceLanguage } = useInterfaceLanguageStore()
 const { isUserDataLoaded, customData } = storeToRefs(useUserStore())
-const { updateInterfaceLanguage, updateNativeLanguage } = useUserStore()
+const { updateNativeLanguage } = useUserStore()
 const { getTranslatedLanguageName, languages } = useConfigStore()
 const { availableLearningLanguagesOptions, activeLearningLanguage, updateActiveLearningLanguage } = useLearningLanguage()
-
-const interfaceLanguage: WritableComputedRef<number> = computed({
-    get() {
-        return unref(interfaceLanguageId)
-    },
-    set(value: number) {
-        updateInterfaceLanguage(value)
-        setInterfaceLanguage(value)
-    },
-})
-const interfaceLanguagesOptions = computed(() => unref(interfaceLanguages).map(languageId => ({
-    label: getTranslatedLanguageName(languageId),
-    value: languageId,
-    class: EDataTestClass.office_settings_interface_language_item,
-})))
 
 const nativeLanguage = computed({
     get() {
@@ -60,13 +43,9 @@ const nativeLanguagesOptions = computed(() => Object.keys(unref(languages)).map(
             <n-form-item
                 :label="$t('interface_language')"
                 path="selectValue">
-                <n-select
+                <InterfaceLanguageSelector
                     v-if="isUserDataLoaded"
-                    v-model:value="interfaceLanguage"
-                    :data-test="EDataTest.office_settings_interface_language"
-                    :placeholder="$t('select')"
-                    :options="interfaceLanguagesOptions"
-                />
+                    size="full"/>
                 <n-skeleton
                     v-else
                     height="34px"

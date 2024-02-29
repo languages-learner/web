@@ -1,31 +1,24 @@
 /// <reference types="cypress" />
 
-import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
-
 describe('localization', () => {
-    it('allow to change interface language for authorized user only in settings', {
+    it('allow to change interface language for authorized user only using selectors', {
         env: {
             language: '',
         },
     }, () => {
         cy.auth({ validateAuth: true })
         cy
+            .log('change user interface language using landing page selector')
+            .visit('/')
+            .changeInterfaceLanguageUsingSelector('ru', { validate: true })
+            .changeInterfaceLanguageUsingSelector('en', { validate: true })
+
+            .log('change user interface language using settings page selector')
             .visit('/en/office/settings')
             .waitWorkspacePageInit()
 
-            .log('select russian language')
-            .el(EDataTest.office_settings_interface_language).click()
-            .elByClass(EDataTestClass.office_settings_interface_language_item).eq(1).click()
-            .location('pathname').should('equal', '/ru/office/settings')
-            .get('html').should('have.attr', 'lang', 'ru')
-            .wait(1000)
-
-            .log('select english language')
-            .el(EDataTest.office_settings_interface_language).click()
-            .elByClass(EDataTestClass.office_settings_interface_language_item).eq(0).click()
-            .location('pathname').should('equal', '/en/office/settings')
-            .get('html').should('have.attr', 'lang', 'en')
-            .wait(1000)
+            .changeInterfaceLanguageUsingSelector('ru', { validate: true })
+            .changeInterfaceLanguageUsingSelector('en', { validate: true })
 
             .log('unavailable to change interface language by changing url')
             .visit('/ru/office/settings')
@@ -41,7 +34,7 @@ describe('localization', () => {
         cy.visit('/').location('pathname').should('equal', '/en')
     })
 
-    it('allow to change interface language for unauthorized user', () => {
+    it('allow to change interface language for unauthorized user by changing url', () => {
         cy.logout()
         cy
             .visit('/xx')

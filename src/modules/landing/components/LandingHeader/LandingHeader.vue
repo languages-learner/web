@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/components/AuthenticateModal/EAuthenticateModalType'
+import InterfaceLanguageSelector from '@/components/InterfaceLanguageSelector/InterfaceLanguageSelector.vue'
 import AuthenticateModal from '@/modules/landing/modules/authenticate/components/AuthenticateModal/AuthenticateModal.vue'
 
 const { isLoggedIn } = storeToRefs(useUserStore())
@@ -18,6 +19,9 @@ const showAuthenticateModal = (type: EAuthenticateModalType) => {
         <n-space
             justify="end"
             class="landing-header__menu">
+            <InterfaceLanguageSelector
+                size="short"
+                theme="green"/>
             <template v-if="!isLoggedIn">
                 <n-button
                     @click="() => showAuthenticateModal(EAuthenticateModalType.SIGNIN)"

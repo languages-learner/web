@@ -1,4 +1,7 @@
 export enum EDataTest {
+    interface_language_selector,
+    interface_language_selector_item,
+
     landing_sign_in_button,
     landing_sign_up_button,
     landing_go_to_workspace_button,
@@ -40,7 +43,6 @@ export enum EDataTest {
 
     office_menu,
     office_profile_email,
-    office_settings_interface_language
 }
 
 export enum EDataTestClass {
@@ -55,6 +57,4 @@ export enum EDataTestClass {
 
     words_container_header_status = 'data-test__words-container-header-status',
     words_container_header_status_active = 'data-test__words-container-header-status--active',
-
-    office_settings_interface_language_item = 'data-test__office-settings-interface-language-item',
 }
