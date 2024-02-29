@@ -4,7 +4,7 @@ import { testApp } from '@@/tests/support/testApp'
 
 describe('composable/useAppBreakpoints', () => {
     testApp('returns', () => {
-        const results: Array<{ width: number, isMobile: boolean }> = []
+        const results = []
         for (let i = 10; i <= 5000; i += 10) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
@@ -12,7 +12,13 @@ describe('composable/useAppBreakpoints', () => {
 
             const useF = withSetup(() => useAppBreakpoints())
             // To save order
-            results.push({ width: i, isMobile: useF.isMobile.value })
+            results.push({
+                width: i,
+                output: {
+                    isMobile: useF.isMobile.value,
+                    isTablet: useF.isTablet.value,
+                },
+            })
         }
 
         expect(results).toMatchSnapshot()

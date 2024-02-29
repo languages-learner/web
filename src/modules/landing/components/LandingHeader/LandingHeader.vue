@@ -16,9 +16,7 @@ const showAuthenticateModal = (type: EAuthenticateModalType) => {
 
 <template>
     <div class="landing-header">
-        <n-space
-            justify="end"
-            class="landing-header__menu">
+        <n-space justify="end">
             <InterfaceLanguageSelector
                 size="short"
                 theme="green"/>
@@ -45,10 +43,10 @@ const showAuthenticateModal = (type: EAuthenticateModalType) => {
                 </router-link>
             </n-button>
         </n-space>
+        <AuthenticateModal
+            v-model:show="isNeededToShowAuthenticateModal"
+            :type="authenticateModalType"/>
     </div>
-    <AuthenticateModal
-        v-model:show="isNeededToShowAuthenticateModal"
-        :type="authenticateModalType"/>
 </template>
 
 <style scoped lang="scss">

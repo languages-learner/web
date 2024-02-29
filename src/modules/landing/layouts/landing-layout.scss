@@ -1,5 +1,43 @@
 .landing-layout {
+  width: 100svw;
+  height: 100dvh;
+  background-image: url(/main-page-background.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
   &__content {
-    min-height: 100dvh;
+    height: calc(100dvh - 60px - 40px);
+    padding: 60px 100px 0 100px;
+
+    @media (max-width: $tablet) {
+      padding: 35px 20px 0 20px;
+    }
+  }
+
+  &__header {
+    width: 100%;
+    padding: 25px 40px 0 40px;
+
+    @media (max-width: $mobile) {
+      padding: 25px 20px 0 20px;
+    }
+  }
+
+  &__footer {
+    display: none;
+
+    @media (max-width: $tablet) {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      display: block;
+      width: calc(100% - 20px);
+      text-align: center;
+    }
+
+    @media (max-width: $mobile) {
+      font-size: 14px;
+    }
   }
 }
