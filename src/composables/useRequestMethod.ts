@@ -1,3 +1,4 @@
+import { noop } from '@vueuse/core'
 // Without direct import get error in template
 import { type Ref, type WritableComputedRef } from 'vue'
 
