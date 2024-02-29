@@ -59,7 +59,7 @@ const [useProvideWordsContainerStore, baseUseWordsContainerStore] = createInject
 
     const wordsContainerState = computed<EWordsContainerState[]>(() => {
         const result = []
-        const isWordFounded = unref(words).get(wordsFilters.text)
+        const isWordFounded = unref(words).get(wordsFilters.formattedText)
         const isHasWords = unref(words).size > 0
 
         if (unref(isAddWordBlockNeededByUserRequest))
@@ -77,8 +77,8 @@ const [useProvideWordsContainerStore, baseUseWordsContainerStore] = createInject
             else
                 result.push(EWordsContainerState.LOADED_WITHOUT_WORDS)
 
-            if (Boolean(wordsFilters.text)) {
-                const isWordWithOtherStatusFounded = unref(wordsWithoutStatusFilter).get(wordsFilters.text)
+            if (Boolean(wordsFilters.formattedText)) {
+                const isWordWithOtherStatusFounded = unref(wordsWithoutStatusFilter).get(wordsFilters.formattedText)
 
                 if (!isWordFounded)
                     result.push(EWordsContainerState.NOT_FOUND_WORD)
@@ -101,8 +101,7 @@ const [useProvideWordsContainerStore, baseUseWordsContainerStore] = createInject
     }
 
     const addWord = async (newTranslations: string[]) => {
-        const sourceWord = wordsFilters.text
-        if (!await baseAddWord(sourceWord, newTranslations)) {
+        if (!await baseAddWord(wordsFilters.formattedText, newTranslations)) {
             notification.error({
                 content: t('error_occurred_while_adding_word'),
                 duration: 1500,

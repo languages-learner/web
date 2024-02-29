@@ -2,10 +2,7 @@ import type { WordsFilters } from '@/modules/workspace/modules/words/types/Words
 import { type WordsLoaderSettings, useWords } from '@/modules/workspace/modules/words/composables/useWords'
 
 export const useWordsList = (
-    filters: WordsFilters = {
-        text: '',
-        status: -1,
-    },
+    filters: WordsFilters,
     settings: WordsLoaderSettings = {
         limitWordsToFetch: 20,
     },

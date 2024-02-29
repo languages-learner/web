@@ -33,16 +33,16 @@ export const useWords = (
 
             const items = await wordsCollection.items(true,  settings.limitWordsToFetch, [{
                 type: 'word',
-                value: filters.text,
+                value: filters.formattedText,
             }, {
                 type: 'status',
                 value: filters.status,
             }], abortController)
 
-            if (!items?.has(filters.text) && filters.status !== -1) {
+            if (!items?.has(filters.formattedText) && filters.status !== -1) {
                 const itemsWithoutStatusFilter = await wordsCollection.items(false,  settings.limitWordsToFetch, [{
                     type: 'word',
-                    value: filters.text,
+                    value: filters.formattedText,
                 }, {
                     type: 'status',
                     value: -1,
@@ -55,8 +55,6 @@ export const useWords = (
                         wordsWithoutStatusFilter.set(word, wordData)
                     })
             }
-
-
 
             if (abortController.signal.aborted) {
                 return Promise.reject()
@@ -94,9 +92,9 @@ export const useWords = (
 
     const addWord = async (word: string, translations: string[]) => {
         isAddingWord.value = true
-        const result = await wordControl.addWord(word, translations)
+        const result = await wordControl.addWord(toLowerCase(word), toLowerCase(translations))
         if (result) {
-            words.set(word, result)
+            words.set(toLowerCase(word), result)
         }
         isAddingWord.value = false
 
@@ -111,7 +109,7 @@ export const useWords = (
     }
 
     const updateWordTranslations = async (word: string, translations: string[]) => {
-        const result = await wordControl.updateWordTranslations(word,  words.get(word)!, translations)
+        const result = await wordControl.updateWordTranslations(word,  words.get(word)!, toLowerCase(translations))
         if (!result) {
             words.delete(word)
 

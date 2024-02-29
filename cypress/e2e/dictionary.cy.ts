@@ -58,7 +58,7 @@ describe('workspace dictionary', () => {
 
             cy
                 .log('create new word')
-                .dictionarySetSearchText(wordSource)
+                .dictionarySetSearchText(wordSource.toUpperCase())
                 .dictionaryWaitWordsLoaded()
                 .el(EDataTest.words_list_item).should('not.exist')
                 .el(EDataTest.words_container_add_word_button).click()
@@ -79,7 +79,7 @@ describe('workspace dictionary', () => {
                         .get(`${elSelector(EDataTest.words_creator_translations)} button`).type(translations[0]).clickOutside()
                         .el(EDataTest.words_creator_add_button).should('exist')
                         .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(1).type(translations[1]).clickOutside()
-                        .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(2).type(translations[2]).clickOutside()
+                        .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(2).type(translations[2].toUpperCase()).clickOutside()
 
                         .log('delete second translation')
                         .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(1).click()
@@ -107,7 +107,7 @@ describe('workspace dictionary', () => {
             const wordSourceEdited = wordSource.slice(0, wordSource.length - 1)
             cy
                 .log('create similar word')
-                .dictionarySetSearchText(wordSourceEdited)
+                .dictionarySetSearchText(wordSourceEdited.toUpperCase())
                 .dictionaryWaitWordsLoaded()
                 .el(EDataTest.words_list_item).should('exist')
                 .el(EDataTest.words_creator).should('not.exist')
@@ -160,7 +160,7 @@ describe('workspace dictionary', () => {
                     cy
                         .log('add translation to existing word')
                         .el(EDataTest.words_list_item_edit_button).eq(0).click()
-                        .get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).last().type(newTranslation).clickOutside()
+                        .get(`${elSelector(EDataTest.words_list_item_edit_translations)} button`).last().type(newTranslation.toUpperCase()).clickOutside()
                         .el(EDataTest.words_list_item_edit_translations).should('contain.text', newTranslation)
 
                         .log('delete word by deleting all translations')

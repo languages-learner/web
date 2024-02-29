@@ -14,6 +14,7 @@ const isWordCreatorNeeded = computed(() => isWordsContainerState(EWordsContainer
 const newTranslations = ref<string[]>([])
 const resetNewTranslations = () => newTranslations.value = []
 
+const addTranslation = (text: string) => text.toLowerCase()
 const addWord = async () => {
     if (await baseAddWord(unref(newTranslations)))
         resetNewTranslations()
@@ -39,13 +40,14 @@ const close = () => {
                 <span>{{ $t('source_word:') }}</span>
                 <n-input
                     size="small"
-                    :value="wordsFilters.text"
+                    :value="wordsFilters.formattedText"
                     disabled></n-input>
             </div>
             <div class="words-container-words-creator__container__property">
                 <span>{{ $t('translations:') }}</span>
                 <n-dynamic-tags
                     v-model:value="newTranslations"
+                    @create="addTranslation"
                     :data-test="EDataTest.words_creator_translations" />
             </div>
             <n-button
