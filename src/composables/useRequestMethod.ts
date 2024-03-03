@@ -8,6 +8,7 @@ type RequestMethodOptions = {
     executeCondition?: () => boolean
 }
 
+// TODO Use useAsyncState - https://vueuse.org/core/useAsyncState/#useasyncstate
 export const useRequestMethod = <V, F extends (
     abortController: AbortController,
     isLoading: WritableComputedRef<boolean>,

@@ -1,5 +1,5 @@
-import type { IConfig } from '@/services/configuration/common/IConfig'
-import type { IConfigService } from '@/services/configuration/common/IConfigService'
+import type { IConfig } from '@/services/configuration/interfaces/IConfig'
+import type { IConfigService } from '@/services/configuration/interfaces/IConfigService'
 
 export class Config implements IConfigService {
     private static instance: Config

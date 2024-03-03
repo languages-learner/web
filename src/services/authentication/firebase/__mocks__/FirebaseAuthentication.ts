@@ -1,4 +1,4 @@
-import type { IAuthentication } from '@/services/authentication/common/IAuthentication'
+import type { IAuthentication } from '@/services/authentication/interfaces/IAuthentication'
 
 export class FirebaseAuthentication implements IAuthentication {
     private static instance: FirebaseAuthentication

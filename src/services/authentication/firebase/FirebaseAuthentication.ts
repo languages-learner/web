@@ -1,7 +1,7 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import { getAuth, useDeviceLanguage } from 'firebase/auth'
-import type { IAuthentication } from '@/services/authentication/common/IAuthentication'
+import type { IAuthentication } from '@/services/authentication/interfaces/IAuthentication'
 import { EAuthenticationProvider } from '@/services/authentication/EAuthenticationProvider'
 
 export class FirebaseAuthentication implements IAuthentication {

@@ -17,6 +17,7 @@ let i18nGlobal:  Composer<
 >
 
 export const setupI18n = async (router: Router, app: App) => {
+    /* v8 ignore next */
     const interfaceLanguage = router?.currentRoute.value.params.lang as string ?? BASE_INTERFACE_LANGUAGE_NAME
     window.document.querySelector('html')?.setAttribute('lang', interfaceLanguage)
     const { translationCollection } = useDbStore()

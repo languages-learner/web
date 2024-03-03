@@ -1,3 +1,4 @@
+/* v8 ignore start */
 export const useVirtualScrollListItemEmits = () => {
     const destination = getCurrentInstance()?.parent?.parent
     const sendEmitToList = (name: string, ...payload: unknown[]) => {
@@ -8,3 +9,4 @@ export const useVirtualScrollListItemEmits = () => {
         sendEmitToList,
     }
 }
+/* v8 ignore stop */

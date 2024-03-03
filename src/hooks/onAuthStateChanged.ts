@@ -1,6 +1,7 @@
 import { type Router } from 'vue-router'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
+/* v8 ignore start */
 export const initializeOnAuthStateChangedHook = (router: Router): void => {
     const route = router.currentRoute
     const { addErrorLogInfo } = useErrorLogStore()
@@ -26,4 +27,5 @@ export const initializeOnAuthStateChangedHook = (router: Router): void => {
         addErrorLogInfo({ type: EErrorType.AUTHENTICATE, message: e.message, detail: 'onAuthStateChanged' })
     })
 }
+/* v8 ignore stop */
 

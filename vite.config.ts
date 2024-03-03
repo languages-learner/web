@@ -83,6 +83,20 @@ export default defineConfig({
             ['tests/**/*.hdom.test.{js,ts}', 'happy-dom'],
         ],
         includeSource: ['src/**/*.{js,ts}', 'tests/**/*.test.{js,ts}'],
+        coverage: {
+            provider: 'v8',
+            include: ['src'],
+            exclude: [
+                '**/interfaces',
+                '**/types',
+                '**/*types.ts',
+                '**/dto',
+                '**/router',
+                '**/__mocks__',
+                '**/*.vue',
+                '**/*.d.ts',
+            ],
+        },
     },
     define: {
         'import.meta.vitest': 'undefined',

@@ -1,4 +1,4 @@
-import type { IDbStore } from '@/services/dbstore/common/IDbStore'
+import type { IDbStore } from '@/services/dbstore/interfaces/IDbStore'
 import { UserFirestoreCollection } from '@/services/dbstore/firestore/UserFirestoreCollection'
 import { TranslationsFirestoreCollection } from '@/services/dbstore/firestore/TranslationsFirestoreCollection'
 import { WordsFirestoreCollection } from '@/services/dbstore/firestore/WordsFirestoreCollection'
