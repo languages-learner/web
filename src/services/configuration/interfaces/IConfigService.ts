@@ -1,4 +1,4 @@
-import type { IConfig } from '@/services/configuration/common/IConfig'
+import type { IConfig } from '@/services/configuration/interfaces/IConfig'
 
 export interface IConfigService {
     setup(): Promise<void>
