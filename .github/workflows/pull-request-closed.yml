@@ -16,8 +16,7 @@ jobs:
           # https://github.com/FirebaseExtended/action-hosting-deploy/issues/60
           args: hosting:channel:list | awk -v pr_number="pr${{ github.event.pull_request.number }}" '$0 ~ pr_number { print $2 }' | xargs -I {} firebase hosting:channel:delete {} --force
         env:
-          GCP_SA_KEY: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}"
-          PROJECT_ID: "${{ secrets.GOOGLE_PROJECT_ID }}"
+          GCP_SA_KEY: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_LANGUAGES_LEARNER }}"
 
   reject-pending-deployments:
     timeout-minutes: 2

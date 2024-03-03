@@ -11,7 +11,7 @@ This project is a language learning application that aims to provide an easy and
 
 ## Live Demo
 
-Check out the live demo of the app at https://education-1c650.web.app/
+Check out the live demo of the app at https://languages-learner.web.app/
 
 ## Technologies Used
 
