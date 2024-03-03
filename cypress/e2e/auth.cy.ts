@@ -29,7 +29,7 @@ describe('user sign-in, sign-up and logout', () => {
     it('should display sign-in errors', () => {
         const authorizationError = 'authorization_error'
         const errorMessageInvalidEmail = 'Firebase: Error (auth/invalid-email)'
-        const errorMessageNotFound = 'Firebase: Error (auth/user-not-found)'
+        const errorMessageInvalidCredential = 'Firebase: Error (auth/invalid-credential)'
         const errorMessageMissingPassword = 'Firebase: Error (auth/missing-password)'
 
         cy.authWithoutSession({
@@ -72,9 +72,9 @@ describe('user sign-in, sign-up and logout', () => {
         cy.elByClass(EDataTestClass.app_notifications)
             .should('be.visible')
             .and('contain', authorizationError)
-            .and('contain', errorMessageNotFound)
+            .and('contain', errorMessageInvalidCredential)
         cy
-            .el(EDataTest.authentication_modal_error).should('be.visible').contains(errorMessageNotFound)
+            .el(EDataTest.authentication_modal_error).should('be.visible').contains(errorMessageInvalidCredential)
             .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
 
         cy.authWithoutSession({
