@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { isUserDataLoaded } = storeToRefs(useUserStore())
-const { availableLearningLanguagesOptionsExceptActive, activeLearningLanguageName, updateActiveLearningLanguage } = useLearningLanguage()
+const { availableLearningLanguagesOptionsExceptActive, activeLearningLanguage, updateActiveLearningLanguage } = useLearningLanguage()
 const { t } = useI18n()
 
 const learningLanguagesOptions = computed(() => ([
@@ -23,7 +23,7 @@ const learningLanguagesOptions = computed(() => ([
             icon-placement="right"
             type="primary"
             ghost>
-            {{ $t('learn') }} {{ activeLearningLanguageName }}
+            {{ $t('learn') }} {{ activeLearningLanguage.name }}
         </n-button>
     </n-dropdown>
     <n-skeleton

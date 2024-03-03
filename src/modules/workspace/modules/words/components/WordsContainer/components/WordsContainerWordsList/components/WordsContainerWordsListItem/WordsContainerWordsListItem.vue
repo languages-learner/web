@@ -24,6 +24,7 @@ const {
     updateWordTranslations,
     updateWordStatus,
 } = useWordsContainerStore()
+const { speak } = useVoiceover()
 
 const wordListItem = ref(null)
 
@@ -89,7 +90,9 @@ const toggleChangeableView = () => {
             <n-grid-item
                 span="3 s:2 m:1"
                 class="words-container-words-list-item__property">
-                <n-button text>
+                <n-button
+                    @click="() => speak(source.word)"
+                    text>
                     <template #icon>
                         <n-icon
                             size="20"
