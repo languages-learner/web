@@ -57,7 +57,7 @@ const nativeLanguagesOptions = computed(() => Object.keys(unref(languages)).map(
                 <n-select
                     v-if="isUserDataLoaded"
                     @update-value="updateActiveLearningLanguage"
-                    :value="activeLearningLanguage"
+                    :value="activeLearningLanguage.id"
                     :placeholder="$t('select')"
                     :options="availableLearningLanguagesOptions"
                     value-field="key"

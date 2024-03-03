@@ -3,8 +3,12 @@ export const useLearningLanguage = () => {
     const { getTranslatedLanguageName, languagesAvailableForLearning } = useConfigStore()
     const { updateActiveLearningLanguage } = useUserStore()
 
-    const activeLearningLanguage = computed(() => unref(customData)?.activeLearningLanguage ?? -1)
-    const activeLearningLanguageName = computed(() => getTranslatedLanguageName(unref(activeLearningLanguage) ?? BASE_INTERFACE_LANGUAGE))
+    const activeLearningLanguageId = computed(() => unref(customData)?.activeLearningLanguage ?? BASE_INTERFACE_LANGUAGE)
+    const activeLearningLanguage = computed(() => ({
+        id: unref(activeLearningLanguageId),
+        name: getTranslatedLanguageName(unref(activeLearningLanguageId), 'full'),
+        nameShort: getTranslatedLanguageName(unref(activeLearningLanguageId), 'short'),
+    }))
     const availableLearningLanguagesOptions = computed(() =>
         languagesAvailableForLearning
             .map(languageId => ({
@@ -17,7 +21,6 @@ export const useLearningLanguage = () => {
 
     return {
         activeLearningLanguage,
-        activeLearningLanguageName,
         availableLearningLanguagesOptions,
         availableLearningLanguagesOptionsExceptActive,
         updateActiveLearningLanguage,
