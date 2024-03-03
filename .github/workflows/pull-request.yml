@@ -34,7 +34,7 @@ jobs:
 
       - name: Write Firebase config
         run: |
-          echo ${{ secrets.FIREBASE_CONFIG }} | base64 -d > firebase.config.json
+          echo ${{ secrets.FIREBASE_CONFIG_BASE64 }} | base64 -d > firebase.config.json
 
       - run: node --version
       - run: node -p 'os.cpus()'
@@ -221,6 +221,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_LANGUAGES_LEARNER }}"
           expires: 7d
-          projectId: "${{ secrets.GOOGLE_PROJECT_ID }}"
