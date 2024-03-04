@@ -32,6 +32,7 @@ const nativeLanguagesOptions = computed(() => Object.keys(unref(languages)).map(
                 <n-select
                     v-if="isUserDataLoaded"
                     v-model:value="nativeLanguage"
+                    data-test-blackout
                     :placeholder="$t('select')"
                     :options="nativeLanguagesOptions"
                 />
@@ -45,6 +46,7 @@ const nativeLanguagesOptions = computed(() => Object.keys(unref(languages)).map(
                 path="selectValue">
                 <InterfaceLanguageSelector
                     v-if="isUserDataLoaded"
+                    data-test-blackout
                     size="full"/>
                 <n-skeleton
                     v-else
@@ -57,6 +59,7 @@ const nativeLanguagesOptions = computed(() => Object.keys(unref(languages)).map(
                 <n-select
                     v-if="isUserDataLoaded"
                     @update-value="updateActiveLearningLanguage"
+                    data-test-blackout
                     :value="activeLearningLanguage.id"
                     :placeholder="$t('select')"
                     :options="availableLearningLanguagesOptions"

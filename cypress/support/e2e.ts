@@ -2,7 +2,10 @@
 
 import './commands'
 import { withLang } from '@@/cypress/utils'
+import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command'
 import { EDataTest } from '@/enums/EDataTest'
+
+addCompareSnapshotCommand()
 
 beforeEach(() => {
     cy.intercept({ resourceType: /xhr|fetch/ }, { log: false })

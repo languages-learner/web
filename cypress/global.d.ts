@@ -1,11 +1,14 @@
 /// <reference types="cypress" />
 
-
 declare namespace Cypress {
+    import { type ScreenshotOptions as CustomScreenshotOptions, type VisualRegressionResult } from 'cypress-visual-regression'
     import type { EDataTest, EDataTestClass } from '@/enums/EDataTest'
     import { type EPageName } from '@/enums/EPageName'
     import { type EWordStatus } from '@/services/dbstore/dto/Words'
     interface Chainable {
+        toMatchSnapshot(name: string, options: CustomScreenshotOptions = {}): Chainable<VisualRegressionResult>
+        toMatchSnapshotForEl(dataTest: EDataTest | EDataTestClass, name: string, options: CustomScreenshotOptions = {}): Chainable<VisualRegressionResult>
+
         el(dataTest: EDataTest, options?: Partial<Loggable & Timeoutable & Withinable & Shadow>): Chainable<JQuery<HTMLBodyElement>>
         elByClass(dataTestClass: EDataTestClass, options?: Partial<Loggable & Timeoutable & Withinable & Shadow>): Chainable<JQuery<HTMLBodyElement>>
         clickOutside(): Chainable<JQuery<HTMLHtmlElement>>

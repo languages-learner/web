@@ -8,7 +8,9 @@ useProvideWordsContainerStore()
 </script>
 
 <template>
-    <div class="words-container">
+    <div
+        class="words-container"
+        :data-test="EDataTest.words_container">
         <WordsContainerHeader />
         <WordsContainerWordCreator class="words-container__word-creator" />
         <WordsContainerWordsList class="words-container__words-list" />

@@ -33,7 +33,10 @@ describe('workspace dictionary', () => {
                 cy.el(EDataTest.workspace_navigation_item).contains('dictionary').click()
             cy.location('pathname').should('equal', withLang('/dictionary'))
 
-            cy.log('check if filters are clear')
+            cy
+                .dictionaryWaitWordsLoaded()
+
+                .log('check if filters are clear')
                 .el(EDataTest.words_container_header_checkbox).should('not.be.checked')
                 .el(EDataTest.words_container_header_search).should('have.value', '')
 
@@ -41,7 +44,6 @@ describe('workspace dictionary', () => {
                 cy.el(EDataTest.words_container_header_status).contains('all')
             else
                 cy.elByClass(EDataTestClass.words_container_header_status_active).contains('all')
-
         })
     })
 
@@ -61,7 +63,9 @@ describe('workspace dictionary', () => {
                 .dictionarySetSearchText(wordSource.toUpperCase())
                 .dictionaryWaitWordsLoaded()
                 .el(EDataTest.words_list_item).should('not.exist')
+                .toMatchSnapshotForEl(EDataTest.words_container, 'Words container - with filtered text, without words')
                 .el(EDataTest.words_container_add_word_button).click()
+                .toMatchSnapshotForEl(EDataTest.words_container, 'Words container - without words, with words creator')
 
                 .log('close words creator')
                 .el(EDataTest.words_creator).should('be.visible').within(() => {
@@ -83,6 +87,8 @@ describe('workspace dictionary', () => {
 
                         .log('delete second translation')
                         .get(`${elSelector(EDataTest.words_creator_translations)} button`).eq(1).click()
+
+                        .root().toMatchSnapshot('Words creator - filled')
 
                         .log('invoke creation')
                         .el(EDataTest.words_creator_add_button).click()
@@ -115,12 +121,14 @@ describe('workspace dictionary', () => {
 
                 .log('check if words with other statuses are visible')
                 .el(EDataTest.words_list_item).should('exist')
+                .toMatchSnapshotForEl(EDataTest.words_container, 'Words container - with words with other statuses')
 
                 .el(EDataTest.words_container_add_word_button).should('be.visible').click()
                 .el(EDataTest.words_creator).should('be.visible')
 
                 .log('check if words with other statuses are visible')
                 .el(EDataTest.words_list_item).should('exist')
+                .toMatchSnapshotForEl(EDataTest.words_container, 'Words container - with words with other statuses and words creator')
 
                 .log('set translation')
                 .get(`${elSelector(EDataTest.words_creator_translations)} button`).type(translations[0]).clickOutside()
@@ -129,7 +137,7 @@ describe('workspace dictionary', () => {
                 .el(EDataTest.words_creator_add_button).click()
                 .dictionaryWaitWordsLoaded()
 
-                .log('check if two word added')
+                .log('check if two words added')
                 .el(EDataTest.words_list_item).first().within(() => {
                     cy.el(EDataTest.words_list_item_source_word).should('contain.text', wordSourceEdited)
                 })
@@ -151,6 +159,7 @@ describe('workspace dictionary', () => {
                     cy.get(`[data-test-value="${wordSourceEdited}"]`).should('exist')
                 })
                 .el(EDataTest.words_container_add_word_button).should('not.exist')
+                .toMatchSnapshotForEl(EDataTest.words_container, 'Words container - with word with other status')
 
             cy.dictionarySetSearchText()
 
@@ -192,6 +201,7 @@ describe('workspace dictionary', () => {
             cy
                 .log('delete word using delete button')
                 .el(EDataTest.words_list_item_delete_button).eq(0).click()
+                .toMatchSnapshotForEl(EDataTestClass.app_popover, 'Word deletion popover')
                 .elByClass(EDataTestClass.app_popover).should('be.visible').within(() => {
                     cy.get('button').click()
                 })

@@ -15,6 +15,7 @@ const { isUserDataLoaded, profileData } = storeToRefs(useUserStore())
                     v-if="isUserDataLoaded"
                     class="office-profile__user">
                     <n-space
+                        data-test-blackout
                         vertical
                         align="center">
                         <UserAvatar

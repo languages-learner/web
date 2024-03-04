@@ -4,7 +4,9 @@ import LandingHeader from '@/modules/landing/components/LandingHeader/LandingHea
 </script>
 
 <template>
-    <div class="landing-layout">
+    <div
+        class="landing-layout"
+        :data-test="EDataTest.landing_layout">
         <LandingHeader class="landing-layout__header" />
         <div class="landing-layout__content">
             <router-view></router-view>

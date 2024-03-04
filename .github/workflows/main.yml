@@ -90,7 +90,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-test
-          path: dist
+          path: dist-test
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -109,17 +109,14 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           install: false
-          start: npm run preview
-          wait-on: "http://localhost:8080"
-          wait-on-timeout: 120
+          start: npm run preview:test
           browser: chrome
 #          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
 #          record: true
 #          parallel: true
 #          group: "E2E - Chrome"
           spec: cypress/e2e/*
-          config-file: cypress.config.ts
-          config: "{\"e2e\":{\"baseUrl\":\"http://localhost:8080\"}}"
+          config-file: cypress/configs/preview.ts
         env:
           TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME_1 }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD_1 }}
@@ -129,6 +126,15 @@ jobs:
 #          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
 #          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save cypress snapshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-chrome-cypress-snapshots
+          path: |
+            cypress/snapshots/actual
+            cypress/snapshots/diff
 
   e2e-chrome-mobile-tests:
     timeout-minutes: 5
@@ -163,7 +169,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-test
-          path: dist
+          path: dist-test
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -182,17 +188,14 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           install: false
-          start: npm run preview
-          wait-on: "http://localhost:8080"
-          wait-on-timeout: 120
+          start: npm run preview:test
           browser: chrome
 #          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
 #          record: true
 #          parallel: true
 #          group: "E2E - Chrome - Mobile"
           spec: cypress/e2e/*
-          config-file: cypress.config.ts
-          config: "{\"e2e\":{\"baseUrl\":\"http://localhost:8080\",\"viewportWidth\":400,\"viewportHeight\":660}}"
+          config-file: cypress/configs/mobile.preview.ts
         env:
           TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME_2 }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD_2 }}
@@ -202,6 +205,15 @@ jobs:
 #          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
 #          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save cypress snapshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-chrome-mobile-cypress-snapshots
+          path: |
+            cypress/snapshots/actual
+            cypress/snapshots/diff
 
   deploy_live_website:
     timeout-minutes: 2

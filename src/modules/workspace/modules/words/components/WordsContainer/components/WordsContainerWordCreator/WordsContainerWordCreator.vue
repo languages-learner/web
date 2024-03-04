@@ -39,6 +39,7 @@ const close = () => {
             <div class="words-container-words-creator__container__property words-container-words-creator__container__source-word">
                 <span>{{ $t('source_word:') }}</span>
                 <n-input
+                    data-test-blackout
                     size="small"
                     :value="wordsFilters.formattedText"
                     disabled></n-input>
@@ -48,6 +49,7 @@ const close = () => {
                 <n-dynamic-tags
                     v-model:value="newTranslations"
                     @create="addTranslation"
+                    data-test-blackout
                     :data-test="EDataTest.words_creator_translations" />
             </div>
             <n-button

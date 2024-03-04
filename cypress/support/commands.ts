@@ -1,7 +1,12 @@
 /// <reference types="cypress" />
 
 import { elSelector, isMobile } from '@@/cypress/utils'
-import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
+import { type ScreenshotOptions } from 'cypress-visual-regression'
+import {
+    EDataTest,
+    EDataTestAttr,
+    EDataTestClass,
+} from '@/enums/EDataTest'
 import { EPageName } from '@/enums/EPageName'
 import { type EWordStatus } from '@/services/dbstore/dto/Words'
 import { WordStatusTranslationKey } from '@/modules/workspace/modules/words/composables/useWordStatuses'
@@ -107,4 +112,27 @@ Cypress.Commands.add('changeInterfaceLanguageUsingSelector', (lang: string, opti
             .location('pathname').should('have.string', `/${lang}`)
             .get('html').should('have.attr', 'lang', lang)
     }
+})
+
+Cypress.Commands.add('toMatchSnapshot', { prevSubject: true },
+    (subject, name: string, options: ScreenshotOptions = {}) => {
+        const baseOptions: ScreenshotOptions = {
+            errorThreshold: 0.1,
+            blackout: [EDataTestAttr.test_blackout],
+        }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        const formattedName = `[${isMobile() ? 'Mobile' : 'Desktop'}] [${cy.state('viewportWidth')}x${cy.state('viewportHeight')}] ${name}`
+
+        return cy.wrap(subject).compareSnapshot(formattedName, {
+            ...baseOptions,
+            ...options,
+        })
+    },
+)
+
+Cypress.Commands.add('toMatchSnapshotForEl', (dataTest: EDataTest | EDataTestClass, name: string, options: ScreenshotOptions = {}) => {
+    const el = Object.values(EDataTest).includes(dataTest) ? cy.el(dataTest as EDataTest) : cy.elByClass(dataTest as EDataTestClass)
+
+    return el.should('be.visible').toMatchSnapshot(name, options)
 })

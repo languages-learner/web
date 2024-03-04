@@ -34,6 +34,8 @@ describe('office settings', () => {
                 .location('pathname').should('equal', withLang('/office/profile'))
                 .el(EDataTest.office_menu).contains('settings').click()
 
-        cy.location('pathname').should('equal', withLang('/office/settings'))
+        cy
+            .location('pathname').should('equal', withLang('/office/settings'))
+            .toMatchSnapshotForEl(EDataTest.workspace_content, 'Office settings page')
     })
 })
