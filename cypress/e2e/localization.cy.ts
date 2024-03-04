@@ -18,7 +18,9 @@ describe('localization', () => {
             .waitWorkspacePageInit()
 
             .changeInterfaceLanguageUsingSelector('ru', { validate: true })
+            .toMatchSnapshot('Interface - ru')
             .changeInterfaceLanguageUsingSelector('en', { validate: true })
+            .toMatchSnapshot('Interface - en')
 
             .log('unavailable to change interface language by changing url')
             .visit('/ru/office/settings')

@@ -12,6 +12,8 @@ dev-dist
 # testing
 dist-test
 coverage
+cypress/snapshots/actual
+cypress/snapshots/diff
 
 # misc
 npm-debug.log*

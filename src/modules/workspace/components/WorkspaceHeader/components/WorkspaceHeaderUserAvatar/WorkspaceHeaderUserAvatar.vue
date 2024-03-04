@@ -41,6 +41,7 @@ const handleSelectAvatarDropdownMenuItem = (key: string) => {
     <n-dropdown
         v-if="isUserDataLoaded"
         @select="handleSelectAvatarDropdownMenuItem"
+        data-test-blackout
         trigger="hover"
         :options="avatarDropdownMenuOptions">
         <UserAvatar

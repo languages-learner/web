@@ -19,5 +19,8 @@ describe('workspace trainings', () => {
         cy
             .location('pathname').should('equal', withLang('/trainings'))
             .el(EDataTest.workspace_content).contains('coming_soon')
+            // TODO Error in ci, for some reason not visible
+            // .should('be.visible')
+            .toMatchSnapshotForEl(EDataTest.workspace_content, 'Trainings page content')
     })
 })

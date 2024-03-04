@@ -35,7 +35,9 @@ const updateText = (value: string) => {
 </script>
 
 <template>
-    <div class="words-container-header">
+    <div
+        class="words-container-header"
+        :data-test="EDataTest.words_container_header">
         <n-grid cols="7 m:2">
             <n-grid-item span="5 m:1">
                 <n-grid
@@ -55,6 +57,7 @@ const updateText = (value: string) => {
                     </n-grid-item>
                     <n-grid-item span="19">
                         <n-input
+                            data-test-blackout
                             :on-update:value="updateText"
                             :value="wordsFilters.text"
                             :data-test="EDataTest.words_container_header_search"
@@ -68,7 +71,9 @@ const updateText = (value: string) => {
             </n-grid-item>
             <n-grid-item span="2 m:1">
                 <n-flex justify="end">
-                    <WordsContainerHeaderStatuses v-model:status="wordsFilters.status"/>
+                    <WordsContainerHeaderStatuses
+                        v-model:status="wordsFilters.status"
+                        data-test-blackout/>
                 </n-flex>
             </n-grid-item>
         </n-grid>

@@ -17,6 +17,7 @@ const learningLanguagesOptions = computed(() => ([
     <n-dropdown
         v-if="isUserDataLoaded"
         @select="updateActiveLearningLanguage"
+        data-test-blackout
         trigger="hover"
         :options="learningLanguagesOptions">
         <n-button

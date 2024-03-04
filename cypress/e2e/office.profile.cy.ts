@@ -22,7 +22,8 @@ describe('office profile', () => {
                 .log('check if right office menu item selected')
                 .el(EDataTest.office_menu).should('have.attr', 'data-test-value', EPageName.OFFICE_PROFILE)
 
-        cy.log('check if display email')
+        cy
+            .log('check if display email')
             .el(EDataTest.office_profile_email).should('contain', Cypress.env('testUser').username)
 
         if (isMobile())
@@ -37,6 +38,8 @@ describe('office profile', () => {
                 .location('pathname').should('equal', withLang('/office/settings'))
                 .el(EDataTest.office_menu).contains('profile').click()
 
-        cy.location('pathname').should('equal', withLang('/office/profile'))
+        cy
+            .location('pathname').should('equal', withLang('/office/profile'))
+            .toMatchSnapshotForEl(EDataTest.workspace_content, 'Office profile page')
     })
 })

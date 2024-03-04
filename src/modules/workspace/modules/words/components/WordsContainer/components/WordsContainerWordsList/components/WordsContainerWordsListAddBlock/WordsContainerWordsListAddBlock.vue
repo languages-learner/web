@@ -16,6 +16,7 @@ const {
             align="center">
             <div>{{ $t('new_word:') }}</div>
             <n-input
+                data-test-blackout
                 :value="wordsFilters.formattedText"
                 disabled
                 class="words-container-words-list-add-block__input"/>

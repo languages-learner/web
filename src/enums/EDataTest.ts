@@ -2,6 +2,7 @@ export enum EDataTest {
     interface_language_selector,
     interface_language_selector_item,
 
+    landing_layout,
     landing_sign_in_button,
     landing_sign_up_button,
     landing_go_to_workspace_button,
@@ -21,6 +22,8 @@ export enum EDataTest {
     workspace_bottom_menu,
     workspace_bottom_menu_item,
 
+    words_container,
+    words_container_header,
     words_container_add_word_button,
     words_container_header_checkbox,
     words_container_header_search,
@@ -52,9 +55,14 @@ export enum EDataTestClass {
     app_popover = 'n-popover',
     app_checkbox_checked = 'n-checkbox--checked',
     app_checkbox_disabled = 'n-checkbox--disabled',
+    app_card_content = 'n-card__content',
 
     word_status = 'data-test__word_status',
 
     words_container_header_status = 'data-test__words-container-header-status',
     words_container_header_status_active = 'data-test__words-container-header-status--active',
+}
+
+export enum EDataTestAttr {
+    test_blackout = '[data-test-blackout]'
 }

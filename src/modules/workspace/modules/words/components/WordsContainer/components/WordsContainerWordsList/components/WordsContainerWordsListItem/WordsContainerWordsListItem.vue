@@ -107,6 +107,7 @@ const toggleChangeableView = () => {
                     vertical
                     class="words-container-words-list-item__property--translations">
                     <n-text
+                        data-test-blackout
                         :type="source.disabled ? 'warning' : 'success'"
                         :data-test="EDataTest.words_list_item_source_word"
                         :data-test-value="source.word"
@@ -115,6 +116,7 @@ const toggleChangeableView = () => {
                     </n-text>
                     <n-dynamic-tags
                         v-if="isChangeableView"
+                        data-test-blackout
                         :disabled="source.disabled"
                         :value="source.wordData.translations"
                         :on-update:value="updateTranslations"
@@ -122,6 +124,7 @@ const toggleChangeableView = () => {
                     />
                     <div
                         v-else
+                        data-test-blackout
                         :data-test="EDataTest.words_list_item_translations">{{ source.wordData.translations.join(', ') }}</div>
                 </n-space>
             </n-grid-item>

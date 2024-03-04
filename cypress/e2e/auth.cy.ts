@@ -8,6 +8,7 @@ describe('user sign-in, sign-up and logout', () => {
         cy.visit(withLang())
         cy.location('pathname').should('equal', withLang())
         cy.logout()
+        cy.visit(withLang())
     })
 
     it('should redirect unauthenticated user to landing page', () => {
@@ -17,6 +18,12 @@ describe('user sign-in, sign-up and logout', () => {
 
     it('should allow to sign-in and logout', () => {
         cy
+            .el(EDataTest.landing_sign_in_button).click()
+            // To make close button unfocused
+            .elByClass(EDataTestClass.app_card_content).should('be.visible').click()
+            .get('html').toMatchSnapshot('Sign in modal')
+            .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
+
             .authWithoutSession()
             .elByClass(EDataTestClass.app_notifications).should('be.visible').and('contain', 'successful_authorization')
             .location('pathname').should('equal', withLang('/dictionary'))
@@ -43,6 +50,7 @@ describe('user sign-in, sign-up and logout', () => {
             .should('be.visible')
             .and('contain', authorizationError)
             .and('contain', errorMessageInvalidEmail)
+            .toMatchSnapshotForEl(EDataTestClass.app_notifications, 'Sign in error notification')
         cy
             .el(EDataTest.authentication_modal_error).should('be.visible').contains(errorMessageInvalidEmail)
             .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
@@ -94,11 +102,19 @@ describe('user sign-in, sign-up and logout', () => {
     })
 
     it('should display sign-up error for existing use', () => {
-        cy.authWithoutSession({
-            ...(Cypress.env('testUser') ?? {}),
-            type: 'signup',
-            validateAuth: false,
-        })
+        cy
+            .el(EDataTest.landing_sign_up_button).click()
+            // To make close button unfocused
+            .elByClass(EDataTestClass.app_card_content).should('be.visible').click()
+            .get('html').toMatchSnapshot('Sign up modal')
+            .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
+
+            .authWithoutSession({
+                ...(Cypress.env('testUser') ?? {}),
+                type: 'signup',
+                validateAuth: false,
+            })
+
         const errorMessage = 'Firebase: Error (auth/email-already-in-use)'
         cy.elByClass(EDataTestClass.app_notifications)
             .should('be.visible')
