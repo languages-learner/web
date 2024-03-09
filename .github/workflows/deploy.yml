@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      isPreview:
+        required: true
+        type: boolean
+        default: false
+    secrets:
+      TOKEN:
+        required: true
+      FIREBASE_SERVICE_ACCOUNT_LANGUAGES_LEARNER:
+        required: true
+
+jobs:
+  deploy_preview_website:
+    timeout-minutes: 2
+    environment: ${{ inputs.isPreview && 'deploy_preview' || '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Download artifact
+        uses: actions/download-artifact@main
+        with:
+          name: dist
+          path: dist
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_LANGUAGES_LEARNER }}"
+          expires: ${{ inputs.isPreview && '7d' || '' }}
+          channelId: ${{ inputs.isPreview && '' || 'live' }}

@@ -1,0 +1,97 @@
+name: E2E Chrome Tests
+
+on:
+  workflow_call:
+    inputs:
+      isManual:
+        required: false
+        type: boolean
+        default: false
+      platform:
+        required: true
+        type: string
+    secrets:
+        TEST_USER_USERNAME:
+          required: true
+        TEST_USER_PASSWORD:
+          required: true
+
+jobs:
+  e2e-chrome-tests:
+    environment: ${{ inputs.isManual && 'manual_e2e_tests' || '' }}
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node18.12.0-chrome106-ff106
+      options: --user 1001
+    strategy:
+      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+      matrix:
+        #        https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
+        #        containers: [ 1, 2 ]
+        containers: [ 1 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-test
+          path: dist-test
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: "Cypress install"
+        run: yarn cypress install --force
+
+      - name: Node info
+        run: node -v
+
+      #      - name: __e Dir
+      #        run: ls /__e
+
+      - name: "E2E Tests - Chrome"
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          start: npm run preview:test
+          browser: chrome
+          #          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
+          #          record: true
+          #          parallel: true
+          #          group: "E2E - Chrome"
+          spec: cypress/e2e/*
+          config-file: ${{ inputs.platform == 'desktop' && 'cypress/configs/preview.ts' || 'cypress/configs/mobile.preview.ts' }}
+        env:
+          TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+#          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
+#          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+#          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+#          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
+#          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save cypress snapshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.platform == 'desktop' && 'e2e-chrome-cypress-snapshots' || 'e2e-chrome-mobile-cypress-snapshots' }}
+          path: |
+            cypress/snapshots/actual
+            cypress/snapshots/diff
