@@ -7,230 +7,39 @@ on:
 
 jobs:
   build:
-    timeout-minutes: 3
-    runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node18.12.0-chrome106-ff106
-      options: --user 1001
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: Write Firebase config
-        run: |
-          echo ${{ secrets.FIREBASE_CONFIG_BASE64 }} | base64 -d > firebase.config.json
-
-      - run: node --version
-      - run: node -p 'os.cpus()'
-      - run: npm run build
-      - run: npm run lint
-      - run: npm run test:ci
-      - run: npm run build:test
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          if-no-files-found: error
-          path: dist
-
-      - name: Save test build folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-test
-          if-no-files-found: error
-          path: dist-test
+    name: 'Build'
+    uses: ./.github/workflows/build.yml
+    secrets:
+      FIREBASE_CONFIG_BASE64: ${{ secrets.FIREBASE_CONFIG_BASE64 }}
 
   e2e-chrome-tests:
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node18.12.0-chrome106-ff106
-      options: --user 1001
+    name: 'E2E Chrome Tests - Desktop'
     needs: build
-    strategy:
-      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
-      matrix:
-#        https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
-#        containers: [ 1, 2 ]
-        containers: [ 1 ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-
-      - name: Download the build folders
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-test
-          path: dist-test
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: "Cypress install"
-        run: yarn cypress install --force
-
-      - name: Node info
-        run: node -v
-
-#      - name: __e Dir
-#        run: ls /__e
-
-      - name: "E2E Tests - Chrome"
-        uses: cypress-io/github-action@v6
-        with:
-          install: false
-          start: npm run preview:test
-          browser: chrome
-#          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
-#          record: true
-#          parallel: true
-#          group: "E2E - Chrome"
-          spec: cypress/e2e/*
-          config-file: cypress/configs/preview.ts
-        env:
-          TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME_1 }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD_1 }}
-#          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
-#          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-#          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-#          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
-#          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Save cypress snapshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2e-chrome-cypress-snapshots
-          path: |
-            cypress/snapshots/actual
-            cypress/snapshots/diff
+    uses: ./.github/workflows/e2e-tests.yml
+    with:
+      isManual: false
+      platform: desktop
+    secrets:
+      TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME_1 }}
+      TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD_1 }}
 
   e2e-chrome-mobile-tests:
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node18.12.0-chrome106-ff106
-      options: --user 1001
+    name: 'E2E Chrome Tests - Mobile'
     needs: build
-    strategy:
-      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
-      matrix:
-#        https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
-#        containers: [ 1, 2 ]
-        containers: [ 1 ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    uses: ./.github/workflows/e2e-tests.yml
+    with:
+      isManual: false
+      platform: mobile
+    secrets:
+      TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME_2 }}
+      TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD_2 }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-
-      - name: Download the build folders
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-test
-          path: dist-test
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: "Cypress install"
-        run: yarn cypress install --force
-
-      - name: Node info
-        run: node -v
-
-#      - name: __e Dir
-#        run: ls /__e
-
-      - name: "E2E Tests - Chrome - Mobile"
-        uses: cypress-io/github-action@v6
-        with:
-          install: false
-          start: npm run preview:test
-          browser: chrome
-#          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
-#          record: true
-#          parallel: true
-#          group: "E2E - Chrome - Mobile"
-          spec: cypress/e2e/*
-          config-file: cypress/configs/mobile.preview.ts
-        env:
-          TEST_USER_USERNAME: ${{ secrets.TEST_USER_USERNAME_2 }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD_2 }}
-#          https://github.com/languages-learner/web/issues/32 - Disable cypress logs because limit reached
-#          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-#          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-#          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
-#          COMMIT_INFO_SHA: ${{ github.event.pull_request.head.sha }}
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Save cypress snapshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2e-chrome-mobile-cypress-snapshots
-          path: |
-            cypress/snapshots/actual
-            cypress/snapshots/diff
-
-  deploy_live_website:
-    timeout-minutes: 2
-    name: Deploy Prod
+  deploy-preview-website:
+    name: 'Deploy Production Website'
     needs: [ build, e2e-chrome-tests, e2e-chrome-mobile-tests ]
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@main
-      - name: Download artifact
-        uses: actions/download-artifact@main
-        with:
-          name: dist
-          path: dist
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_LANGUAGES_LEARNER }}"
-          channelId: live
+    uses: ./.github/workflows/deploy.yml
+    with:
+      isPreview: false
+    secrets:
+      TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      FIREBASE_SERVICE_ACCOUNT_LANGUAGES_LEARNER: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LANGUAGES_LEARNER }}
