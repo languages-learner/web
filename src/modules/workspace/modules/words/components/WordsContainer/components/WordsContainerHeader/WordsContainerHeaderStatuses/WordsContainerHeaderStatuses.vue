@@ -4,7 +4,7 @@ const WordStatusIcon = defineAsyncComponent(() => import('@/modules/workspace/mo
 import { useWordStatuses } from '@/modules/workspace/modules/words/composables/useWordStatuses'
 
 const { isMobile } = useAppBreakpoints()
-const { wordStatusOptionsWithAll, getWordStatusesValues } = useWordStatuses()
+const { wordStatusLabel, wordStatusOptionsWithAll, getWordStatusesValues } = useWordStatuses()
 
 const currentStatus = defineModel<WordsFilters['status']>('status', { required: true })
 const options = computed(() => unref(wordStatusOptionsWithAll).map(option => ({
@@ -36,6 +36,7 @@ const updateStatus = (value: WordsFilters['status']) => {
             :data-test="EDataTest.words_container_header_status"
             :class="{[EDataTestClass.words_container_header_status_active]: isSelectedStatus(wordStatus)}"
             :secondary="isSelectedStatus(wordStatus)"
+            :aria-label="wordStatusLabel[wordStatus]"
         >
             <template #icon>
                 <WordStatusIcon :status="wordStatus" />

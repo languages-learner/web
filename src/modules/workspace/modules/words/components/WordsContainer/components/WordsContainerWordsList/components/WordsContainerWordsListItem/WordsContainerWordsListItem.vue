@@ -82,6 +82,7 @@ const toggleChangeableView = () => {
                 class="words-container-words-list-item__property">
                 <n-checkbox
                     v-if="!source.disabled"
+                    :aria-label="$t('select_word')"
                     :data-test="EDataTest.words_list_item_checkbox"
                     :checked="isSelected"
                     :on-update:checked="toggleSelection">
@@ -92,6 +93,7 @@ const toggleChangeableView = () => {
                 class="words-container-words-list-item__property">
                 <n-button
                     @click="() => speak(source.word)"
+                    :aria-label="$t('speak')"
                     text>
                     <template #icon>
                         <n-icon
@@ -132,6 +134,7 @@ const toggleChangeableView = () => {
                 span="2 m:1"
                 class="words-container-words-list-item__property">
                 <n-button
+                    :aria-label="$t('edit')"
                     :disabled="source.disabled"
                     text
                     :data-test="EDataTest.words_list_item_edit_button">
@@ -172,6 +175,7 @@ const toggleChangeableView = () => {
                     </template>
                     <template #trigger>
                         <n-button
+                            :aria-label="$t('delete')"
                             :disabled="source.disabled"
                             text
                             :data-test="EDataTest.words_list_item_delete_button">
