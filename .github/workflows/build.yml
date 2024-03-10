@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    timeout-minutes: 3
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     container:
       image: cypress/browsers:node18.12.0-chrome106-ff106

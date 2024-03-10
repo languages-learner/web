@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import WordsContainerHeaderStatuses from '@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerHeader/WordsContainerHeaderStatuses/WordsContainerHeaderStatuses.vue'
-import WordsContainerAddWordButton from '@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerAddWordButton/WordsContainerAddWordButton.vue'
+const WordsContainerAddWordButton =  defineAsyncComponent(() => import('@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerAddWordButton/WordsContainerAddWordButton.vue'))
 import { EWordsContainerState, useWordsContainerStore } from '@/modules/workspace/modules/words/components/WordsContainer/useWordsContainerStore'
 
 const { isMobile } = useAppBreakpoints()

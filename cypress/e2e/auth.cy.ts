@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { elSelector, withLang } from '@@/cypress/utils'
+import { withLang } from '@@/cypress/utils'
 import { EDataTest, EDataTestClass } from '@/enums/EDataTest'
 
 describe('user sign-in, sign-up and logout', () => {
@@ -20,9 +20,12 @@ describe('user sign-in, sign-up and logout', () => {
         cy
             .el(EDataTest.landing_sign_in_button).click()
             // To make close button unfocused
-            .elByClass(EDataTestClass.app_card_content).should('be.visible').click()
+            .elByClass(EDataTestClass.app_dialog).should('be.visible').click()
             .get('html').toMatchSnapshot('Sign in modal')
-            .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
+            .elByClass(EDataTestClass.app_dialog).within(() => {
+                cy.elByClass(EDataTestClass.app_close_button).click()
+            })
+
 
             .authWithoutSession()
             .elByClass(EDataTestClass.app_notifications).should('be.visible').and('contain', 'successful_authorization')
@@ -53,7 +56,9 @@ describe('user sign-in, sign-up and logout', () => {
             .toMatchSnapshotForEl(EDataTestClass.app_notifications, 'Sign in error notification')
         cy
             .el(EDataTest.authentication_modal_error).should('be.visible').contains(errorMessageInvalidEmail)
-            .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
+            .elByClass(EDataTestClass.app_dialog).within(() => {
+                cy.elByClass(EDataTestClass.app_close_button).click()
+            })
 
         cy.authWithoutSession({
             username: '',
@@ -68,7 +73,9 @@ describe('user sign-in, sign-up and logout', () => {
             .and('contain', errorMessageInvalidEmail)
         cy
             .el(EDataTest.authentication_modal_error).should('be.visible').contains(errorMessageInvalidEmail)
-            .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
+            .elByClass(EDataTestClass.app_dialog).within(() => {
+                cy.elByClass(EDataTestClass.app_close_button).click()
+            })
 
         cy.authWithoutSession({
             username: 'email@gmail.com',
@@ -83,7 +90,9 @@ describe('user sign-in, sign-up and logout', () => {
             .and('contain', errorMessageInvalidCredential)
         cy
             .el(EDataTest.authentication_modal_error).should('be.visible').contains(errorMessageInvalidCredential)
-            .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
+            .elByClass(EDataTestClass.app_dialog).within(() => {
+                cy.elByClass(EDataTestClass.app_close_button).click()
+            })
 
         cy.authWithoutSession({
             username: 'email@gmail.com',
@@ -98,16 +107,20 @@ describe('user sign-in, sign-up and logout', () => {
             .and('contain', errorMessageMissingPassword)
         cy
             .el(EDataTest.authentication_modal_error).should('be.visible').contains(errorMessageMissingPassword)
-            .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
+            .elByClass(EDataTestClass.app_dialog).within(() => {
+                cy.elByClass(EDataTestClass.app_close_button).click()
+            })
     })
 
     it('should display sign-up error for existing use', () => {
         cy
             .el(EDataTest.landing_sign_up_button).click()
             // To make close button unfocused
-            .elByClass(EDataTestClass.app_card_content).should('be.visible').click()
+            .elByClass(EDataTestClass.app_dialog).should('be.visible').click()
             .get('html').toMatchSnapshot('Sign up modal')
-            .get(`${elSelector(EDataTest.authentication_modal)} .n-base-close`).click()
+            .elByClass(EDataTestClass.app_dialog).within(() => {
+                cy.elByClass(EDataTestClass.app_close_button).click()
+            })
 
             .authWithoutSession({
                 ...(Cypress.env('testUser') ?? {}),

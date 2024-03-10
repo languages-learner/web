@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InterfaceLanguageSelector from '@/components/InterfaceLanguageSelector/InterfaceLanguageSelector.vue'
+const InterfaceLanguageSelector = defineAsyncComponent(() => import('@/components/InterfaceLanguageSelector/InterfaceLanguageSelector.vue'))
 
 const { isUserDataLoaded, customData } = storeToRefs(useUserStore())
 const { updateNativeLanguage } = useUserStore()

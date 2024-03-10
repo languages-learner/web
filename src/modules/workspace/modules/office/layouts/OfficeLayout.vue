@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type ComputedRef } from 'vue'
-import OfficeNavigation from '@/modules/workspace/modules/office/components/OfficeNavigation/OfficeNavigation.vue'
+const OfficeNavigation = defineAsyncComponent(() => import('@/modules/workspace/modules/office/components/OfficeNavigation/OfficeNavigation.vue'))
 
 const { t } = useI18n()
 

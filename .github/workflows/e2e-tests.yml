@@ -19,7 +19,7 @@ on:
 jobs:
   e2e-chrome-tests:
     environment: ${{ inputs.isManual && 'manual_e2e_tests' || '' }}
-    timeout-minutes: 5
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     container:
       image: cypress/browsers:node18.12.0-chrome106-ff106

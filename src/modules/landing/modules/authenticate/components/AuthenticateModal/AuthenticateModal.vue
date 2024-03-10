@@ -4,41 +4,14 @@ import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/c
 
 const props = defineProps<{
     type: EAuthenticateModalType
-    show: boolean
 }>()
-
-const { isMobile } = useAppBreakpoints()
 
 const authenticateType = ref(props.type)
 watch(() => props.type, () => authenticateType.value = props.type)
-
-const modalStyle = computed(() => unref(isMobile)
-    ? {
-        width: '100vw',
-        height: '100dvh',
-    }
-    : {
-        width: '600px',
-    })
-
-const emit = defineEmits<{
-    (e: 'update:show', value: boolean): void
-}>()
-
-const updateShow = (value: boolean) => emit('update:show', value)
 </script>
 
 <template>
-    <n-modal
-        :show="props.show"
-        :on-update:show="updateShow"
-        transform-origin="center"
-        preset="card"
-        size="huge"
-        :title="$t('authentication')"
-        :style="modalStyle"
-        :data-test="EDataTest.authentication_modal"
-    >
+    <div :data-test="EDataTest.authentication_modal">
         <n-tabs
             v-model:value="authenticateType"
             :default-value="EAuthenticateModalType.SIGNIN"
@@ -58,5 +31,5 @@ const updateShow = (value: boolean) => emit('update:show', value)
                 <AuthenticateModalForm :type="EAuthenticateModalType.SIGNUP"/>
             </n-tab-pane>
         </n-tabs>
-    </n-modal>
+    </div>
 </template>
