@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useElementSize } from '@vueuse/core'
 import LandingAbout from '@/modules/landing/components/LandingAbout/LandingAbout.vue'
+import PreviewProfilePageMobile from '@/assets/images/preview-profile-page-mobile.webp'
+import PreviewDictionaryPageMobile from '@/assets/images/preview-dictionary-page-mobile.webp'
 
 const { isTablet, isMobile } = useAppBreakpoints()
 
@@ -61,12 +63,12 @@ const carouselStyle = computed(() => unref(isTablet) || unref(isMobile) ?
                     centered-slides>
                     <n-carousel-item>
                         <img
-                            src="/preview-dictionary-page-mobile.png"
+                            :src="PreviewDictionaryPageMobile"
                             alt="preview-dictionary-page-mobile"/>
                     </n-carousel-item>
                     <n-carousel-item>
                         <img
-                            src="/preview-profile-page-mobile.png"
+                            :src="PreviewProfilePageMobile"
                             alt="preview-profile-page-mobile"/>
                     </n-carousel-item>
                 </n-carousel>

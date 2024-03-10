@@ -10,7 +10,9 @@ initializeOnAuthStateChangedHook(router)
         <n-notification-provider
             placement="bottom-left"
             container-class="app-notifications">
-            <router-view></router-view>
+            <n-modal-provider>
+                <router-view></router-view>
+            </n-modal-provider>
         </n-notification-provider>
     </n-dialog-provider>
 </template>

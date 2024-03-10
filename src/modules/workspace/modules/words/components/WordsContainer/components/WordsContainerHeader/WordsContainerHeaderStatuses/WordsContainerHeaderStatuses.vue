@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { WordsFilters } from '@/modules/workspace/modules/words/types/WordsFilters'
-import WordStatusIcon from '@/modules/workspace/modules/words/components/WordStatus/WordStatusIcon.vue'
+const WordStatusIcon = defineAsyncComponent(() => import('@/modules/workspace/modules/words/components/WordStatus/WordStatusIcon.vue'))
 import { useWordStatuses } from '@/modules/workspace/modules/words/composables/useWordStatuses'
 
 const { isMobile } = useAppBreakpoints()

@@ -74,10 +74,7 @@ Check out the live demo of the app at https://languages-learner.web.app/
 
 ## Preview (Mobile)
 
-[//]: # (![preview-dictionary-page-mobile]&#40;public/preview-dictionary-page-mobile.png&#41;)
-
-[//]: # (![preview-profile-page-mobile]&#40;public/preview-profile-page-mobile.png&#41;)
 <p align="center">
-  <img src="public/preview-dictionary-page-mobile.png" alt="preview-dictionary-page-mobile" width="200" style="margin-right: 20px;">
-  <img src="public/preview-profile-page-mobile.png" alt="preview-profile-page-mobile" width="200">
+  <img src="src/assets/images/preview-dictionary-page-mobile.webp" alt="preview-dictionary-page-mobile" width="200" style="margin-right: 20px;">
+  <img src="src/assets/images/preview-profile-page-mobile.webp" alt="preview-profile-page-mobile" width="200">
 </p>

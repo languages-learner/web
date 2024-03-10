@@ -1,17 +1,20 @@
 <script setup lang="ts">
+import {  useModal } from 'naive-ui'
 import { EAuthenticateModalType } from '@/modules/landing/modules/authenticate/components/AuthenticateModal/EAuthenticateModalType'
 import InterfaceLanguageSelector from '@/components/InterfaceLanguageSelector/InterfaceLanguageSelector.vue'
-import AuthenticateModal from '@/modules/landing/modules/authenticate/components/AuthenticateModal/AuthenticateModal.vue'
 
+const modal = useModal()
 const { isLoggedIn } = storeToRefs(useUserStore())
 
-const authenticateModalType = ref<EAuthenticateModalType>(EAuthenticateModalType.SIGNIN)
-const isNeededToShowAuthenticateModal = ref(false)
-
-const showAuthenticateModal = (type: EAuthenticateModalType) => {
-    authenticateModalType.value = type
-    isNeededToShowAuthenticateModal.value = true
+const showAuthenticateModal = async (type: EAuthenticateModalType) => {
+    const { useAuthenticateModal } = await import('@/modules/landing/modules/authenticate/components/AuthenticateModal/useAuthenticateModal')
+    const { openAuthenticateModal } = useAuthenticateModal(modal)
+    openAuthenticateModal(type)
 }
+
+onBeforeUnmount(() => {
+    modal.destroyAll()
+})
 </script>
 
 <template>
@@ -43,9 +46,6 @@ const showAuthenticateModal = (type: EAuthenticateModalType) => {
                 </router-link>
             </n-button>
         </n-space>
-        <AuthenticateModal
-            v-model:show="isNeededToShowAuthenticateModal"
-            :type="authenticateModalType"/>
     </div>
 </template>
 

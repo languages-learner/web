@@ -2,9 +2,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import VirtualList from 'vue3-virtual-scroll-list'
-import WordsContainerWordsListItem from '@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerWordsList/components/WordsContainerWordsListItem/WordsContainerWordsListItem.vue'
-import WordsContainerWordsListAddBlock from '@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerWordsList/components/WordsContainerWordsListAddBlock/WordsContainerWordsListAddBlock.vue'
-import WordsContainerAddWordButton from '@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerAddWordButton/WordsContainerAddWordButton.vue'
+const WordsContainerWordsListItem = defineAsyncComponent(() => import('@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerWordsList/components/WordsContainerWordsListItem/WordsContainerWordsListItem.vue'))
+const WordsContainerWordsListAddBlock = defineAsyncComponent(() => import('@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerWordsList/components/WordsContainerWordsListAddBlock/WordsContainerWordsListAddBlock.vue'))
+const WordsContainerAddWordButton = defineAsyncComponent(() => import('@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerAddWordButton/WordsContainerAddWordButton.vue'))
 import { EWordsContainerState, useWordsContainerStore } from '@/modules/workspace/modules/words/components/WordsContainer/useWordsContainerStore'
 import { type WordsContainerWordsListItemProps } from '@/modules/workspace/modules/words/components/WordsContainer/components/WordsContainerWordsList/components/WordsContainerWordsListItem/types'
 
@@ -68,20 +68,22 @@ const isWordsNeeded = computed(() => isWordsContainerState([
         <WordsContainerWordsListAddBlock
             v-if="isAddBlockNeeded"
             class="words-container-words-list__item" />
-        <virtual-list
-            v-if="isWordsNeeded"
-            @deleteWord="deleteWord"
-            @updateWordStatus="updateWordStatus"
-            @updateWordTranslations="updateWordTranslations"
-            @toggleWordSelection="toggleWordSelection"
-            data-key="word"
-            :data-sources="items"
-            :data-component="WordsContainerWordsListItem"
-            :data-test="EDataTest.words_list"
-            :estimate-size="77"
-            item-class="words-container-words-list__item"
-            :page-mode="true"
-        />
+        <Suspense>
+            <virtual-list
+                v-if="isWordsNeeded"
+                @deleteWord="deleteWord"
+                @updateWordStatus="updateWordStatus"
+                @updateWordTranslations="updateWordTranslations"
+                @toggleWordSelection="toggleWordSelection"
+                data-key="word"
+                :data-sources="items"
+                :data-component="WordsContainerWordsListItem"
+                :data-test="EDataTest.words_list"
+                :estimate-size="77"
+                item-class="words-container-words-list__item"
+                :page-mode="true"
+            />
+        </Suspense>
         <template v-if="isOtherWordsNeeded">
             <div class="words-container-words-list__other-words">
                 <n-text

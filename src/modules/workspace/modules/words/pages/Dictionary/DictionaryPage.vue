@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import WordsContainer from '@/modules/workspace/modules/words/components/WordsContainer/WordsContainer.vue'
+const WordsContainer = defineAsyncComponent(() => import('@/modules/workspace/modules/words/components/WordsContainer/WordsContainer.vue'))
 
 const { isUserDataLoaded } = storeToRefs(useUserStore())
 </script>

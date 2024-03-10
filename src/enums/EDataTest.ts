@@ -56,6 +56,7 @@ export enum EDataTestClass {
     app_checkbox_checked = 'n-checkbox--checked',
     app_checkbox_disabled = 'n-checkbox--disabled',
     app_card_content = 'n-card__content',
+    app_close_button = 'n-base-close',
 
     word_status = 'data-test__word_status',
 

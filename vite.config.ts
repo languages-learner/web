@@ -1,5 +1,5 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
 import Components from 'unplugin-vue-components/vite'
@@ -68,6 +68,7 @@ export default defineConfig({
                 display: 'standalone',
             },
         }),
+        splitVendorChunkPlugin(),
     ],
     test: {
         // https://vitest.dev/guide/common-errors#failed-to-terminate-worker

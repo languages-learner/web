@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import WorkspaceHeader from '@/modules/workspace/components/WorkspaceHeader/WorkspaceHeader.vue'
-import WorkspaceBottomMenu from '@/modules/workspace/components/WorkspaceBottomMenu/WorkspaceBottomMenu.vue'
+const WorkspaceBottomMenu = defineAsyncComponent(() => import('@/modules/workspace/components/WorkspaceBottomMenu/WorkspaceBottomMenu.vue'))
 
 const { isMobile } = useAppBreakpoints()
 </script>
