@@ -10,23 +10,20 @@ export const WordStatusTranslationKey: Record<EWordStatus, string> = {
 export const useWordStatuses = () => {
     const { t } = useI18n()
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const wordStatusLabel: Record<EWordStatus, string> = Object.fromEntries(
+        getWordStatusesValues()
+            .map((status) => [status as EWordStatus, t(WordStatusTranslationKey[status as EWordStatus])] as [EWordStatus, string]),
+    )
+
     const wordStatusOptions: Array<{
         label: string,
         value: WordsFilters['status']
-    }> = [
-        {
-            label: t(WordStatusTranslationKey[EWordStatus.NEW_WORD]),
-            value: EWordStatus.NEW_WORD,
-        },
-        {
-            label: t(WordStatusTranslationKey[EWordStatus.LEARN]),
-            value: EWordStatus.LEARN,
-        },
-        {
-            label: t(WordStatusTranslationKey[EWordStatus.LEARNED]),
-            value: EWordStatus.LEARNED,
-        },
-    ]
+    }> = getWordStatusesValues().map((status) => ({
+        label: wordStatusLabel[status as EWordStatus],
+        value: status as EWordStatus,
+    }))
 
     const wordStatusOptionsWithAll = [{
         label: t('all'),
@@ -34,6 +31,7 @@ export const useWordStatuses = () => {
     }].concat(wordStatusOptions)
 
     return {
+        wordStatusLabel,
         wordStatusOptions,
         wordStatusOptionsWithAll,
         getWordStatusesValues,

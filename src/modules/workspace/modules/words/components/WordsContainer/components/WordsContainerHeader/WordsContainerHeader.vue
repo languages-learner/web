@@ -48,6 +48,7 @@ const updateText = (value: string) => {
                             align="center"
                             class="words-container-header__checkbox">
                             <n-checkbox
+                                :aria-label="$t('select_all_words')"
                                 :disabled="isAllWordsSelectedDisabled"
                                 :data-test="EDataTest.words_container_header_checkbox"
                                 :checked="isAllWordsSelected"
