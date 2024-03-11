@@ -95,3 +95,11 @@ jobs:
           path: |
             cypress/snapshots/actual
             cypress/snapshots/diff
+
+      - name: Save lighthouse report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.platform == 'desktop' && 'e2e-chrome-lighthouse' || 'e2e-chrome-mobile-lighthouse' }}
+          path: |
+            cypress/configs/lighthouse.html

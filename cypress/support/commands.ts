@@ -11,6 +11,8 @@ import { EPageName } from '@/enums/EPageName'
 import { type EWordStatus } from '@/services/dbstore/dto/Words'
 import { WordStatusTranslationKey } from '@/modules/workspace/modules/words/composables/useWordStatuses'
 
+import '@cypress-audit/lighthouse/commands'
+
 Cypress.Commands.add('el', (dataTest: EDataTest, options?: Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow>) =>
     cy.get(elSelector(dataTest), options))
 Cypress.Commands.add('elByClass', (dataTestClass: EDataTestClass, options?: Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow>) =>

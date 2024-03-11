@@ -9,16 +9,27 @@ describe('landing', () => {
         cy.location('pathname').should('equal', withLang())
     })
 
+    it('lighthouse', {
+        env: {
+            language: 'en',
+        },
+    }, () => {
+        cy.lighthouse({
+            performance: 80,
+            accessibility: 75,
+            'best-practices': 100,
+            seo: 80,
+        })
+    })
+
     it('unauthenticated user', () => {
         cy
             .logout()
-            .visit(withLang())
             .toMatchSnapshotForEl(EDataTest.landing_layout, 'Landing page content for unauthenticated user')
     })
 
     it('authenticated user', () => {
         cy
-            .visit(withLang())
             .auth()
             .visit(withLang())
             .toMatchSnapshotForEl(EDataTest.landing_layout, 'Landing page content for authenticated user')
