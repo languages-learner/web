@@ -19,6 +19,7 @@
     "cypress:open": "cypress open --config-file cypress/configs/index.ts",
     "cypress:open:update-snapshots": "npm run cypress:open -- -e type=base",
     "cypress:open:preview": "cypress open --config-file cypress/configs/preview.ts",
+    "cypress:open:mobile:preview": "cypress open --config-file cypress/configs/mobile.preview.ts",
     "cypress:open:mobile": "cypress open --config-file cypress/configs/mobile.ts",
     "cypress:run": "cypress run --config-file cypress/configs/index.ts",
     "cypress:run:preview": "cypress run --config-file cypress/configs/preview.ts",
@@ -59,6 +60,7 @@
     "vue3-virtual-scroll-list": "^0.2.1"
   },
   "devDependencies": {
+    "@cypress-audit/lighthouse": "^1.4.2",
     "@pinia/testing": "^0.1.3",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",

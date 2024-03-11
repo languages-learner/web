@@ -40,12 +40,15 @@ Check out the live demo of the app at https://languages-learner.web.app/
     - [Vitest][vitest]: Unit and Component Tests.
     - [Cypress][cypress] + [Cypress Cloud][cypress-cloud]: End-to-end Tests  across multiple browsers and device sizes.
       - **Include visual regression tests** using [cypress-visual-regression][cypress-visual-regression]
+      - **Include performance tests** using [Lighthouse (cypress-audit)][cypress-audit]
+        - Currently only for landing page to demonstrate the concept.
 
 - **CI/CD**
   - Automated Tests: Unit, Component and End-to-end Tests.
   - Deploy:
     - Preview website for pull-requests and delete on PR close
     - Production deploy
+  - UI Performance Testing with **Lighthouse**
   - Reject pending deployments on PR close
 
 - **Code Quality Tools**
@@ -69,6 +72,7 @@ Check out the live demo of the app at https://languages-learner.web.app/
 [cypress]: https://www.cypress.io/
 [cypress-cloud]: https://cloud.cypress.io/projects/fm6ypm/runs
 [cypress-visual-regression]: https://github.com/cypress-visual-regression/cypress-visual-regression
+[cypress-audit]: https://github.com/mfrachet/cypress-audit
 [eslint]: https://eslint.org/
 [stylelint]: https://stylelint.io/
 

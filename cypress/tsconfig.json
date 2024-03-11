@@ -3,7 +3,11 @@
   "include": ["./**/*.ts", "../types/cypress.d.ts"],
   "exclude": [],
   "compilerOptions": {
-    "types": ["cypress", "cypress-visual-regression"],
+    "types": [
+      "cypress",
+      "cypress-visual-regression",
+      "@cypress-audit/lighthouse"
+    ],
     "lib": ["es2017", "dom"],
     "isolatedModules": false,
     "allowJs": true,
